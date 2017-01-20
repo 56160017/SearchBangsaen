@@ -7,8 +7,21 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="TextViewDBThaiText">
+        <item name="fontPath">fonts/DB_ThaiText/DB_ThaiText_X.ttf</item>
+    </style>
+
+    <style name="TextViewCloudLight">
+        <item name="fontPath">fonts/cloud/Cloud-Light.otf</item>
+    </style>
+
+    <style name="SimpleTextCloud.large" parent="TextViewCloudLight">
+        <item name="android:textSize">@dimen/large_font_size_tv</item>
     </style>
 </resources>
