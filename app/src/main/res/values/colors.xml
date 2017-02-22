@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorLandingFristPage">#ccc1bd</color>
+
+    <color name="solid_frist">#357180</color>
+    <color name="solid_one">#4abc96</color>
+    <color name="solid_two">#b48045</color>
+    <color name="solid_three">#f1c305</color>
 </resources>

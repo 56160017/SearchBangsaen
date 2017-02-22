@@ -24,4 +24,7 @@
     <style name="SimpleTextCloud.large" parent="TextViewCloudLight">
         <item name="android:textSize">@dimen/large_font_size_tv</item>
     </style>
+    <style name="SimpleTextCloud">
+        <item name="fontPath">fonts/cloud/Cloud-Light.otf</item>
+    </style>
 </resources>
