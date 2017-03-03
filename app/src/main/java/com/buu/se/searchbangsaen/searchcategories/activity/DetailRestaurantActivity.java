@@ -13,11 +13,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.buu.se.searchbangsaen.R;
+
 import com.buu.se.searchbangsaen.searchcategories.adapter.BenefitsAdapter;
 import com.buu.se.searchbangsaen.searchcategories.adapter.RecyclerImageAdapter;
-import com.buu.se.searchbangsaen.searchcategories.dao.BenefitsDao;
 import com.buu.se.searchbangsaen.searchcategories.dao.ImageDao;
 import com.buu.se.searchbangsaen.searchcategories.dao.RestaurantDao;
+
 
 import java.util.ArrayList;
 import java.util.List;
