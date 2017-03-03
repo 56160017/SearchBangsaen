@@ -1,14 +1,10 @@
 package com.buu.se.searchbangsaen;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
-import com.buu.se.searchbangsaen.searchcategories.RestaurantSearchActivity;
 import com.codemybrainsout.onboarder.AhoyOnboarderActivity;
 import com.codemybrainsout.onboarder.AhoyOnboarderCard;
 

@@ -22,13 +22,14 @@
             android:src="@drawable/btn_back"/>
 
         <TextView
-            style="@style/SimpleTextCloud.large.bold"
+            style="@style/TextViewDBThaiText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="ร้านอาหาร"
             android:textColor="#ffffffff"
-            />
+            android:textSize="25dp"
+            android:textStyle="bold"/>
 
         <ImageView
             android:id="@+id/ivMenu"
@@ -41,15 +42,12 @@
             android:src="@drawable/btn_menu"/>
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        style="@style/TextViewDBThaiText"
-        android:id="@+id/recycler_res"
+    <it.gmariotti.cardslib.library.view.CardListView
+        android:id="@+id/card_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tvTitle"
-        android:background="#40fbff00"
-        android:overScrollMode="never"
-        android:scrollbars="vertical"/>
+        android:layout_below="@+id/tvTitle"/>
+
     <FrameLayout
         android:id="@+id/viewpager"
         android:layout_width="match_parent"

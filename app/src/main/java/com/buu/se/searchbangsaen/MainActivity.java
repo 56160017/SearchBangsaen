@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import com.buu.se.searchbangsaen.searchcategories.RestaurantSearchActivity;
+import com.buu.se.searchbangsaen.searchcategories.activity.RestaurantSearchActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         btnRestaurant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            //    Intent intent = new Intent(getApplicationContext(), CardRestaurantSearchActivity.class);
                 Intent intent = new Intent(getApplicationContext(), RestaurantSearchActivity.class);
                 startActivity(intent);
             }

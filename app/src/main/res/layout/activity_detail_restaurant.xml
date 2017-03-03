@@ -1,0 +1,255 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.buu.se.searchbangsaen.searchcategories.activity.DetailRestaurantActivity">
+
+    <RelativeLayout
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#edbd2c">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:src="@drawable/btn_back"/>
+
+        <TextView
+            android:id="@+id/tvNameRes"
+            style="@style/SimpleTextCloud.large.bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="ครัวป้าไหม"
+            android:textColor="#ffffffff"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:src="@drawable/btn_menu"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tvTitle"
+        android:background="#40fbff00"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+            android:layout_weight="6"
+            android:background="#f2f2f2"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
+            app:contentPadding="3dp">
+
+            <RelativeLayout
+                android:id="@+id/rlDetail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tvName"
+                    style="@style/SimpleTextCloud.large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ครัวน้องเบส"
+                    android:textColor="#656565"
+                    android:textStyle="bold"/>
+
+
+                <GridView
+                    android:id="@+id/gridview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvName"
+                    android:columnWidth="120dp"
+                    android:gravity="center"
+                    android:horizontalSpacing="4dp"
+                    android:numColumns="auto_fit"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="4dp"/>
+
+                <TextView
+                    android:id="@+id/tvTypeFood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/gridview"
+                    android:layout_weight="1"
+                    android:text="อาหารทะเล,อาหารอีสาน,อาหารตามสั่ง"
+                    android:textColor="#666666"
+                    android:textSize="18dp"/>
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvTypeFood"
+                    android:layout_weight="1"
+                    android:text="จันทร์ - ศุกร์ 10.00 น. - 22.00 น."
+                    android:textColor="#666666"
+                    android:textSize="18dp"/>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+            android:layout_weight="7"
+            android:background="#A0AFF2"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#0093d7"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/ic_image"/>
+
+                    <TextView
+                        android:id="@+id/tvImg"
+                        style="@style/SimpleTextCloud.medium.bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="top"
+                        android:paddingLeft="10dp"
+                        android:text="Images"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvImgs"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="5"
+                    android:background="#f2f2f2"></android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="#F0ECE9"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="#F0ECE9"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_phone"/>
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    style="@style/SimpleTextCloud"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:text="089-2196241"
+                    android:textColor="#656565"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+            android:layout_weight="3"
+            android:background="#F0ECE9"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#F0ECE9"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#0093d7"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/ic_location3"/>
+
+                    <TextView
+                        style="@style/SimpleTextCloud.medium.bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:gravity="center_vertical"
+                        android:text="Location"
+                        android:textColor="@color/white"
+                        />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_location"
+                    style="@style/SimpleTextCloud"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:text="ถนนมิตรสัมพันธ์ ชลบุรี"
+                    android:textColor="#656565"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="2"
+            android:text="ปุ่มดูแผนที่ ยังไม่ได้ออกแบบ"/>
+    </LinearLayout>
+
+</RelativeLayout>
