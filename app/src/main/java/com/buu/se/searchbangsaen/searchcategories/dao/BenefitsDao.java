@@ -13,6 +13,7 @@ public class BenefitsDao implements Parcelable {
     boolean alcohol; //กินเหล้าได้
     boolean Reservation;  //จองล่วงหน้า
     boolean liveMusic; //ดนตรีสด
+
     int count;
 
     public BenefitsDao(boolean parking, boolean creditCards, boolean alcohol, boolean reservation, boolean liveMusic) {
