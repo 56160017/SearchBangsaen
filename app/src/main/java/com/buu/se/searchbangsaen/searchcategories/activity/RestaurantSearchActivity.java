@@ -14,8 +14,6 @@ import com.buu.se.searchbangsaen.R;
 import com.buu.se.searchbangsaen.searchcategories.adapter.CardRestaurantSearchActivity;
 import com.buu.se.searchbangsaen.searchcategories.dao.BenefitsDao;
 import com.buu.se.searchbangsaen.searchcategories.dao.RestaurantDao;
-import com.buu.se.searchbangsaen.searchcategories.adapter.RecyclerRestaurantSearch;
-import com.buu.se.searchbangsaen.searchcategories.fragment.TabMenuFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,17 +69,6 @@ public class RestaurantSearchActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnClickListener OnClickMenuListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            TabMenuFragment myFragment = (TabMenuFragment) TabMenuFragment.newInstance();
-            FragmentManager manager = getSupportFragmentManager();
-            FragmentTransaction transaction = manager.beginTransaction();
-            transaction.replace(R.id.recycler_res, myFragment);
-            transaction.commit();
-            //    finish();
-        }
-    };
 
     @Override
     protected void attachBaseContext(Context newBase) {
