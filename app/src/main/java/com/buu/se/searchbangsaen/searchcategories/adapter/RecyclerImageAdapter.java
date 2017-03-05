@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import com.buu.se.searchbangsaen.R;
 import com.buu.se.searchbangsaen.searchcategories.dao.ImageDao;
-import com.buu.se.searchbangsaen.searchcategories.fragment.Fragment2;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
