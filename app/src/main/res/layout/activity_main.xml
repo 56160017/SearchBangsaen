@@ -1,80 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:id="@+id/activity_main"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="com.buu.se.searchbangsaen.MainActivity">
+              >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#740008ff">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_search"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/bg_search"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search Bangsean"
+            android:layout_toRightOf="@id/civ_search"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/tv_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginRight="10dp"
+            />
+        <TextView
+            android:id="@+id/tv_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/tv_login"
+            android:text="Report"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:textSize="20dp"
+            />
+
+
+
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="เลือกสถานที่ที่คุณอยากค้นหา"
+        android:textSize="30sp"
+        android:paddingTop="10dp"
+        android:textStyle="bold"
+        android:gravity="center"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:src="@drawable/ic_food"
-            android:adjustViewBounds="true"
-            android:id="@+id/btnRestaurant"
-            style="@style/TextViewDBThaiText"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:orientation="horizontal"
+        android:layout_weight="2"
+        >
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="test btn"/>
+            >
 
-        <ImageButton
-            android:id="@+id/btnHotel"
-            style="@style/TextViewDBThaiText"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/btn_Restaurant"
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"
+                android:src="@drawable/bg_landing"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FF000000"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_Restaurant"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="ร้านอาหาร"
+                android:textSize="20sp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="test btn"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_Hotel"
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"
+                android:src="@drawable/bg_landing"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FF000000"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/img_Hotel"
+                android:layout_centerHorizontal="true"
+                android:text="โรงแรม"
+                android:layout_marginTop="5dp"
+                android:textSize="20sp"/>
+        </RelativeLayout>
+
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/btnCoffee"
-            style="@style/TextViewDBThaiText"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="2"
+        >
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="test btn"/>
+            >
 
-        <ImageButton
-            android:id="@+id/btnGift"
-            style="@style/TextViewDBThaiText"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/btn_Coffee"
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"
+                android:src="@drawable/bg_landing"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FF000000"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_Coffee"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="ร้านกาแฟ"
+                android:textSize="20sp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="test btn"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_Gift"
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"
+                android:src="@drawable/bg_landing"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FF000000"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/img_Gift"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="ร้านของฝาก"
+                android:textSize="20sp"/>
+        </RelativeLayout>
+
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/btnWS"
-            style="@style/TextViewDBThaiText"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="2"
+        >
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="test btn"/>
+            >
 
-        <ImageButton
-            android:id="@+id/btnFestival"
-            style="@style/TextViewDBThaiText"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/btn_Ws"
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"
+                android:src="@drawable/bg_landing"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FF000000"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_Ws"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="ถนนคนเดิน"
+                android:textSize="20sp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="test btn"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_Festival"
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"
+                android:src="@drawable/bg_landing"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FF000000"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/img_Festival"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="แหล่งท่องเที่ยว"
+                android:textSize="20sp"/>
+        </RelativeLayout>
+
     </LinearLayout>
 </LinearLayout>
