@@ -75,7 +75,7 @@
 
 
                 <GridView
-                    android:id="@+id/gridview"
+                    android:id="@+id/gv_benefit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvName"
@@ -86,21 +86,35 @@
                     android:stretchMode="columnWidth"
                     android:verticalSpacing="4dp"/>
 
+                <GridView
+                    android:id="@+id/gv_type_food"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:columnWidth="120dp"
+                    android:gravity="center"
+                    android:layout_below="@+id/gv_benefit"
+                    android:horizontalSpacing="1dp"
+                    android:numColumns="auto_fit"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="4dp"/>
+<!--
+
                 <TextView
                     android:id="@+id/tvTypeFood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/gridview"
+                    android:layout_below="@+id/gv_benefit"
                     android:layout_weight="1"
                     android:text="อาหารทะเล,อาหารอีสาน,อาหารตามสั่ง"
                     android:textColor="#666666"
                     android:textSize="18dp"/>
+-->
 
                 <TextView
                     android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvTypeFood"
+                    android:layout_below="@+id/gv_type_food"
                     android:layout_weight="1"
                     android:text="จันทร์ - ศุกร์ 10.00 น. - 22.00 น."
                     android:textColor="#666666"

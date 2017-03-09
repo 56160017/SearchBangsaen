@@ -70,6 +70,8 @@
         </activity>
         <activity android:name=".LoginActivity">
         </activity>
+        <activity android:name=".searchcategories.activity.ShowImageActivity">
+        </activity>
     </application>
 
 </manifest>
