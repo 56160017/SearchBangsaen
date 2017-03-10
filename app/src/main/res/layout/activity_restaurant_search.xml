@@ -6,40 +6,8 @@
                 android:layout_height="match_parent"
                 tools:context="com.buu.se.searchbangsaen.searchcategories.activity.RestaurantSearchActivity">
 
-    <RelativeLayout
-        android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#edbd2c">
-
-        <ImageView
-            android:id="@+id/ivBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="15dp"
-            android:src="@drawable/btn_back"/>
-
-        <TextView
-            style="@style/SimpleTextCloud.large.bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="ร้านอาหาร"
-            android:textColor="#ffffffff"
-            />
-
-        <ImageView
-            android:id="@+id/ivMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="15dp"
-            android:paddingLeft="15dp"
-            android:paddingTop="15dp"
-            android:src="@drawable/btn_menu"/>
-    </RelativeLayout>
+  <include layout="@layout/toolbar"
+         />
 
     <android.support.v7.widget.RecyclerView
         style="@style/TextViewDBThaiText"
@@ -47,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tvTitle"
-        android:background="#40fbff00"
+        android:background="@color/background_detail"
         android:overScrollMode="never"
         android:scrollbars="vertical"/>
     <FrameLayout
@@ -55,4 +23,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </FrameLayout>
+
+   <!-- <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"/>-->
 </RelativeLayout>

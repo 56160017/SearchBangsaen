@@ -1,6 +1,9 @@
 package com.buu.se.searchbangsaen.searchcategories.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.buu.se.searchbangsaen.R;
+import com.buu.se.searchbangsaen.searchcategories.activity.ShowImageActivity;
 import com.buu.se.searchbangsaen.searchcategories.dao.ImageDao;
 import com.squareup.picasso.Picasso;
 
@@ -16,16 +20,20 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.buu.se.searchbangsaen.R.id.ivShow;
+
 /**
  * Created by Dell on 27/02/2560.
  */
 public class RecyclerImageAdapter extends RecyclerView.Adapter<RecyclerImageAdapter.ViewHolder> {
     private Context mContext;
     private List<ImageDao> imageList;
+    private String mTextTitle;
 
-    public RecyclerImageAdapter(Context context, List<ImageDao> imageList) {
+    public RecyclerImageAdapter(Context context, List<ImageDao> imageList,String titlename) {
         this.mContext = context;
         this.imageList = imageList;
+        this.mTextTitle = titlename;
     }
 
     @Override
@@ -37,14 +45,18 @@ public class RecyclerImageAdapter extends RecyclerView.Adapter<RecyclerImageAdap
     }
 
     @Override
-    public void onBindViewHolder(RecyclerImageAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerImageAdapter.ViewHolder holder, final int position) {
         Picasso.with(mContext).load(imageList.get(position).getUrl()).into(holder.ivShow);
         final ImageDao item = imageList.get(position);
         holder.ivShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentJump(item);
-
+              //  fragmentJump(item);
+                Intent i = new Intent(mContext, ShowImageActivity.class);
+                i.putExtra("tvname", mTextTitle);
+                i.putExtra("imageSrc", imageList.get(position).getUrl());
+                mContext.startActivity(i, ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        (Activity) mContext, holder.ivShow, "shareView").toBundle());
             }
         });
     }

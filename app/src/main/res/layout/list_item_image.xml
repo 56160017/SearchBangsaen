@@ -11,6 +11,7 @@
         android:adjustViewBounds="true"
         android:layout_margin="5dp"
         android:background="@drawable/image_border"
+        android:transitionName="shareView"
         android:padding="10dp" />
 
 </LinearLayout>

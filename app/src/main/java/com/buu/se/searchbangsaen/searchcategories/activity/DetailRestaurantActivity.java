@@ -2,15 +2,11 @@ package com.buu.se.searchbangsaen.searchcategories.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -20,12 +16,8 @@ import android.widget.TextView;
 import com.buu.se.searchbangsaen.R;
 import com.buu.se.searchbangsaen.searchcategories.adapter.BenefitsAdapter;
 import com.buu.se.searchbangsaen.searchcategories.adapter.RecyclerImageAdapter;
-import com.buu.se.searchbangsaen.searchcategories.adapter.TypeFoodAdpter;
 import com.buu.se.searchbangsaen.searchcategories.dao.ImageDao;
 import com.buu.se.searchbangsaen.searchcategories.dao.RestaurantDao;
-import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
-import com.yalantis.contextmenu.lib.MenuObject;
-import com.yalantis.contextmenu.lib.MenuParams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +29,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DetailRestaurantActivity extends AppCompatActivity {
 
-    @BindView(R.id.tvNameRes) TextView tvNameRes;
+    @BindView(R.id.tvNameTitle) TextView tvNameRes;
     @BindView(R.id.tvTitle) RelativeLayout tvTitle;
     @BindView(R.id.tvName) TextView tvName;
     //    @BindView(R.id.tvTypeFood) TextView tvTypeFood;
@@ -45,15 +37,16 @@ public class DetailRestaurantActivity extends AppCompatActivity {
     @BindView(R.id.rlDetail) RelativeLayout rlDetail;
     @BindView(R.id.tvImg) TextView tvImg;
     @BindView(R.id.rvImgs) RecyclerView rvImgs;
-    @BindView(R.id.iv_back) ImageView ivBack;
+    @BindView(R.id.ivBack) ImageView ivBack;
     @BindView(R.id.tv_phone) TextView tvPhone;
     @BindView(R.id.tv_location) TextView tvLocation;
     @BindView(R.id.gv_benefit) GridView gvBenefit;
-    @BindView(R.id.gv_type_food) GridView gvTypeFood;
+    @BindView(R.id.tv_type_food) TextView tvTypeFood;
 
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerImageAdapter mAdapter;
     private RestaurantDao restaurantListDao;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,28 +54,20 @@ public class DetailRestaurantActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-
         //ส่งค่าจากหน้าร้านอาหารว่าเป็นร้านอาหารไหน
         Intent mIntent = getIntent();
         int intValue = mIntent.getIntExtra("key", 0);
-        //      Toast.makeText(getApplicationContext(), String.valueOf(intValue), Toast.LENGTH_LONG).show();
-        //   BenefitsDao Benefit = new BenefitsDao(true,true,true,true,true);
-
+        restaurantListDao = mIntent.getParcelableExtra("data");
 
         rvImgs.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvImgs.setLayoutManager(mLayoutManager);
-
-        // imageList.add(new ImageDao(99, ""));
-        mAdapter = new RecyclerImageAdapter(DetailRestaurantActivity.this, getImageDao(intValue));
+        mAdapter = new RecyclerImageAdapter(DetailRestaurantActivity.this, getImageDao(intValue),restaurantListDao.getName());
         rvImgs.setAdapter(mAdapter);
 
-        ivBack.setOnClickListener(OnClickBackListener);
+        String text = getStringTypeFood();
+        tvTypeFood.setText(text);
 
-        restaurantListDao = mIntent.getParcelableExtra("data");
-        //gvTypeFood.setNumColumns(3);
-       // gvTypeFood.setAdapter(new TypeFoodAdpter(this, restaurantListDao.getTfDao()));
-//        Log.d("testing", String.valueOf(restaurantListDao.getTfDao().getId()));
         gvBenefit.setNumColumns(3);
         gvBenefit.setAdapter(new BenefitsAdapter(this, restaurantListDao.getBenefitsDao()));
 
@@ -91,6 +76,20 @@ public class DetailRestaurantActivity extends AppCompatActivity {
         tvDate.setText(restaurantListDao.getDay() + " " + restaurantListDao.getOpen() + " - " + restaurantListDao.getClose());
         tvPhone.setText(restaurantListDao.getContact());
         tvLocation.setText(restaurantListDao.getLocation());
+
+        ivBack.setOnClickListener(OnClickBackListener);
+    }
+
+    @NonNull
+    private String getStringTypeFood() {
+        String text = "";
+        int i = 0;
+        while (i < restaurantListDao.getTfDao().size()) {
+            if (i > 0) text += ", ";
+            text += restaurantListDao.getTfDao().get(i);
+            i++;
+        }
+        return text;
     }
 
     @NonNull
@@ -133,14 +132,12 @@ public class DetailRestaurantActivity extends AppCompatActivity {
     }
 
 
-
     private View.OnClickListener OnClickBackListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             finish();
         }
     };
-
 
 
     @Override

@@ -3,6 +3,8 @@ package com.buu.se.searchbangsaen.searchcategories.dao;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by Dell on 10/01/2560.
  */
@@ -18,10 +20,10 @@ public class RestaurantDao implements Parcelable {
     private String distance;
     private String location;
     private BenefitsDao BenefitsDao;
-
+    private List<String> tfDao;
 
     public RestaurantDao(int i, String name, String day, String open, String close
-            , String contact, String location, String status, String distance,BenefitsDao BenefitsDao) {
+            , String contact, String location, String status, String distance,List<String> tfDao,BenefitsDao BenefitsDao) {
         this.id = i;
         this.name = name;
         this.day = day;
@@ -31,10 +33,11 @@ public class RestaurantDao implements Parcelable {
         this.location = location;
         this.status = status;
         this.distance = distance;
+        this.tfDao = tfDao;
         this.BenefitsDao = BenefitsDao;
 
-        //lcgv
     }
+
 
     protected RestaurantDao(Parcel in) {
         id = in.readInt();
@@ -47,25 +50,7 @@ public class RestaurantDao implements Parcelable {
         distance = in.readString();
         location = in.readString();
         BenefitsDao = in.readParcelable(com.buu.se.searchbangsaen.searchcategories.dao.BenefitsDao.class.getClassLoader());
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(name);
-        dest.writeString(day);
-        dest.writeString(open);
-        dest.writeString(close);
-        dest.writeString(contact);
-        dest.writeString(status);
-        dest.writeString(distance);
-        dest.writeString(location);
-        dest.writeParcelable(BenefitsDao, flags);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+        tfDao = in.createStringArrayList();
     }
 
     public static final Creator<RestaurantDao> CREATOR = new Creator<RestaurantDao>() {
@@ -155,9 +140,36 @@ public class RestaurantDao implements Parcelable {
     public BenefitsDao getBenefitsDao() {
         return BenefitsDao;
     }
-
     public void setBenefitsDao(BenefitsDao benefitsDao) {
         BenefitsDao = benefitsDao;
     }
 
+    public List<String> getTfDao() {
+        return tfDao;
+    }
+
+    public void setTfDao( List<String> tfDao) {
+        this.tfDao = tfDao;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(day);
+        dest.writeString(open);
+        dest.writeString(close);
+        dest.writeString(contact);
+        dest.writeString(status);
+        dest.writeString(distance);
+        dest.writeString(location);
+        dest.writeParcelable(BenefitsDao, flags);
+        dest.writeStringList(tfDao);
+    }
 }
