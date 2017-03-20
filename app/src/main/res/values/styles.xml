@@ -36,4 +36,31 @@
     <style name="SimpleTextCloud">
         <item name="fontPath">fonts/cloud/Cloud-Light.otf</item>
     </style>
+
+    <!--<style name="BtnSubmitAtBottom" parent="buttonThemeDVStyle">-->
+        <!--<item name="android:layout_centerInParent">true</item>-->
+        <!--<item name="android:layout_alignParentBottom">true</item>-->
+
+    <!--</style>-->
+
+    <!--<style name="BlueImageButton" parent="Widget.AppCompat.Button.Colored">-->
+        <!--<item name="colorButtonNormal">@color/scb_common</item>-->
+        <!--<item name="android:tint">@android:color/white</item>-->
+        <!--<item name="android:textColor">@android:color/white</item>-->
+        <!--<item name="fontPath">fonts/cloud/Cloud-Regular.otf</item>-->
+        <!--<item name="android:textSize">@dimen/medium_font_size_tv</item>-->
+    <!--</style>-->
+
+
+    <!--<style name="buttonThemeDVStyle" parent="SimpleTextCloud.medium">-->
+        <!--<item name="android:layout_marginLeft">20dp</item>-->
+        <!--<item name="android:layout_marginRight">20dp</item>-->
+        <!--<item name="android:layout_marginBottom">20dp</item>-->
+        <!--<item name="android:textColor">@color/accent_White</item>-->
+        <!--<item name="android:theme">@style/BlueImageButton</item>-->
+        <!--<item name="android:gravity">center</item>-->
+        <!--<item name="android:background">@drawable/button_state_enable_disable</item>-->
+        <!--<item name="android:layout_height">?attr/actionBarSize</item>-->
+        <!--<item name="android:layout_width">match_parent</item>-->
+    <!--</style>-->
 </resources>

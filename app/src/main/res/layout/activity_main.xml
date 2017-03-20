@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#740008ff">
+        android:background="#edbd2c">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/civ_search"

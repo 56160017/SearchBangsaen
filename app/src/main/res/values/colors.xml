@@ -9,6 +9,9 @@
     <color name="solid_one">#4abc96</color>
     <color name="solid_two">#b48045</color>
     <color name="solid_three">#f1c305</color>
+    <color name="accent_White">#ffffff</color>
+    <color name="scb_common">#807995</color>
+    <color name="color_gray">#c9c8c8</color>
 
     <color name="text_color">#222222</color>
     <color name="background_detail">#20fbff00</color>
