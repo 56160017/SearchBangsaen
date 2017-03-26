@@ -1,6 +1,7 @@
-package com.buu.se.searchbangsaen.searchcategories.activity;
+package com.buu.se.searchbangsaen.restaurant_categories.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,10 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.buu.se.searchbangsaen.auth.activity.AuthActivity;
 import com.buu.se.searchbangsaen.R;
-import com.buu.se.searchbangsaen.searchcategories.adapter.CardRestaurantSearchActivity;
-import com.buu.se.searchbangsaen.searchcategories.dao.BenefitsDao;
-import com.buu.se.searchbangsaen.searchcategories.dao.RestaurantDao;
+import com.buu.se.searchbangsaen.restaurant_categories.adapter.CardRestaurantSearchAdapter;
+import com.buu.se.searchbangsaen.restaurant_categories.dao.BenefitsDao;
+import com.buu.se.searchbangsaen.restaurant_categories.dao.RestaurantDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,21 +22,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class RestaurantSearchActivity extends AppCompatActivity  {
+public class RestaurantSearchActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler_res) RecyclerView recyclerRes;
     @BindView(R.id.ivBack) ImageView ivBack;
-    @BindView(R.id.ivMenu) ImageView ivMenu;
+    @BindView(R.id.ivAdd) ImageView ivAdd;
+
 
     private RecyclerView.LayoutManager mLayoutManager;
-    private CardRestaurantSearchActivity mAdapter;
+    private CardRestaurantSearchAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_search);
         ButterKnife.bind(this);
-
 
 
         recyclerRes.setHasFixedSize(true);
@@ -49,11 +51,11 @@ public class RestaurantSearchActivity extends AppCompatActivity  {
 
 
         //add befinet
-        BenefitsDao benefDao = new BenefitsDao(true,true,true,true,true);
-        BenefitsDao benefDao2 = new BenefitsDao(false,false,false,false,false);
-        BenefitsDao benefDao3 = new BenefitsDao(false,true,false,true,false);
-        BenefitsDao benefDao4 = new BenefitsDao(true,true,true,true,false);
-        BenefitsDao benefDao5 = new BenefitsDao(true,false,false,false,true);
+        BenefitsDao benefDao = new BenefitsDao(true, true, true, true, true);
+        BenefitsDao benefDao2 = new BenefitsDao(false, false, false, false, false);
+        BenefitsDao benefDao3 = new BenefitsDao(false, true, false, true, false);
+        BenefitsDao benefDao4 = new BenefitsDao(true, true, true, true, false);
+        BenefitsDao benefDao5 = new BenefitsDao(true, false, false, false, true);
 
         //add data
         List<RestaurantDao> restaurantList = new ArrayList<>();
@@ -63,22 +65,27 @@ public class RestaurantSearchActivity extends AppCompatActivity  {
         restaurantList.add(new RestaurantDao(4, "ข้าวต้มแสนสุข", "ทุกวัน", "18.00", "05.00", "086-545-6416", "398 ถนนลงหาดบางแสน (ร้านอยู่ทางลงหาดบางแสนด้านขวามือ ตรงข้ามกับหอพัก สิมิลัน)", "OPEN", "6", tfDao, benefDao4));
         restaurantList.add(new RestaurantDao(5, "ก๋วยเตี๋ยวไง บางแสน", "จันทร์ - เสาร์", "11.30", "20.00", "093-9655565 ", "ก่อนถึง ม.บูรพา เจอร้าน ม.หมูกะทะ เลี้ยวซ้ายไปประมาณ 100 เมตรร้านอยู่ขวามือ", "OPEN", "9.4", tfDao, benefDao5));
 
-        mAdapter = new CardRestaurantSearchActivity(RestaurantSearchActivity.this, restaurantList);
+        mAdapter = new CardRestaurantSearchAdapter(RestaurantSearchActivity.this, restaurantList);
         recyclerRes.setAdapter(mAdapter);
         ivBack.setOnClickListener(OnClickBackListener);
-      //  ivMenu.setOnClickListener(OnClickMenuListener);
-
+        //  ivMenu.setOnClickListener(OnClickMenuListener);
+        ivAdd.setOnClickListener(OnClickAddBackListener);
     }
 
     private View.OnClickListener OnClickBackListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            finish();
+            onBackPressed();
         }
     };
-
-
-
+    private View.OnClickListener OnClickAddBackListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent i = new Intent(RestaurantSearchActivity.this, AuthActivity.class);
+            i.putExtra("CategoriesID","restaurant");
+            startActivity(i);
+        }
+    };
 
     @Override
     protected void attachBaseContext(Context newBase) {

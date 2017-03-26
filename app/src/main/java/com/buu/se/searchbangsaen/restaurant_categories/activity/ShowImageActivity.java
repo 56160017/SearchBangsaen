@@ -1,4 +1,4 @@
-package com.buu.se.searchbangsaen.searchcategories.activity;
+package com.buu.se.searchbangsaen.restaurant_categories.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -20,6 +20,7 @@ public class ShowImageActivity extends AppCompatActivity {
     @BindView(R.id.ivBack) ImageView ivBack;
     @BindView(R.id.tvNameTitle) TextView tvNameTitle;
     @BindView(R.id.ivItemBig) ImageView ivItemBig;
+    @BindView(R.id.ivAdd) ImageView ivAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,7 @@ public class ShowImageActivity extends AppCompatActivity {
 
 
         if (getIntent() != null) {
-            tvNameTitle.setText( getIntent().getStringExtra("tvname"));
+            tvNameTitle.setText(getIntent().getStringExtra("tvname"));
             String imageSrc = getIntent().getStringExtra("imageSrc");
             if (imageSrc != null) {
                 //   ivItem.setImageResource(imageSrc);
@@ -38,6 +39,8 @@ public class ShowImageActivity extends AppCompatActivity {
                 Log.d("testIvitem :", "null");
             }
         }
+
+        ivAdd.setVisibility(View.INVISIBLE);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

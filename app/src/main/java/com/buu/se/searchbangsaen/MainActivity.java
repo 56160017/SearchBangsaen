@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.buu.se.searchbangsaen.searchcategories.activity.RestaurantSearchActivity;
+import com.buu.se.searchbangsaen.hotel_categories.activity.HotelActivity;
+import com.buu.se.searchbangsaen.restaurant_categories.activity.RestaurantSearchActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.tv_login) TextView tvLogin;
     @BindView(R.id.tv_report) TextView tvReport;
     @BindView(R.id.btn_Restaurant) CircleImageView btnRestaurant;
-    @BindView(R.id.img_Hotel) CircleImageView imgHotel;
+    @BindView(R.id.btn_Hotel) CircleImageView btnHotel;
     @BindView(R.id.btn_Coffee) CircleImageView btnCoffee;
     @BindView(R.id.img_Gift) CircleImageView imgGift;
     @BindView(R.id.btn_Ws) CircleImageView btnWs;
@@ -44,12 +44,18 @@ public class MainActivity extends AppCompatActivity {
         btnRestaurant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //    Intent intent = new Intent(getApplicationContext(), CardRestaurantSearchActivity.class);
+                //    Intent intent = new Intent(getApplicationContext(), CardRestaurantSearchAdapter.class);
                 Intent intent = new Intent(getApplicationContext(), RestaurantSearchActivity.class);
                 startActivity(intent);
             }
         });
-
+        btnHotel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HotelActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void tvLoginOnClickListener() {

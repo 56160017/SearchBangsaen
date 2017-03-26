@@ -6,7 +6,7 @@
     android:id="@+id/tvTitle"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="#edbd2c">
+    android:background="#ff9100">
 
     <ImageView
         android:id="@+id/ivBack"
@@ -19,21 +19,22 @@
     <TextView
         android:id="@+id/tvNameTitle"
         style="@style/SimpleTextCloud.large.bold"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_centerInParent="true"
+        android:lines="1"
         android:text="ร้านอาหาร"
         android:textColor="#ffffffff"
         />
 
     <ImageView
-        android:id="@+id/ivMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/ivAdd"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="15dp"
-        android:paddingLeft="15dp"
-        android:paddingTop="15dp"
-        android:src="@drawable/btn_menu"/>
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:src="@drawable/plus_button"/>
 </RelativeLayout>
 

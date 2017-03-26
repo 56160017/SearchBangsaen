@@ -1,7 +1,6 @@
-package com.buu.se.searchbangsaen.searchcategories.adapter;
+package com.buu.se.searchbangsaen.restaurant_categories.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

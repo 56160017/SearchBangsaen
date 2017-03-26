@@ -14,6 +14,8 @@
     <color name="color_gray">#c9c8c8</color>
 
     <color name="text_color">#222222</color>
-    <color name="background_detail">#20fbff00</color>
-    20fbff00
+    <color name="background_detail">#fffde7</color>
+    <color name="title_bar_hotel">#ec407a</color>
+    <color name="background_detail_hotel">#fcf1f4</color>
+
 </resources>

@@ -4,7 +4,7 @@
                 android:id="@+id/activity_restaurant_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="com.buu.se.searchbangsaen.searchcategories.activity.RestaurantSearchActivity">
+                tools:context="com.buu.se.searchbangsaen.restaurant_categories.activity.RestaurantSearchActivity">
 
     <RelativeLayout
         android:id="@+id/tvTitle"

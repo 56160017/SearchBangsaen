@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:transitionName="shareView"
-    tools:context="com.buu.se.searchbangsaen.searchcategories.activity.ShowImageActivity">
+    tools:context="com.buu.se.searchbangsaen.restaurant_categories.activity.ShowImageActivity">
     <include layout="@layout/toolbar"
         />
     <ImageView

@@ -1,9 +1,8 @@
-package com.buu.se.searchbangsaen.searchcategories.adapter;
+package com.buu.se.searchbangsaen.restaurant_categories.adapter;
 
 import android.content.Context;
 
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,12 +14,11 @@ import android.widget.TextView;
 
 import com.buu.se.searchbangsaen.R;
 
-import com.buu.se.searchbangsaen.searchcategories.dao.RestaurantDao;
-import com.buu.se.searchbangsaen.searchcategories.activity.DetailRestaurantActivity;
+import com.buu.se.searchbangsaen.restaurant_categories.dao.RestaurantDao;
+import com.buu.se.searchbangsaen.restaurant_categories.activity.DetailRestaurantActivity;
 import com.squareup.picasso.Picasso;
 
 
-import java.io.Serializable;
 import java.util.Calendar;
 
 import java.util.List;
@@ -30,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class CardRestaurantSearchActivity extends RecyclerView.Adapter<CardRestaurantSearchActivity.ViewHolder> {
+public class CardRestaurantSearchAdapter extends RecyclerView.Adapter<CardRestaurantSearchAdapter.ViewHolder> {
 
     private Context mContext;
     private List<RestaurantDao> restaurantList;
@@ -39,7 +37,7 @@ public class CardRestaurantSearchActivity extends RecyclerView.Adapter<CardResta
     private int cSecond;
 
 
-    public CardRestaurantSearchActivity(Context context, List<RestaurantDao> restaurantlist) {
+    public CardRestaurantSearchAdapter(Context context, List<RestaurantDao> restaurantlist) {
         this.mContext = context;
         this.restaurantList = restaurantlist;
     }
@@ -47,8 +45,8 @@ public class CardRestaurantSearchActivity extends RecyclerView.Adapter<CardResta
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View mView = LayoutInflater.from(mContext)
-                .inflate(R.layout.list_item_card, parent, false);
-        ViewHolder holder = new CardRestaurantSearchActivity.ViewHolder(mView);
+                .inflate(R.layout.list_item_card_restaurant, parent, false);
+        ViewHolder holder = new CardRestaurantSearchAdapter.ViewHolder(mView);
         return holder;
     }
 
@@ -167,52 +165,4 @@ public class CardRestaurantSearchActivity extends RecyclerView.Adapter<CardResta
         }
     }
 
-  /*  private View.OnClickListener OnItemClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-            Log.d("onClick: ", "test");
-            Intent i = new Intent(mContext, DetailRestaurantActivity.class);
-            mContext.startActivity(i);
-        }
-    };
-*/
-
-
-
-
-/*    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card_restaurant_search);
-        ButterKnife.bind(this);
-
-        List<RestaurantDao> restaurantList = new ArrayList<>();
-        restaurantList.add(new RestaurantDao(1, "LOBSTER BUCKET", "จันทร์ - ศุกร์", "16.00", "24.00", "06-28354459", "OPEN", "2"));
-        restaurantList.add(new RestaurantDao(2, "ชาบูชิลล์ ณ บางแสน", "จันทร์ - พฤหัสบดี", "17.00", "23.30", "086-1013756", "OPEN", "3"));
-        restaurantList.add(new RestaurantDao(3, "ครัวต้นข้าว", "พุธ - อาทิตย์", "15.00", "22.00", "089-2526163", "OPEN", "5.2"));
-        restaurantList.add(new RestaurantDao(4, "กุ้งถัง บางแสน", "อังคาร - ศุกร์", "06.00", "16.00", "098-9894337", "OPEN", "6"));
-        restaurantList.add(new RestaurantDao(5, "มงคลฟาร์ม บางแสน", "จันทร์ - เสาร์", "10.00", "22.00", "081-3993833", "OPEN", "9.4"));
-
-
-        ArrayList<Card> cards = new ArrayList<Card>();
-
-        for (int i = 0; i < 5; i++) {
-
-//            c.setTitle("Title #" + i);
-//
-//            cards.add(c);
-        }
-        CardArrayAdapter mCardArrayAdapter = new CardArrayAdapter(this,cards);
-        CardListView listView = (CardListView) findViewById(R.id.card_list);
-        if (listView!=null){
-            listView.setAdapter(mCardArrayAdapter);
-        }
-    }*/
-
-
-//    @Override
-//    protected void attachBaseContext(Context newBase) {
-//        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-//    }
 }

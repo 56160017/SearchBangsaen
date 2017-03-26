@@ -1,4 +1,4 @@
-package com.buu.se.searchbangsaen.searchcategories.dao;
+package com.buu.se.searchbangsaen.restaurant_categories.dao;
 
 import android.os.Parcel;
 import android.os.Parcelable;

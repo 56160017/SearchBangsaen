@@ -1,4 +1,4 @@
-package com.buu.se.searchbangsaen.searchcategories.dao;
+package com.buu.se.searchbangsaen.restaurant_categories.dao;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -49,7 +49,7 @@ public class RestaurantDao implements Parcelable {
         status = in.readString();
         distance = in.readString();
         location = in.readString();
-        BenefitsDao = in.readParcelable(com.buu.se.searchbangsaen.searchcategories.dao.BenefitsDao.class.getClassLoader());
+        BenefitsDao = in.readParcelable(com.buu.se.searchbangsaen.restaurant_categories.dao.BenefitsDao.class.getClassLoader());
         tfDao = in.createStringArrayList();
     }
 

@@ -1,4 +1,4 @@
-package com.buu.se.searchbangsaen.searchcategories.adapter;
+package com.buu.se.searchbangsaen.restaurant_categories.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,16 +11,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.buu.se.searchbangsaen.R;
-import com.buu.se.searchbangsaen.searchcategories.activity.ShowImageActivity;
-import com.buu.se.searchbangsaen.searchcategories.dao.ImageDao;
+import com.buu.se.searchbangsaen.restaurant_categories.activity.ShowImageActivity;
+import com.buu.se.searchbangsaen.restaurant_categories.dao.ImageDao;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.buu.se.searchbangsaen.R.id.ivShow;
 
 /**
  * Created by Dell on 27/02/2560.

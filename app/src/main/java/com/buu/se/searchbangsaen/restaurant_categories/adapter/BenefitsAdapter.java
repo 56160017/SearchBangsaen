@@ -1,4 +1,4 @@
-package com.buu.se.searchbangsaen.searchcategories.adapter;
+package com.buu.se.searchbangsaen.restaurant_categories.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.buu.se.searchbangsaen.R;
-import com.buu.se.searchbangsaen.searchcategories.dao.BenefitsDao;
+import com.buu.se.searchbangsaen.restaurant_categories.dao.BenefitsDao;
 
 /**
  * Created by Dell on 03/03/2560.

@@ -101,7 +101,7 @@
             android:layout_weight="1">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/img_Hotel"
+                android:id="@+id/btn_Hotel"
                 android:layout_width="wrap_content"
                 android:layout_height="120dp"
                 android:src="@drawable/bg_landing"
@@ -110,7 +110,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/img_Hotel"
+                android:layout_below="@id/btn_Hotel"
                 android:layout_centerHorizontal="true"
                 android:text="โรงแรม"
                 android:layout_marginTop="5dp"

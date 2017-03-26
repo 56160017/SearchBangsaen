@@ -12,7 +12,9 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <style name="AppTheme.NoActionBar.SearchBangsaen" parent="AppTheme.NoActionBar">
 
+    </style>
     <style name="TextViewDBThaiText">
         <item name="fontPath">fonts/DB_ThaiText/DB_ThaiText_X.ttf</item>
     </style>

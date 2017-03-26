@@ -1,4 +1,4 @@
-package com.buu.se.searchbangsaen.searchcategories.activity;
+package com.buu.se.searchbangsaen.restaurant_categories.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,16 +8,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.buu.se.searchbangsaen.MapDirectionActivity;
 import com.buu.se.searchbangsaen.R;
-import com.buu.se.searchbangsaen.searchcategories.adapter.BenefitsAdapter;
-import com.buu.se.searchbangsaen.searchcategories.adapter.RecyclerImageAdapter;
-import com.buu.se.searchbangsaen.searchcategories.dao.ImageDao;
-import com.buu.se.searchbangsaen.searchcategories.dao.RestaurantDao;
+import com.buu.se.searchbangsaen.restaurant_categories.adapter.BenefitsAdapter;
+import com.buu.se.searchbangsaen.restaurant_categories.adapter.RecyclerImageAdapter;
+import com.buu.se.searchbangsaen.restaurant_categories.dao.ImageDao;
+import com.buu.se.searchbangsaen.restaurant_categories.dao.RestaurantDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +34,6 @@ public class DetailRestaurantActivity extends AppCompatActivity {
     @BindView(R.id.tvNameTitle) TextView tvNameRes;
     @BindView(R.id.tvTitle) RelativeLayout tvTitle;
     @BindView(R.id.tvName) TextView tvName;
-    //    @BindView(R.id.tvTypeFood) TextView tvTypeFood;
     @BindView(R.id.tvDate) TextView tvDate;
     @BindView(R.id.rlDetail) RelativeLayout rlDetail;
     @BindView(R.id.tvImg) TextView tvImg;
@@ -42,6 +43,8 @@ public class DetailRestaurantActivity extends AppCompatActivity {
     @BindView(R.id.tv_location) TextView tvLocation;
     @BindView(R.id.gv_benefit) GridView gvBenefit;
     @BindView(R.id.tv_type_food) TextView tvTypeFood;
+    @BindView(R.id.btn_map) Button btnMap;
+    @BindView(R.id.ivAdd) ImageView ivAdd;
 
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerImageAdapter mAdapter;
@@ -62,7 +65,7 @@ public class DetailRestaurantActivity extends AppCompatActivity {
         rvImgs.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvImgs.setLayoutManager(mLayoutManager);
-        mAdapter = new RecyclerImageAdapter(DetailRestaurantActivity.this, getImageDao(intValue),restaurantListDao.getName());
+        mAdapter = new RecyclerImageAdapter(DetailRestaurantActivity.this, getImageDao(intValue), restaurantListDao.getName());
         rvImgs.setAdapter(mAdapter);
 
         String text = getStringTypeFood();
@@ -78,6 +81,14 @@ public class DetailRestaurantActivity extends AppCompatActivity {
         tvLocation.setText(restaurantListDao.getLocation());
 
         ivBack.setOnClickListener(OnClickBackListener);
+        ivAdd.setVisibility(View.INVISIBLE);
+        btnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(DetailRestaurantActivity.this, MapDirectionActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @NonNull

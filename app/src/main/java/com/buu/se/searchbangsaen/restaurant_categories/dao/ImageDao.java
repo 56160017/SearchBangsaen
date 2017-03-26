@@ -1,4 +1,4 @@
-package com.buu.se.searchbangsaen.searchcategories.dao;
+package com.buu.se.searchbangsaen.restaurant_categories.dao;
 
 /**
  * Created by Dell on 27/02/2560.
