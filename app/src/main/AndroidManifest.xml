@@ -56,9 +56,6 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
-            android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
             android:name=".restaurant_categories.activity.ShowImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

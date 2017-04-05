@@ -40,5 +40,7 @@ dependencies {
     compile 'com.google.firebase:firebase-database:10.2.0'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'javax.annotation:javax.annotation-api:1.2'
+
 }
 apply plugin: 'com.google.gms.google-services'

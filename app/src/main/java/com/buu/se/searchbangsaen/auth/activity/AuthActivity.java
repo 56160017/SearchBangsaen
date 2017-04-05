@@ -1,5 +1,6 @@
 package com.buu.se.searchbangsaen.auth.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.UUID;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AuthActivity extends AppCompatActivity implements
         onClickRegisterListener
@@ -191,5 +193,10 @@ public class AuthActivity extends AppCompatActivity implements
     protected void onDestroy() {
         mAuthDao = null;
         super.onDestroy();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }
