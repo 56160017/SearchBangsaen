@@ -39,6 +39,8 @@
         <item name="fontPath">fonts/cloud/Cloud-Light.otf</item>
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <!--<style name="BtnSubmitAtBottom" parent="buttonThemeDVStyle">-->
         <!--<item name="android:layout_centerInParent">true</item>-->
         <!--<item name="android:layout_alignParentBottom">true</item>-->
