@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:background="#000">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        android:background="@drawable/bg_landing">
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:weightSum="25">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2" />
+
+        <RelativeLayout
+            android:id="@+id/rl_pic"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="7"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_centerHorizontal="true"
+                android:padding="0dp"
+                android:src="@drawable/user_profile"
+                app:civ_border_color="#ffffff"
+                app:civ_border_width="3dp" />
+
+            <Button
+                android:id="@+id/btn_add_profile"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_alignEnd="@+id/iv_profile"
+                android:layout_alignRight="@+id/iv_profile"
+                android:layout_alignTop="@+id/iv_profile"
+                android:background="@drawable/add_green_blue" />
+        </RelativeLayout>
+
+        <android.support.v7.widget.CardView
+            style="@style/bgLinearData"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="14"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
+            app:contentPadding="3dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="10">
+                <LinearLayout
+                    android:id="@+id/ll_name"
+                    style="@style/bgLinearData"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal"
+                    android:weightSum="8">
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/name_black" />
+                    <EditText
+                        android:id="@+id/editText"
+                        style="@style/editTextInEditActivity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="7"
+                        android:text="เจ้าของร้าน" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_tel"
+                    style="@style/bgLinearData"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal"
+                    android:weightSum="8">
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/phone_black" />
+                    <EditText
+                        style="@style/editTextInEditActivity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="7"
+                        android:text="02353633X" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_email"
+                    style="@style/bgLinearData"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal"
+                    android:weightSum="8">
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/email_black" />
+                    <EditText
+                        style="@style/editTextInEditActivity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="7"
+                        android:text="myshop@gmail.com" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_pass"
+                    style="@style/bgLinearData"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal"
+                    android:weightSum="8">
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/password_black" />
+                    <EditText
+                        style="@style/editTextInEditActivity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="7"
+                        android:inputType="textPassword"
+                        android:text="passpass" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_pass_confirm"
+                    style="@style/bgLinearData"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal"
+                    android:weightSum="8">
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/password_black" />
+                    <EditText
+                        style="@style/editTextInEditActivity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="7"
+                        android:inputType="textPassword"
+                        android:text="passpass" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="2"
+            android:background="@drawable/background_button"
+            android:text="แก้ไขข้อมูล"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+</RelativeLayout>
