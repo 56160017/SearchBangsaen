@@ -2,13 +2,13 @@ package com.buu.se.searchbangsaen;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.buu.se.searchbangsaen.auth.activity.AuthActivity;
 import com.buu.se.searchbangsaen.hotel_categories.activity.HotelActivity;
 import com.buu.se.searchbangsaen.restaurant_categories.activity.RestaurantSearchActivity;
 
@@ -23,22 +23,19 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.civ_search) CircleImageView civSearch;
     @BindView(R.id.tv_login) TextView tvLogin;
-    @BindView(R.id.tv_report) TextView tvReport;
     @BindView(R.id.btn_Restaurant) CircleImageView btnRestaurant;
     @BindView(R.id.btn_Hotel) CircleImageView btnHotel;
     @BindView(R.id.btn_Coffee) CircleImageView btnCoffee;
     @BindView(R.id.img_Gift) CircleImageView imgGift;
     @BindView(R.id.btn_Ws) CircleImageView btnWs;
     @BindView(R.id.img_Festival) CircleImageView imgFestival;
-    @BindView(R.id.activity_main) LinearLayout activityMain;
+    @BindView(R.id.activity_main) RelativeLayout activityMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        tvLogin.setPaintFlags(tvLogin.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
-        tvReport.setPaintFlags(tvReport.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
         tvLoginOnClickListener();
 
         btnRestaurant.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AuthActivity.class);
                 startActivity(intent);
             }
         });
