@@ -19,6 +19,7 @@ import com.buu.se.searchbangsaen.auth.fragment.RegisterDetailFragment.onClickToP
 import com.buu.se.searchbangsaen.auth.fragment.RegisterEmailFragment;
 import com.buu.se.searchbangsaen.auth.fragment.RegisterEmailFragment.onClickDetailRegisterListener;
 import com.buu.se.searchbangsaen.auth.fragment.RegisterPictureFragment.onClickCreateDataRegisterListener;
+import com.buu.se.searchbangsaen.editcategories.activity.EditPageActivity;
 import com.buu.se.searchbangsaen.utils.SearchNonSwipeableViewPager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -55,13 +56,13 @@ public class AuthActivity extends AppCompatActivity implements
         menuAdapter = new AuthMenuAdapter(getSupportFragmentManager());
         flNonSwipeViewpager.setAdapter(menuAdapter);
 
-        mAuth = FirebaseAuth.getInstance();
+       /* mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
             }
-        };
+        };*/
     }
 
     @Override
@@ -132,7 +133,7 @@ public class AuthActivity extends AppCompatActivity implements
     }
     @Override
     public void onSuccessToUserPageClick() {
-        Intent i = new Intent(AuthActivity.this, LogoutActivity.class);
+        Intent i = new Intent(AuthActivity.this, EditPageActivity.class);
         startActivity(i);
         finish();
     }
@@ -163,7 +164,7 @@ public class AuthActivity extends AppCompatActivity implements
 
                             mRootRef.child("users-categories").child(task.getResult().getUser().getUid()).child(mAuthDao.getCategoriesID()).setValue(uuid);
 
-                            Intent i = new Intent(AuthActivity.this, LogoutActivity.class);
+                            Intent i = new Intent(AuthActivity.this, EditPageActivity.class);
                             startActivity(i);
                             finish();
                         }
@@ -175,7 +176,7 @@ public class AuthActivity extends AppCompatActivity implements
     private void Detail(final String name, final String sname,String phone,String email) {
 
     }
-    @Override
+  /*  @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
@@ -187,7 +188,7 @@ public class AuthActivity extends AppCompatActivity implements
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
-    }
+    }*/
 
     @Override
     protected void onDestroy() {
