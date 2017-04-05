@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.buu.se.searchbangsaen.R;
@@ -25,12 +26,15 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class RegisterEmailFragment extends Fragment {
 
 
+    @BindView(R.id.txt_level1) TextView txtLevel1;
     @BindView(R.id.et_email) EditText etEmail;
+    @BindView(R.id.et_usr) EditText etUsr;
     @BindView(R.id.et_pwd) EditText etPwd;
     @BindView(R.id.et_conf_pwd) EditText etConfPwd;
     @BindView(R.id.btn_submit) Button btnSubmit;
@@ -141,4 +145,5 @@ public class RegisterEmailFragment extends Fragment {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
+
 }
