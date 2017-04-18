@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import com.buu.se.searchbangsaen.R;
 
 import com.buu.se.searchbangsaen.editcategories.fragment.EditDataPageFragment;
+import com.buu.se.searchbangsaen.editcategories.fragment.EditHotelFragment;
 import com.buu.se.searchbangsaen.editcategories.fragment.EditProfilePageFragment;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
     private LinearLayout linearLayout;
     private EditDataPageFragment editDataPageFragment;
     private EditProfilePageFragment editProfilePageFragment;
+    private EditHotelFragment editHotelFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
 
         editDataPageFragment = EditDataPageFragment.newInstance();
         editProfilePageFragment = EditProfilePageFragment.newInstance();
+        editHotelFragment = EditHotelFragment.newInstance();
+
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, editDataPageFragment)
@@ -68,14 +72,12 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
     }
 
     private void createMenuList() {
-        SlideMenuItem menuItem0 = new SlideMenuItem("CloseTab", R.drawable.icn_close);
+        SlideMenuItem menuItem0 = new SlideMenuItem("CloseTab", R.drawable.arrow_left_pink);
         list.add(menuItem0);
         SlideMenuItem menuItem1 = new SlideMenuItem("EditPage", R.drawable.shop_white);
         list.add(menuItem1);
         SlideMenuItem menuItem2 = new SlideMenuItem("Profile", R.drawable.user_white);
         list.add(menuItem2);
-        SlideMenuItem menuItem3 = new SlideMenuItem("Logout", R.drawable.shutdown_white);
-        list.add(menuItem3);
     }
 
     private void setActionBar() {
@@ -165,9 +167,6 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
             editDataPageFragment = EditDataPageFragment.newInstance();
             getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, editDataPageFragment).commit();
             return editDataPageFragment;
-        }else if(name == "Logout"){
-            finish();
-            return editDataPageFragment;
         }else{
             editDataPageFragment = EditDataPageFragment.newInstance();
             getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, editDataPageFragment).commit();
@@ -184,8 +183,6 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
                 return replaceFragment(screenShotable, position,"Profile");
             case "EditPage":
                 return replaceFragment(screenShotable, position,"EditPage");
-            case "Logout":
-                return replaceFragment(screenShotable, position,"Logout");
             default:
                 return screenShotable;
         }

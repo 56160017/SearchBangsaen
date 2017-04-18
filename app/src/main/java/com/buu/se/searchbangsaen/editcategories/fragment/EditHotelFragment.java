@@ -19,6 +19,10 @@ public class EditHotelFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static EditHotelFragment newInstance() {
+        EditHotelFragment editHotelFragment = new EditHotelFragment();
+        return editHotelFragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

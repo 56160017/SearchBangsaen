@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.buu.se.searchbangsaen.R;
+import com.buu.se.searchbangsaen.editcategories.adapter.EditPageShopInAccountAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -98,38 +99,3 @@ public class EditDataPageFragment extends Fragment implements ScreenShotable {
 
 }
 
-class EditPageShopInAccountAdapter extends RecyclerView.Adapter<EditPageShopInAccountAdapter.ViewHolder> {
-    private Context mContext;
-
-    public EditPageShopInAccountAdapter(Context mContext) {
-        this.mContext = mContext;
-    }
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.list_item_shop_in_account, parent, false);
-        ViewHolder holder = new EditPageShopInAccountAdapter.ViewHolder(v);
-        return holder;
-    }
-
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.tvNameShopInEditPage.setText("ร้านค้า");
-    }
-
-
-    @Override
-    public int getItemCount() {
-        return 5;
-    }
-
-    class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_name_shop_in_edit_page)
-        TextView tvNameShopInEditPage;
-
-        ViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-        }
-    }
-}

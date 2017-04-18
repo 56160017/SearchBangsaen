@@ -28,6 +28,7 @@
             android:textSize="20dp" />
 
         <ImageButton
+            android:id="@+id/img_button_shop_in_edit_picture_page"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="2"
