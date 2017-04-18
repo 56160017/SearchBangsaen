@@ -1,0 +1,250 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.buu.se.searchbangsaen.add_categories.fragment.AddBenefitsResFragment">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:cardBackgroundColor="#ff9100"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="3dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:padding="15dp"
+                android:paddingTop="15dp"
+                android:src="@drawable/btn_back"/>
+
+            <TextView
+                android:id="@+id/tvNameTitle"
+                style="@style/SimpleTextCloud.medium.bold"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:lines="1"
+                android:text="สิ้งอำนวยความสะดวก"
+                android:textColor="#ffffffff"
+                />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/btn_border_select_time"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="3dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            >
+
+            <TextView
+                style="@style/SimpleTextCloud.medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="#a3a3a3"
+                android:paddingLeft="10dp"
+                android:text="ประเภทอาหาร"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
+
+                <CheckBox
+                    android:id="@+id/chkSea"
+                    style="@style/SimpleTextCloud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="อาหารทะเล"/>
+
+                <CheckBox
+                    android:id="@+id/chkSingleFood"
+                    style="@style/SimpleTextCloud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="อาหารจานเดียว"/>
+
+                <CheckBox
+                    android:id="@+id/chkThai"
+                    style="@style/SimpleTextCloud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ิอาหารไทย"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
+
+                <CheckBox
+                    android:id="@+id/chkWildfood"
+                    style="@style/SimpleTextCloud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="อาหารป่า"/>
+
+                <CheckBox
+                    android:id="@+id/chkEsanfood"
+                    style="@style/SimpleTextCloud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="อาหารอีสาน"/>
+                <CheckBox
+                    android:id="@+id/chkBuffet"
+                    style="@style/SimpleTextCloud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="Buffet"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="20dp">
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/btn_border_select_time"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="3dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            >
+
+            <TextView
+                style="@style/SimpleTextCloud.medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="#a3a3a3"
+                android:paddingLeft="10dp"
+                android:text="สิ่งอำนวยความสะดวก"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
+
+                <CheckBox
+                    android:id="@+id/chkParking"
+                    style="@style/SimpleTextCloud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="มีที่จอดรถ"/>
+
+                <CheckBox
+                    android:id="@+id/chkCreditCards"
+                    style="@style/SimpleTextCloud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="รับเคริตการ์ด"/>
+
+                <CheckBox
+                    android:id="@+id/chkLiveMusic"
+                    style="@style/SimpleTextCloud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ดนตรีสด"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
+
+                <CheckBox
+                    android:id="@+id/chkReservation"
+                    style="@style/SimpleTextCloud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="จองล่วงหน้า"/>
+
+                <CheckBox
+                    android:id="@+id/chkAlcohol"
+                    style="@style/SimpleTextCloud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="ดื่มแอลกอฮอล์"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="20dp">
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="10dp">
+
+        <Button
+            android:id="@+id/btn_submit_final_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_border_submit"
+            android:text="ยืนยัน"
+            style="@style/SimpleTextCloud.mini.bold"
+            android:textColor="#60d9cb"/>
+    </RelativeLayout>
+</LinearLayout>
