@@ -43,17 +43,19 @@
     <ScrollView
         android:id="@+id/sv_detail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="20dp"
+        android:layout_height="wrap_content"
         >
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:orientation="vertical">
 
             <EditText
+                android:layout_marginTop="20dp"
                 android:id="@+id/et_add_hotel"
                 android:inputType="textNoSuggestions"
                 style="@style/SimpleTextCloud"
@@ -329,6 +331,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/btn_border_submit"
                     android:text="ยืนยัน"
+                    android:layout_marginBottom="10dp"
                     android:textColor="#60d9cb"/>
 
             </RelativeLayout>

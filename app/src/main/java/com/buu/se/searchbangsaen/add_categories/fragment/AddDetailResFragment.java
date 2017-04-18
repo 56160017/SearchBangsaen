@@ -103,7 +103,6 @@ public class AddDetailResFragment extends Fragment {
         });
 
 
-        etTimeOpen.setShowSoftInputOnFocus(false);
         etTimeOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,8 +134,6 @@ public class AddDetailResFragment extends Fragment {
                 mTimePicker.show();
             }
         });
-
-        etTimeClose.setShowSoftInputOnFocus(false);
         etTimeClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
