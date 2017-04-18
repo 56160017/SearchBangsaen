@@ -25,6 +25,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
+            android:src="@drawable/bg_landing"
             android:adjustViewBounds="true"
             />
 
@@ -34,7 +35,6 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:orientation="vertical"
-            android:paddingBottom="5dp"
             android:paddingTop="5dp"
             android:weightSum="11"
             >
@@ -42,18 +42,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
                 android:orientation="vertical"
                 >
 
                 <TextView
+                    style="@style/SimpleTextCloud.bold"
                     android:id="@+id/tvName"
                     android:layout_width="wrap_content"
-                    android:layout_height="21dp"
-                    android:layout_weight="1"
-                    android:textColor="#848181"
-                    android:textSize="18sp"
-                    android:textStyle="bold"/>
+                    android:layout_height="wrap_content"
+                    android:text="5555555555"
+                    android:textColor="#403d3d"
+                    android:lines="1"
+                   />
 
             </LinearLayout>
 
@@ -62,23 +62,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="9dp"
-                android:layout_weight="2"
+                android:lines="1"
+                android:text="5555555555"
                 />
 
             <TextView
                 android:id="@+id/tvOpen"
+                android:maxLength="14"
+                android:textColor="#7bdf41"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="2"
+                android:lines="1"
+                android:text="5555555555"
                 />
 
             <TextView
                 android:id="@+id/tvClose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:lines="1"
+                android:textColor="#df5341"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="2"
+                android:text="5555555555"
                 />
 
             <TextView
@@ -86,7 +92,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
-                android:layout_weight="2"
+                android:lines="1"
+                android:text="5555555555"
                 />
         </LinearLayout>
 
@@ -108,6 +115,7 @@
                 android:id="@+id/tvDistance"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:lines="1"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="bottom"

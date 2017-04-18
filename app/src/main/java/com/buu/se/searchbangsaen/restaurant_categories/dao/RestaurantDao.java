@@ -3,6 +3,8 @@ package com.buu.se.searchbangsaen.restaurant_categories.dao;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.buu.se.searchbangsaen.add_categories.dao.TypeResDao;
+
 import java.util.List;
 
 /**
@@ -16,14 +18,21 @@ public class RestaurantDao implements Parcelable {
     private String open;
     private String close;
     private String contact;
-    private String status;
+    private boolean status;
     private String distance;
     private String location;
-    private BenefitsDao BenefitsDao;
-    private List<String> tfDao;
+    private double latitude;
+    private double longitude;
 
-    public RestaurantDao(int i, String name, String day, String open, String close
-            , String contact, String location, String status, String distance,List<String> tfDao,BenefitsDao BenefitsDao) {
+    private BenefitsDao BenefitsDao;
+    private TypeResDao typeResDao;
+    public RestaurantDao(){
+
+    }
+
+    public RestaurantDao(int i, String name, String day, String open, String close,
+                         String contact, String location, boolean status, String distance,
+                         double latitude, double longitude,TypeResDao typeResDao, BenefitsDao BenefitsDao) {
         this.id = i;
         this.name = name;
         this.day = day;
@@ -33,7 +42,9 @@ public class RestaurantDao implements Parcelable {
         this.location = location;
         this.status = status;
         this.distance = distance;
-        this.tfDao = tfDao;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.typeResDao = typeResDao;
         this.BenefitsDao = BenefitsDao;
 
     }
@@ -46,11 +57,14 @@ public class RestaurantDao implements Parcelable {
         open = in.readString();
         close = in.readString();
         contact = in.readString();
-        status = in.readString();
+        status = in.readByte() != 0;
         distance = in.readString();
         location = in.readString();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
         BenefitsDao = in.readParcelable(com.buu.se.searchbangsaen.restaurant_categories.dao.BenefitsDao.class.getClassLoader());
-        tfDao = in.createStringArrayList();
+        typeResDao = in.readParcelable(com.buu.se.searchbangsaen.add_categories.dao.TypeResDao.class.getClassLoader());
+
     }
 
     public static final Creator<RestaurantDao> CREATOR = new Creator<RestaurantDao>() {
@@ -113,11 +127,11 @@ public class RestaurantDao implements Parcelable {
         this.contact = contact;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
@@ -137,6 +151,22 @@ public class RestaurantDao implements Parcelable {
         this.location = location;
     }
 
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
     public BenefitsDao getBenefitsDao() {
         return BenefitsDao;
     }
@@ -144,14 +174,14 @@ public class RestaurantDao implements Parcelable {
         BenefitsDao = benefitsDao;
     }
 
-    public List<String> getTfDao() {
-        return tfDao;
+
+    public TypeResDao getTypeResDao() {
+        return typeResDao;
     }
 
-    public void setTfDao( List<String> tfDao) {
-        this.tfDao = tfDao;
+    public void setTypeResDao(TypeResDao typeResDao) {
+        this.typeResDao = typeResDao;
     }
-
 
     @Override
     public int describeContents() {
@@ -166,10 +196,12 @@ public class RestaurantDao implements Parcelable {
         dest.writeString(open);
         dest.writeString(close);
         dest.writeString(contact);
-        dest.writeString(status);
+        dest.writeByte((byte) (status ? 1 : 0));
         dest.writeString(distance);
         dest.writeString(location);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
         dest.writeParcelable(BenefitsDao, flags);
-        dest.writeStringList(tfDao);
+        dest.writeParcelable(typeResDao, flags);
     }
 }

@@ -10,13 +10,20 @@ public class HotelDao implements Parcelable {
 
     private int id;
     private String name;
-    private int empty_room;
+    private String empty_room;
+    private String phone;
     private String contact;
-    private int price_f;
-    private int price_t;
+    private String price_f;
+    private String price_t;
     private String distance;
+    private double latitude;
+    private double longitude;
 
-    public HotelDao(int id, String name, int empty_room, String contact, int price_f, int price_t, String distance) {
+    public HotelDao() {
+
+    }
+
+    public HotelDao(int id, String name, String empty_room, String contact, String price_f, String price_t, String distance) {
         this.id = id;
         this.name = name;
         this.empty_room = empty_room;
@@ -26,14 +33,18 @@ public class HotelDao implements Parcelable {
         this.distance = distance;
     }
 
+
     protected HotelDao(Parcel in) {
         id = in.readInt();
         name = in.readString();
-        empty_room = in.readInt();
+        empty_room = in.readString();
+        phone = in.readString();
         contact = in.readString();
-        price_f = in.readInt();
-        price_t = in.readInt();
+        price_f = in.readString();
+        price_t = in.readString();
         distance = in.readString();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
     }
 
     public static final Creator<HotelDao> CREATOR = new Creator<HotelDao>() {
@@ -64,11 +75,19 @@ public class HotelDao implements Parcelable {
         this.name = name;
     }
 
-    public int getEmpty_room() {
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmpty_room() {
         return empty_room;
     }
 
-    public void setEmpty_room(int empty_room) {
+    public void setEmpty_room(String empty_room) {
         this.empty_room = empty_room;
     }
 
@@ -80,19 +99,19 @@ public class HotelDao implements Parcelable {
         this.contact = contact;
     }
 
-    public int getPrice_f() {
+    public String getPrice_f() {
         return price_f;
     }
 
-    public void setPrice_f(int price_f) {
+    public void setPrice_f(String price_f) {
         this.price_f = price_f;
     }
 
-    public int getPrice_t() {
+    public String getPrice_t() {
         return price_t;
     }
 
-    public void setPrice_t(int price_t) {
+    public void setPrice_t(String price_t) {
         this.price_t = price_t;
     }
 
@@ -104,6 +123,23 @@ public class HotelDao implements Parcelable {
         this.distance = distance;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -113,10 +149,13 @@ public class HotelDao implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeString(name);
-        dest.writeInt(empty_room);
+        dest.writeString(empty_room);
+        dest.writeString(phone);
         dest.writeString(contact);
-        dest.writeInt(price_f);
-        dest.writeInt(price_t);
+        dest.writeString(price_f);
+        dest.writeString(price_t);
         dest.writeString(distance);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
     }
 }

@@ -15,18 +15,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tvTitle"
-        android:background="@color/background_detail"
+        android:background="@drawable/bg_beach"
         android:overScrollMode="never"
+        android:alpha="0.8"
         android:scrollbars="vertical"/>
-    <FrameLayout
+
+  <FrameLayout
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </FrameLayout>
 
-   <!-- <FrameLayout
-        android:id="@+id/container"
+  <FrameLayout
+      android:id="@+id/fl_map"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+
+      android:visibility="invisible">
+    <fragment
+        android:id="@+id/map_fake"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"/>-->
+        />
+  </FrameLayout>
 </RelativeLayout>

@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "304927142262",
-    "firebase_url": "https://searchbangsaen.firebaseio.com",
-    "project_id": "searchbangsaen",
-    "storage_bucket": "searchbangsaen.appspot.com"
+    "project_number": "36410586566",
+    "firebase_url": "https://searchbangsaen2.firebaseio.com",
+    "project_id": "searchbangsaen2",
+    "storage_bucket": "searchbangsaen2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:304927142262:android:4f6c7d8bc2e9583d",
+        "mobilesdk_app_id": "1:36410586566:android:4f6c7d8bc2e9583d",
         "android_client_info": {
           "package_name": "com.buu.se.searchbangsaen"
         }
       },
       "oauth_client": [
         {
-          "client_id": "304927142262-o6bpq3m33kqhmfj04d5g35f660clq6ch.apps.googleusercontent.com",
+          "client_id": "36410586566-lp7gl5rj8vhc017qaqg2b2u107bjnn7b.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDelzuhU8pfq4SkjJwMnojeDKjtAVVJpmA"
+          "current_key": "AIzaSyCF1aIUoWVL_Gy3s5VgTUYbvIkVwToS60s"
         }
       ],
       "services": {

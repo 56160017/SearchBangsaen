@@ -34,7 +34,6 @@ public class RegisterEmailFragment extends Fragment {
 
     @BindView(R.id.txt_level1) TextView txtLevel1;
     @BindView(R.id.et_email) EditText etEmail;
-    @BindView(R.id.et_usr) EditText etUsr;
     @BindView(R.id.et_pwd) EditText etPwd;
     @BindView(R.id.et_conf_pwd) EditText etConfPwd;
     @BindView(R.id.btn_submit) Button btnSubmit;
@@ -98,34 +97,9 @@ public class RegisterEmailFragment extends Fragment {
                         mCallBack.onSuccessToRegisterDetailClick(etEmail.getText().toString(), etPwd.getText().toString());
                     }
                 }
-
-
             }
         });
 
-
-    }
-
-    private void CreateUser() {
-        mAuth.createUserWithEmailAndPassword(etEmail.getText().toString(), etPwd.getText().toString())
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(Task<AuthResult> task) {
-                        task.getResult().getUser().getUid();
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(getActivity(), "Add failed.", Toast.LENGTH_SHORT).show();
-                            userID = etEmail.getText().toString();
-                            pwd = etPwd.getText().toString();
-                        } else {
-                            Toast.makeText(getActivity(), "Add OK.", Toast.LENGTH_SHORT).show();
-                            DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-
-                            mRootRef.child("users").child(task.getResult().getUser().getUid()).child("email").setValue(etEmail.getText().toString());
-                            mRootRef.child("users").child(task.getResult().getUser().getUid()).child("pwd").setValue(etPwd.getText().toString());
-                        }
-
-                    }
-                });
     }
 
     public static Fragment newInstance() {

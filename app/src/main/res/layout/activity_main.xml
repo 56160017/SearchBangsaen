@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:id="@+id/activity_main"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
+                android:id="@+id/activity_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/grdnt"
-              >
+    >
     <View
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,46 +16,66 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:orientation="horizontal"
         android:background="#009a9a">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/civ_search"
-            android:layout_width="40dp"
+            android:layout_width="0dp"
             android:layout_height="40dp"
             android:src="@drawable/bg_search"
-            android:layout_centerVertical="true"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             />
         <TextView
+          android:id="@+id/tv_t"
             style="@style/SimpleTextCloud.medium.bold"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+          android:gravity="center"
             android:text="Search Bangsean"
-            android:layout_toRightOf="@id/civ_search"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
+            android:layout_weight="10"
             android:layout_marginLeft="10dp"
             android:textSize="20dp"
             android:textStyle="bold"
             />
         <TextView
+            android:layout_weight="6"
             style="@style/SimpleTextCloud.medium.bold"
             android:id="@+id/tv_login"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="เข้าสู่ระบบ"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:textSize="20sp"
+
+            android:gravity="right"
+            android:layout_gravity="center"
             android:textStyle="bold"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="5dp"
             />
+        <RelativeLayout
+            android:id="@+id/rl_profile"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:visibility="gone"
+            android:padding="10dp"
+            android:layout_height="match_parent">
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:id="@+id/iv_profile"
 
+            android:src="@drawable/user_profile"
+            android:adjustViewBounds="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
 
-    </RelativeLayout>
+            />
+        </RelativeLayout>
+    </LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -81,11 +100,12 @@
             android:orientation="vertical"
             >
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/btn_Restaurant"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:src="@drawable/img_restaurant"
+                android:padding="20dp"
                 android:layout_gravity="center"
                 android:background="@drawable/bg_circle"
                 />
@@ -112,6 +132,7 @@
                 android:layout_height="120dp"
                 android:src="@drawable/img_hotel"
                 android:layout_gravity="center"
+                android:paddingTop="20dp"
                 android:background="@drawable/bg_circle"
                 />
             <TextView
@@ -144,6 +165,7 @@
                 android:id="@+id/btn_Coffee"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
+                android:padding="20dp"
                 android:src="@drawable/img_coffee"
                 android:layout_gravity="center"
                 android:background="@drawable/bg_circle"
@@ -171,6 +193,7 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:src="@drawable/img_gift"
+                android:paddingTop="20dp"
                 android:layout_gravity="center"
                 android:background="@drawable/bg_circle"
                 />
@@ -204,6 +227,7 @@
                 android:id="@+id/btn_Ws"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
+                android:paddingTop="20dp"
                 android:src="@drawable/img_walking"
                 android:background="@drawable/bg_circle"
                 android:layout_gravity="center"
@@ -230,6 +254,7 @@
                 android:id="@+id/img_Festival"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
+                android:paddingTop="20dp"
                 android:src="@drawable/img_travel"
                 android:background="@drawable/bg_circle"
                 android:layout_gravity="center"

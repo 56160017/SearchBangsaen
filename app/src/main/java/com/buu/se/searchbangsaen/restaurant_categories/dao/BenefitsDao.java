@@ -24,6 +24,10 @@ public class BenefitsDao implements Parcelable {
         this.liveMusic = liveMusic;
     }
 
+    public BenefitsDao() {
+
+    }
+
     public boolean isParking() {
         return parking;
     }

@@ -1,17 +1,30 @@
 package com.buu.se.searchbangsaen.auth.dao;
 
+import android.net.Uri;
+
+import java.net.URI;
+
 /**
  * Created by Dell on 26/03/2560.
  */
 
 public class AuthDao {
-    String uid;
-    String pwd;
-    String name;
-    String sname;
-    String numberphone;
-    String email;
-    String CategoriesID;
+    private String uid;
+    private String pwd;
+    private String name;
+    private String sname;
+    private String numberphone;
+    private String email;
+    private int CategoriesID;
+    private Uri uri;
+
+    public Uri getUri() {
+        return uri;
+    }
+
+    public void setUri(Uri uri) {
+        this.uri = uri;
+    }
 
     public String getUid() {
         return uid;
@@ -61,11 +74,11 @@ public class AuthDao {
         this.email = email;
     }
 
-    public String getCategoriesID() {
+    public int getCategoriesID() {
         return CategoriesID;
     }
 
-    public void setCategoriesID(String categoriesID) {
+    public void setCategoriesID(int categoriesID) {
         CategoriesID = categoriesID;
     }
 }

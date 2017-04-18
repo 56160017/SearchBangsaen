@@ -21,6 +21,6 @@
     <color name="edit_pink">#673697</color>
 
     <color name="black_alpha_40">#00000000</color>
-
+    <color name="Text_error">#ff1a1a</color>
 
 </resources>

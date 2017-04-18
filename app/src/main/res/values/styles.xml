@@ -23,6 +23,10 @@
         <item name="fontPath">fonts/cloud/Cloud-Light.otf</item>
     </style>
 
+    <style name="SimpleTextCloud.bold" parent="TextViewCloudLight">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="SimpleTextCloud.large" parent="TextViewCloudLight">
         <item name="android:textSize">@dimen/large_font_size_tv</item>
     </style>
@@ -35,6 +39,20 @@
     <style name="SimpleTextCloud.medium.bold" parent="SimpleTextCloud.medium">
         <item name="android:textStyle">bold</item>
     </style>
+    <style name="SimpleTextCloud.mini" parent="TextViewCloudLight">
+        <item name="android:textSize">@dimen/mini_font_size_tv</item>
+    </style>
+    <style name="SimpleTextCloud.micro.bold" parent="SimpleTextCloud.micro">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="SimpleTextCloud.micro" parent="TextViewCloudLight">
+        <item name="android:textSize">@dimen/micro_font_size_tv</item>
+    </style>
+    <style name="SimpleTextCloud.mini.bold" parent="SimpleTextCloud.mini">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
     <style name="SimpleTextCloud">
         <item name="fontPath">fonts/cloud/Cloud-Light.otf</item>
     </style>

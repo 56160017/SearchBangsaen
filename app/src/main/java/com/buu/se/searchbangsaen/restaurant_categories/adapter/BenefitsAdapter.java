@@ -1,6 +1,7 @@
 package com.buu.se.searchbangsaen.restaurant_categories.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class BenefitsAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         return mBenefits.getSize();
+
     }
 
     @Override
@@ -56,14 +58,14 @@ public class BenefitsAdapter extends BaseAdapter {
                 if (mBenefits.isCreditCards()) {
                     setText++;
                     if (setText == position + 1) {
-                        tvBenef.setText("ใช้เคตดิตการ์ด");
+                        tvBenef.setText("รับเคตดิตการ์ด");
 
                     }
                 }
                 if (mBenefits.isAlcohol()) {
                     setText++;
                     if (setText == position + 1) {
-                        tvBenef.setText("มีแอลกอฮอ");
+                        tvBenef.setText("มีแอลกอฮอล์");
 
                     }
                 }

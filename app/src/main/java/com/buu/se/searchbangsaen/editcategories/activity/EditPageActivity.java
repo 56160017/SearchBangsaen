@@ -3,6 +3,7 @@ package com.buu.se.searchbangsaen.editcategories.activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import com.buu.se.searchbangsaen.R;
 import com.buu.se.searchbangsaen.editcategories.fragment.EditDataPageFragment;
 import com.buu.se.searchbangsaen.editcategories.fragment.EditHotelFragment;
 import com.buu.se.searchbangsaen.editcategories.fragment.EditProfilePageFragment;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,8 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
     private LinearLayout linearLayout;
     private EditDataPageFragment editDataPageFragment;
     private EditProfilePageFragment editProfilePageFragment;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
     private EditHotelFragment editHotelFragment;
 
     @Override
@@ -69,6 +73,13 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
         setActionBar();
         createMenuList();
         viewAnimator = new yalantis.com.sidemenu.util.ViewAnimator<>(this, list, editDataPageFragment, drawerLayout, this);
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
+            }
+        };
     }
 
     private void createMenuList() {
@@ -146,6 +157,7 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
         switch (item.getItemId()) {
             case R.id.logout:
                 finish();
+                mAuth.signOut();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -167,6 +179,9 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
             editDataPageFragment = EditDataPageFragment.newInstance();
             getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, editDataPageFragment).commit();
             return editDataPageFragment;
+        }else if(name == "Logout"){
+            finish();
+            return editDataPageFragment;
         }else{
             editDataPageFragment = EditDataPageFragment.newInstance();
             getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, editDataPageFragment).commit();
@@ -183,6 +198,8 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
                 return replaceFragment(screenShotable, position,"Profile");
             case "EditPage":
                 return replaceFragment(screenShotable, position,"EditPage");
+            case "Logout":
+                return replaceFragment(screenShotable, position,"Logout");
             default:
                 return screenShotable;
         }
@@ -203,6 +220,21 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
     public void addViewToContainer(View view) {
         linearLayout.addView(view);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
 
     @Override
     protected void attachBaseContext(Context newBase) {

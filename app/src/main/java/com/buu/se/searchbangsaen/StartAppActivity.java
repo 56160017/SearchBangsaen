@@ -1,9 +1,15 @@
 package com.buu.se.searchbangsaen;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Layout;
+import android.util.LayoutDirection;
 
 import com.codemybrainsout.onboarder.AhoyOnboarderActivity;
 import com.codemybrainsout.onboarder.AhoyOnboarderCard;
@@ -13,21 +19,23 @@ import java.util.List;
 
 public class StartAppActivity extends AhoyOnboarderActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_start_app);
         AhoyOnboarderCard ahoyOnboarderCardFirst = new AhoyOnboarderCard("Search Bangsean", "Easy Sreach Easy Go!!", R.drawable.ic_coconut);
-        ahoyOnboarderCardFirst.setTitleTextSize(40);
+        ahoyOnboarderCardFirst.setTitleTextSize(30);
         ahoyOnboarderCardFirst.setDescriptionTextSize(25);
         AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("คุณกำลังหาอะไร", "จะเที่ยวไหนก็หาเจอ \nจะไปไหนก็รู้ก่อนใคร", R.drawable.ic_spend);
-        ahoyOnboarderCard1.setTitleTextSize(40);
+        ahoyOnboarderCard1.setTitleTextSize(30);
         ahoyOnboarderCard1.setDescriptionTextSize(25);
         AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("คุณจะไปยังไง", "มีแผนที่ในการนำทาง \nอยู่ตรงไหนก็ไปถูก", R.drawable.ic_map_of_road);
-        ahoyOnboarderCard2.setTitleTextSize(40);
+        ahoyOnboarderCard2.setTitleTextSize(30);
         ahoyOnboarderCard2.setDescriptionTextSize(25);
         AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("เริ่มใช้งานกันเลย!!", "", R.drawable.ic_reward);
-        ahoyOnboarderCard3.setTitleTextSize(40);
+        ahoyOnboarderCard3.setTitleTextSize(30);
       //  ahoyOnboarderCard2.setDescriptionTextSize(25);
 
         ahoyOnboarderCardFirst.setBackgroundColor(R.color.black_transparent);
@@ -45,8 +53,8 @@ public class StartAppActivity extends AhoyOnboarderActivity {
         }
        // ahoyOnboarderCardFirst.setIconLayoutParams(500,500,50,0,0,0);
 
-        setFinishButtonTitle("Get Started");
-
+        setFinishButtonTitle("เริ่มต้นใช้งาน");
+        setFinishButtonDrawableStyle(getResources().getDrawable(R.drawable.btn_submit_first_page));
         showNavigationControls(false);
 
         //setGradientBackground();

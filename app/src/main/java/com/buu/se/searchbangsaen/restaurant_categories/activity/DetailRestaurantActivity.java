@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 
 import com.buu.se.searchbangsaen.MapDirectionActivity;
 import com.buu.se.searchbangsaen.R;
+import com.buu.se.searchbangsaen.add_categories.dao.TypeResDao;
 import com.buu.se.searchbangsaen.restaurant_categories.adapter.BenefitsAdapter;
 import com.buu.se.searchbangsaen.restaurant_categories.adapter.RecyclerImageAdapter;
 import com.buu.se.searchbangsaen.restaurant_categories.dao.ImageDao;
@@ -32,7 +35,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class DetailRestaurantActivity extends AppCompatActivity {
 
     @BindView(R.id.tvNameTitle) TextView tvNameRes;
-    @BindView(R.id.tvTitle) RelativeLayout tvTitle;
+
     @BindView(R.id.tvName) TextView tvName;
     @BindView(R.id.tvDate) TextView tvDate;
     @BindView(R.id.rlDetail) RelativeLayout rlDetail;
@@ -45,10 +48,13 @@ public class DetailRestaurantActivity extends AppCompatActivity {
     @BindView(R.id.tv_type_food) TextView tvTypeFood;
     @BindView(R.id.btn_map) Button btnMap;
     @BindView(R.id.ivAdd) ImageView ivAdd;
+    @BindView(R.id.tvTitle) CardView tvTitle;
+    @BindView(R.id.tvTime) TextView tvTime;
 
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerImageAdapter mAdapter;
     private RestaurantDao restaurantListDao;
+    private TypeResDao typeResDao;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,9 +65,10 @@ public class DetailRestaurantActivity extends AppCompatActivity {
 
         //ส่งค่าจากหน้าร้านอาหารว่าเป็นร้านอาหารไหน
         Intent mIntent = getIntent();
-        int intValue = mIntent.getIntExtra("key", 0);
+        final int intValue = mIntent.getIntExtra("key", 0);
         restaurantListDao = mIntent.getParcelableExtra("data");
 
+        //image view
         rvImgs.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvImgs.setLayoutManager(mLayoutManager);
@@ -76,7 +83,8 @@ public class DetailRestaurantActivity extends AppCompatActivity {
 
         tvNameRes.setText(restaurantListDao.getName());
         tvName.setText(restaurantListDao.getName());
-        tvDate.setText(restaurantListDao.getDay() + " " + restaurantListDao.getOpen() + " - " + restaurantListDao.getClose());
+        tvDate.setText("วันที่เปิด: " + restaurantListDao.getDay());
+        tvTime.setText("เวลาทำการ: "+ restaurantListDao.getOpen() + " น. - " + restaurantListDao.getClose() + " น.");
         tvPhone.setText(restaurantListDao.getContact());
         tvLocation.setText(restaurantListDao.getLocation());
 
@@ -86,6 +94,11 @@ public class DetailRestaurantActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(DetailRestaurantActivity.this, MapDirectionActivity.class);
+                i.putExtra("name",restaurantListDao.getName());
+                i.putExtra("loc",restaurantListDao.getLocation());
+                i.putExtra("lat",restaurantListDao.getLatitude());
+                i.putExtra("lng",restaurantListDao.getLongitude());
+
                 startActivity(i);
             }
         });
@@ -94,11 +107,30 @@ public class DetailRestaurantActivity extends AppCompatActivity {
     @NonNull
     private String getStringTypeFood() {
         String text = "";
-        int i = 0;
-        while (i < restaurantListDao.getTfDao().size()) {
+      /*  int i = 0;
+        while (i < restaurantListDao.getTypeResDao()..size()) {
             if (i > 0) text += ", ";
             text += restaurantListDao.getTfDao().get(i);
             i++;
+        }*/
+      //  Log.d( "getStringTypeFood: ",""+restaurantListDao.getTypeResDao().isChkSea());
+        if(restaurantListDao.getTypeResDao().isChkSea()){
+            text +="อาหารทะเล ";
+        }
+        if(restaurantListDao.getTypeResDao().isChkSingleFood()){
+            text +="อาหารจานเดียว ";
+        }
+        if(restaurantListDao.getTypeResDao().isChkEsanfood()){
+            text +="อาหารอีสาน ";
+        }
+        if(restaurantListDao.getTypeResDao().isChkThai()){
+            text +="อาหารไทย ";
+        }
+        if(restaurantListDao.getTypeResDao().isChkWildfood()){
+            text +="อาหารป่า ";
+        }
+        if(restaurantListDao.getTypeResDao().isChkBuffet()){
+            text +="Buffet ";
         }
         return text;
     }

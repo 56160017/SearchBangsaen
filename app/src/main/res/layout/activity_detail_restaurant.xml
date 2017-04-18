@@ -1,25 +1,32 @@
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/background_detail"
                 tools:context="com.buu.se.searchbangsaen.restaurant_categories.activity.DetailRestaurantActivity">
 
     <include layout="@layout/toolbar"
         />
 
+    <ScrollView
+        android:id="@+id/sv_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTitle">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tvTitle"
         android:background="@color/background_detail"
+        android:weightSum="20"
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_weight="6"
             android:background="#f2f2f2"
             app:cardCornerRadius="12dp"
             app:cardElevation="3dp"
@@ -28,7 +35,7 @@
             <RelativeLayout
                 android:id="@+id/rlDetail"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:padding="10dp">
 
                 <TextView
@@ -45,7 +52,8 @@
                 <GridView
                     android:id="@+id/gv_benefit"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
+
                     android:layout_below="@+id/tvName"
                     android:columnWidth="120dp"
                     android:gravity="center"
@@ -54,34 +62,25 @@
                     android:stretchMode="columnWidth"
                     android:verticalSpacing="4dp"/>
 
-
-<!--
-
-                <TextView
-                    android:id="@+id/tvTypeFood"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/gv_benefit"
-                    android:layout_weight="1"
-                    android:text="อาหารทะเล,อาหารอีสาน,อาหารตามสั่ง"
-                    android:textColor="#666666"
-                    android:textSize="18dp"/>
--->
-
                 <TextView
                     android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/gv_benefit"
-                    android:layout_weight="1"
-                    android:text="จันทร์ - ศุกร์ 10.00 น. - 22.00 น."
+                    android:textColor="#666666"
+                    android:textSize="18dp"/>
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvDate"
                     android:textColor="#666666"
                     android:textSize="18dp"/>
                 <TextView
                     android:id="@+id/tv_type_food"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvDate"
+                    android:layout_below="@+id/tvTime"
                     android:layout_weight="1"
                     android:text=""
                     android:textColor="#666666"
@@ -91,16 +90,15 @@
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_weight="7"
             android:background="#A0AFF2"
             app:cardCornerRadius="12dp"
             app:cardElevation="3dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -108,23 +106,29 @@
                     android:layout_height="wrap_content"
                     android:background="#0093d7"
                     android:orientation="horizontal"
-                    android:padding="5dp">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="5dp"
-                        android:src="@drawable/ic_image"/>
+                    android:weightSum="13"
+                    >
 
                     <TextView
+
                         android:id="@+id/tvImg"
+                        android:layout_width="0dp"
                         style="@style/SimpleTextCloud.medium.bold"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="3"
                         android:paddingLeft="10dp"
-                        android:text="Images"
+                        android:text="รูปภาพ"
                         android:textColor="@color/white"/>
+
+                    <ImageView
+
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/ic_image"/>
                 </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
@@ -132,51 +136,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="5"
-                    android:background="#f2f2f2"></android.support.v7.widget.RecyclerView>
+                    android:background="#f2f2f2">
+                </android.support.v7.widget.RecyclerView>
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="#F0ECE9"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="3dp"
-            >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:background="#F0ECE9"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_phone"/>
-
-                <TextView
-                    android:id="@+id/tv_phone"
-                    style="@style/SimpleTextCloud"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:text="089-2196241"
-                    android:textColor="#656565"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_weight="3"
             android:background="#F0ECE9"
             app:cardCornerRadius="12dp"
             app:cardElevation="3dp"
@@ -193,21 +164,27 @@
                     android:layout_height="wrap_content"
                     android:background="#0093d7"
                     android:orientation="horizontal"
-                    android:padding="5dp">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="5dp"
-                        android:src="@drawable/ic_location3"/>
-
+                    android:weightSum="11">
                     <TextView
                         style="@style/SimpleTextCloud.medium.bold"
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:gravity="center_vertical"
-                        android:text="Location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:lines="1"
+                        android:paddingLeft="10dp"
+                        android:text="ตำแหน่วที่อยู่"
                         android:textColor="@color/white"
+                        />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_pin_location"
                         />
                 </LinearLayout>
 
@@ -215,23 +192,65 @@
                     android:id="@+id/tv_location"
                     style="@style/SimpleTextCloud"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="2"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:text="ถนนมิตรสัมพันธ์ ชลบุรี"
                     android:textColor="#656565"
+
                     android:textStyle="bold"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="#F0ECE9"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="3dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#F0ECE9"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_phone"/>
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    style="@style/SimpleTextCloud"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="5"
+                    android:lines="1"
+                    android:text="089-2196241"
+                    android:textColor="#656565"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
         <Button
+            style="@style/SimpleTextCloud.mini.bold"
             android:id="@+id/btn_map"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_margin="5dp"
             android:layout_marginRight="20dp"
-            android:layout_weight="2"
-            android:text="ปุ่มดูแผนที่ ยังไม่ได้ออกแบบ"/>
-    </LinearLayout>
+            android:background="@drawable/btn_border_submit"
+            android:text="ค้นหาตำแหน่ง"/>
 
+    </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

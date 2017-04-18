@@ -45,13 +45,21 @@ public class CardHotelAdapter extends RecyclerView.Adapter<CardHotelAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         DecimalFormat formatter = new DecimalFormat("#,###,###");
-        holder.tvName.setText(" " + hotelList.get(position).getName());
+
+        if(hotelList.get(position).getName().trim().length() > 20){
+            holder.tvName.setText(" " + hotelList.get(position).getName().trim().subSequence(0,18) + "..");
+        }else{
+            holder.tvName.setText(" " + hotelList.get(position).getName());
+        }
+
         holder.tvRoom.setText("เหลือ " + hotelList.get(position).getEmpty_room() + " ห้องสุดท้าย");
-        holder.tvContact.setText("ติดต่อ " + hotelList.get(position).getContact());
-        holder.tvPriceTitleF.setText("THB " + formatter.format(hotelList.get(position).getPrice_f()));
+        holder.tvContact.setText("ติดต่อ " + hotelList.get(position).getPhone());
+        holder.tvPriceTitleF.setText("THB " + formatter.format(Integer.parseInt(hotelList.get(position).getPrice_f())));
         holder.tvPriceTitleF.setPaintFlags(holder.tvPriceTitleF.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.tvPriceTitleT.setText("THB " + formatter.format(hotelList.get(position).getPrice_t()));
+        holder.tvPriceTitleT.setText("THB " + formatter.format(Integer.parseInt(hotelList.get(position).getPrice_t())));
         holder.tvDistance.setText(hotelList.get(position).getDistance() + " กม.");
+
+        //img
         if (position == 0) {
             Picasso.with(mContext).load("https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-0/p206x206/1934604_10153418966847304_790610692157339225_n.jpg?oh=93bfb5e2f6160b981e4fda636b6211c2&oe=597312C5").into(holder.ivHotel);
             setOnclickDetailListener(holder, position);
@@ -60,6 +68,8 @@ public class CardHotelAdapter extends RecyclerView.Adapter<CardHotelAdapter.View
             setOnclickDetailListener(holder, position);
         } else if (position == 2) {
             Picasso.with(mContext).load("http://www.saensukcity.com/images/hotel/thetideresort/bangsaen/thetideresort-03s.jpg").into(holder.ivHotel);
+            setOnclickDetailListener(holder, position);
+        }else{
             setOnclickDetailListener(holder, position);
         }
     }
