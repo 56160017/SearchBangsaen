@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
@@ -78,7 +79,6 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
         editDataPageFragment = EditDataPageFragment.newInstance();
         editProfilePageFragment = EditProfilePageFragment.newInstance();
         editHotelFragment = EditHotelFragment.newInstance();
-
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, editDataPageFragment)

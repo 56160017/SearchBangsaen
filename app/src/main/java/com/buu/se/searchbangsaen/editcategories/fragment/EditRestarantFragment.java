@@ -20,7 +20,11 @@ import butterknife.ButterKnife;
  * A simple {@link Fragment} subclass.
  */
 public class EditRestarantFragment extends Fragment {
-    @BindView(R.id.editText) EditText editText;
+    @BindView(R.id.et_name) EditText etName;
+    @BindView(R.id.et_time_open) EditText etTimeOpen;
+    @BindView(R.id.et_time_close) EditText etTimeClose;
+    @BindView(R.id.et_tel) EditText etTel;
+    @BindView(R.id.et_address) EditText etAddress;
     private AddRestaurantDao addRestaurantDao;
 
     public EditRestarantFragment() {
@@ -30,7 +34,6 @@ public class EditRestarantFragment extends Fragment {
         // Required empty public constructor
         this.addRestaurantDao = addRestaurantDao;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +47,10 @@ public class EditRestarantFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        editText.setText(addRestaurantDao.getNameRestaurant());
+        etName.setText(addRestaurantDao.getNameRestaurant());
+        etTimeOpen.setText(addRestaurantDao.getResOpen());
+        etTimeClose.setText(addRestaurantDao.getResClose());
+        etTel.setText(addRestaurantDao.getResPhone());
+        etAddress.setText(addRestaurantDao.getResAddress());
     }
 }

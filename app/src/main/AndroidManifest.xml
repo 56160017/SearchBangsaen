@@ -84,7 +84,7 @@
             android:name=".editcategories.activity.EditPageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="stateVisible|adjustPan">
+            android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
         <activity
             android:name=".add_categories.activity.AddRestaurantActivity"

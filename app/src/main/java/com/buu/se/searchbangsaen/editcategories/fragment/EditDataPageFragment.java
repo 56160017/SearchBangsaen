@@ -172,6 +172,8 @@ public class EditDataPageFragment extends Fragment implements ScreenShotable {
                             addRestaurantDao.setResClose("" + uuRes.child("time-close").getValue());
                             addRestaurantDao.setResAddress("" + uuRes.child("address").getValue());
 
+                            addRestaurantDao.setResDate("จันทร์-ศุกร์");
+
                             LatLng latLng = new LatLng(Double.parseDouble("" + uuRes.child("latitude").getValue()), Double.parseDouble("" + uuRes.child("longitude").getValue()));
                             addRestaurantDao.setResLatLng(latLng);
 

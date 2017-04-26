@@ -36,7 +36,6 @@ public class EditPageShopInAccountAdapter extends RecyclerView.Adapter<EditPageS
 
     public interface onEditShopSuccessClickNextListener {
         void onSuccessToEditClick(AddRestaurantDao addRestaurantDao);
-
     }
     public EditPageShopInAccountAdapter(Context mContext, ArrayList<AddRestaurantDao> mAddRestaurantDao) {
         this.mContext = mContext;
@@ -49,50 +48,16 @@ public class EditPageShopInAccountAdapter extends RecyclerView.Adapter<EditPageS
         View v = LayoutInflater.from(mContext).inflate(R.layout.list_item_shop_in_account, parent, false);
         ViewHolder holder = new ViewHolder(v);
         Log.d( "sizeRes: ",""+mAddRestaurantDao.size());
-
         return holder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.tvNameShopInEditPage.setText(mAddRestaurantDao.get(position).getNameRestaurant());
-        //       Toast.makeText(mContext, "sss", Toast.LENGTH_LONG).show();
-
         holder.tvNameShopInEditPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mCallBack.onSuccessToEditClick(mAddRestaurantDao.get(position));
-
-
-//                editHotelFragment = EditHotelFragment.newInstance();
-//                getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.content_frame, editHotelFragment)
-//                        .commit();
-
-//                Fragment fragment = new EditHotelFragment();
-//                FragmentManager fragmentManager = EditPageActivity().getSupportFragmentManager();
-
-
-            //    FragmentManager manager = ((Activity) mContext).getFragmentManager();
-                // android.app.FragmentTransaction fragmentTransaction = manager.beginTransaction();
-
-//      manager.beginTransaction().replace(R.id.container_frame, new EditHotelFragment.newInstance()).commit();          //      manager.beginTransaction().replace(R.id.container_frame, new EditHotelFragment.newInstance()).commit();
-
-
-
-
-
-
-
-
-                // FragmentTransaction manager2 = ((Activity)mContext).getFragmentManager().beginTransaction().replace(R.id.container_frame, editHotelFragment);
-                //  fragmentTransaction.replace(R.id.container_frame, editHotelFragment).commit();
-
-                //Intent i = new Intent(mContext, EditHotelFragment.class);
-
-
-                // Intent i = new Intent(mContext, EditPageActivity.class);
-                //mContext.startActivity(i);
             }
         });
 
@@ -100,7 +65,6 @@ public class EditPageShopInAccountAdapter extends RecyclerView.Adapter<EditPageS
             @Override
             public void onClick(View v) {
                 Toast.makeText(mContext, "ooooo", Toast.LENGTH_LONG).show();
-
             }
         });
     }
@@ -121,7 +85,6 @@ public class EditPageShopInAccountAdapter extends RecyclerView.Adapter<EditPageS
 
         @Override
         public void onClick(View view) {
-            //  Toast.makeText(mContext, "sss", Toast.LENGTH_LONG).show();
         }
     }
 }
