@@ -30,7 +30,7 @@ public class RegisterDetailFragment extends Fragment {
     @BindView(R.id.txt_level1) TextView txtLevel1;
     @BindView(R.id.imv_back) ImageView imvBack;
     @BindView(R.id.rl_appbar) RelativeLayout rlAppbar;
-    @BindView(R.id.toolbar) AppBarLayout toolbar;
+
     @BindView(R.id.et_name) EditText etName;
     @BindView(R.id.et_sname) EditText etSname;
     @BindView(R.id.et_nb_phone) EditText etNbPhone;

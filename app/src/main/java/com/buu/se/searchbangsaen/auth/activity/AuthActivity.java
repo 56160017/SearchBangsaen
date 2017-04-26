@@ -173,9 +173,10 @@ public class AuthActivity extends AppCompatActivity implements
         mAuthDao.setUri(picUri);
         Log.d("onSuccessToCreateData: ", "onSuccess");
         CreateUser();
+
 //        Intent i = new Intent(AuthActivity.this, LogoutActivity.class);
 //        startActivity(i);
-       finish();
+
     }
 
 
@@ -216,12 +217,10 @@ public class AuthActivity extends AppCompatActivity implements
     }
 
     private void CreateUser() {
-
         mAuth.createUserWithEmailAndPassword(mAuthDao.getUid(), mAuthDao.getPwd())
                 .addOnCompleteListener(AuthActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(Task<AuthResult> task) {
-
                         if (!task.isSuccessful()) {
                             Toast.makeText(AuthActivity.this, "Add failed.", Toast.LENGTH_SHORT).show();
                             Log.d("onCompleteRegis: ",task.toString());
@@ -239,10 +238,6 @@ public class AuthActivity extends AppCompatActivity implements
                             mRootRef.child("users").child(task.getResult().getUser().getUid()).child("detail").child("email").setValue(mAuthDao.getEmail());
                             String photo_uuid = "pt-" + UUID.randomUUID().toString();
 
-                          /*  if (mAuthDao.getCategoriesID() != null) {
-                               // mRootRef.child("users-categories").child(task.getResult().getUser().getUid()).child(mAuthDao.getCategoriesID()).setValue(uuid);
-                            }*/
-
                             mRootRef.child("users").child(task.getResult().getUser().getUid()).child("detail").child("pic").setValue(photo_uuid);
                             StorageReference filepath = mStorage.child("profile").child(photo_uuid);
                             filepath.putFile(mAuthDao.getUri()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -252,18 +247,24 @@ public class AuthActivity extends AppCompatActivity implements
                                 }
 
                             });
-
-
+                            Log.d( "onCheck: ","ture");
                             Intent i = new Intent(AuthActivity.this, EditPageActivity.class);
                             startActivity(i);
                             finish();
-                        }
 
+                        }
                     }
+
                 });
 
     }
     private void Detail(final String name, final String sname,String phone,String email) {
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
 
     }
 
@@ -283,7 +284,7 @@ public class AuthActivity extends AppCompatActivity implements
 
     @Override
     protected void onDestroy() {
-        mAuthDao = null;
+      //  mAuthDao = null;
         super.onDestroy();
     }
 
