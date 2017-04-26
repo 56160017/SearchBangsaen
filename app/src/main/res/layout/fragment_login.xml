@@ -140,7 +140,7 @@
             android:layout_marginBottom="40dp"
             android:letterSpacing="0.2"/>
         <TextView
-            android:id="@+id/sup"
+            android:id="@+id/forgot_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

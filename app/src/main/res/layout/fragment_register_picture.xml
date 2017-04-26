@@ -1,61 +1,70 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:orientation="vertical"
-                android:background="@drawable/grdnt"
-                tools:context="com.buu.se.searchbangsaen.auth.fragment.RegisterPictureFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/grdnt"
+    android:orientation="vertical"
+
+    tools:context="com.buu.se.searchbangsaen.auth.fragment.RegisterPictureFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
     <View
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_landing"
         android:alpha="0.3"
-        />
+        android:background="@drawable/bg_landing" />
 
-    <RelativeLayout
-        android:id="@+id/rl_appbar"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#009a9a">
-        <TextView
-            android:id="@+id/txt_level1"
-            style="@style/SimpleTextCloud.medium.bold"
+        android:alpha="1"
+        android:background="#009a9a"
+        app:popupTheme="@style/AppTheme.AppBarOverlay">
+
+        <RelativeLayout
+            android:id="@+id/rl_appbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="ขั้นตอนที่ 3 "
-            />
-        <ImageView
-            android:id="@+id/imv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingLeft="10dp"
-            android:src="@drawable/btn_back_arrow_white"/>
+            android:background="#009a9a">
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/txt_level1"
+                style="@style/SimpleTextCloud.medium.bold"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="ขั้นตอนที่ 3 " />
+
+            <ImageView
+                android:id="@+id/imv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingLeft="10dp"
+                android:src="@drawable/btn_back_arrow_white" />
+
+        </RelativeLayout>
+    </android.support.design.widget.AppBarLayout>
 
     <TextView
         style="@style/SimpleTextCloud.large.bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rl_appbar"
+        android:layout_below="@id/toolbar"
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="กรุณาใส่รูปภาพ"
-        android:textColor="@color/accent_White"
-        />
+        android:textColor="@color/accent_White" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_profile_add"
@@ -70,10 +79,9 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            >
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/ll_add_pic"
@@ -83,14 +91,16 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/icon_pencil"/>
+                android:src="@drawable/icon_pencil" />
+
             <TextView
                 style="@style/SimpleTextCloud"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="เลือกรูปภาพ"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
+                android:text="เลือกรูปภาพ"
+                android:textColor="@color/accent_White" />
                 android:textColor="@color/accent_White"/>
             </LinearLayout>
 
@@ -103,15 +113,18 @@
                 <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/icon_delete"
-                android:layout_marginLeft="20dp"/>
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/icon_delete" />
+
             <TextView
                 style="@style/SimpleTextCloud"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ลบรูปภาพ"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
+                android:text="ลบรูปภาพ"
+                android:textColor="@color/accent_White" />
+
                 android:textColor="@color/accent_White"/>
             </LinearLayout>
         </LinearLayout>
@@ -123,15 +136,23 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="40dp"
-        android:gravity="center"
-        >
-    <Button
-        android:id="@+id/btn_create"
-        android:layout_width="240dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:background="#009a9a"
-        android:text="ตกลง"/>
+        android:gravity="center">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="3dp">
+
+            <Button
+                android:id="@+id/btn_create"
+                android:layout_width="240dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:background="#009a9a"
+                android:text="ยืนยัน" />
+
+        </android.support.v7.widget.CardView>
 
     </RelativeLayout>
 

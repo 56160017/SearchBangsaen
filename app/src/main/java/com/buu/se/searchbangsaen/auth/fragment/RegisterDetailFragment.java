@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,18 +27,20 @@ import butterknife.ButterKnife;
 
 public class RegisterDetailFragment extends Fragment {
 
-    @BindView(R.id.btn_submit) Button btnSubmit;
+    @BindView(R.id.txt_level1) TextView txtLevel1;
+    @BindView(R.id.imv_back) ImageView imvBack;
+    @BindView(R.id.rl_appbar) RelativeLayout rlAppbar;
+    @BindView(R.id.toolbar) AppBarLayout toolbar;
     @BindView(R.id.et_name) EditText etName;
     @BindView(R.id.et_sname) EditText etSname;
     @BindView(R.id.et_nb_phone) EditText etNbPhone;
     @BindView(R.id.et_email) EditText etEmail;
-    @BindView(R.id.txt_level1) TextView txtLevel1;
-    @BindView(R.id.rl_appbar) RelativeLayout rlAppbar;
-    @BindView(R.id.imv_back) ImageView imvBack;
+    @BindView(R.id.btn_submit) Button btnSubmit;
     private onClickToPictureRegisterListener mCallBack;
 
     public interface onClickToPictureRegisterListener {
         void onSuccessToRegisterPictureClick(String name, String sname, String phone, String email);
+        void onBackDetailClick();
     }
 
 
@@ -94,9 +97,8 @@ public class RegisterDetailFragment extends Fragment {
     private void imvBackOnClickListener() {
         imvBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), RegisterEmailFragment.class);
-
+            public void onClick(View v) {
+                mCallBack.onBackDetailClick();
             }
         });
     }

@@ -1,69 +1,76 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@drawable/grdnt"
-                tools:context="com.buu.se.searchbangsaen.auth.fragment.RegisterDetailFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/grdnt"
+    android:orientation="vertical"
+    tools:context="com.buu.se.searchbangsaen.auth.fragment.RegisterDetailFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
     <View
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_landing"
         android:alpha="0.3"
-        />
+        android:background="@drawable/bg_landing" />
 
-    <RelativeLayout
-        android:id="@+id/rl_appbar"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#009a9a">
-    <TextView
-        android:id="@+id/txt_level1"
-        style="@style/SimpleTextCloud.medium.bold"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="ขั้นตอนที่ 2 "
-        />
-    <ImageView
-        android:id="@+id/imv_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:paddingLeft="10dp"
-        android:src="@drawable/btn_back_arrow_white"/>
+        android:alpha="1"
+        android:background="#009a9a"
+        app:popupTheme="@style/AppTheme.AppBarOverlay">
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#009a9a">
+
+            <TextView
+                android:id="@+id/txt_level1"
+                style="@style/SimpleTextCloud.medium.bold"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="ขั้นตอนที่ 2 " />
+
+            <ImageView
+                android:id="@+id/imv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingLeft="10dp"
+                android:src="@drawable/btn_back_arrow_white" />
+
+        </RelativeLayout>
+    </android.support.design.widget.AppBarLayout>
+
     <TextView
         style="@style/SimpleTextCloud.large.bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rl_appbar"
+        android:layout_below="@id/toolbar"
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="กรุณากรอกข้อมูลส่วนตัว"
-        android:textColor="@color/accent_White"
-        />
-
+        android:textColor="@color/accent_White" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
-        >
+        android:paddingLeft="60dp"
+        android:paddingRight="60dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -75,7 +82,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/usrusr"/>
+                    android:src="@drawable/usrusr" />
 
                 <EditText
                     android:id="@+id/et_name"
@@ -84,20 +91,17 @@
                     android:layout_marginLeft="15dp"
                     android:background="#00000000"
                     android:hint="ชื่อ"
-                    android:lines="1"
                     android:inputType="text"
                     android:letterSpacing="0.1"
                     android:textColor="#fff"
                     android:textColorHint="#d9e5f3"
-                    android:textSize="16dp"
-                    />
+                    android:textSize="16dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#4a5a71">
-            </LinearLayout>
+                android:background="#4a5a71"></LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -109,7 +113,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/usrusr"/>
+                    android:src="@drawable/usrusr" />
 
                 <EditText
                     android:id="@+id/et_sname"
@@ -118,20 +122,17 @@
                     android:layout_marginLeft="15dp"
                     android:background="#00000000"
                     android:hint="นามสกุล"
-                    android:lines="1"
                     android:inputType="text"
                     android:letterSpacing="0.1"
                     android:textColor="#fff"
                     android:textColorHint="#d9e5f3"
-                    android:textSize="16dp"
-                    />
+                    android:textSize="16dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#4a5a71">
-            </LinearLayout>
+                android:background="#4a5a71"></LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -143,7 +144,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/phonemob"/>
+                    android:src="@drawable/phonemob" />
 
                 <EditText
                     android:id="@+id/et_nb_phone"
@@ -152,21 +153,17 @@
                     android:layout_marginLeft="15dp"
                     android:background="#00000000"
                     android:hint="เบอร์โทรศัพท์"
-                    android:maxLength="10"
-                    android:lines="1"
-                    android:inputType="number"
+                    android:inputType="textPassword"
                     android:letterSpacing="0.1"
                     android:textColor="#fff"
                     android:textColorHint="#d9e5f3"
-                    android:textSize="16dp"
-                    />
+                    android:textSize="16dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#4a5a71">
-            </LinearLayout>
+                android:background="#4a5a71"></LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -182,7 +179,6 @@
 
                 <EditText
                     android:id="@+id/et_email"
-                    android:lines="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
@@ -192,25 +188,37 @@
                     android:letterSpacing="0.1"
                     android:textColor="#fff"
                     android:textColorHint="#d9e5f3"
-                    android:textSize="16dp"
-                    />
+                    android:textSize="16dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#4a5a71">
-            </LinearLayout>
+                android:background="#4a5a71"></LinearLayout>
 
-            <Button
-                android:id="@+id/btn_submit"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="40dp"
-                android:background="#009a9a"
-                android:textColor="#ffffff"
-                android:text="ต่อไป"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+
+                    app:cardCornerRadius="3dp"
+                    app:cardElevation="3dp">
+
+                    <Button
+                        android:id="@+id/btn_submit"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:background="#009a9a"
+                        android:text="ต่อไป" />
+
+                </android.support.v7.widget.CardView>
+            </RelativeLayout>
         </LinearLayout>
         /
     </LinearLayout>

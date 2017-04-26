@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.buu.se.searchbangsaen.R;
@@ -36,12 +38,22 @@ public class RegisterPictureFragment extends Fragment {
 
 
     //    private int PICK_IMAGE_REQUEST = 1;
-    @BindView(R.id.btn_create) Button btnCreate;
-    @BindView(R.id.txt_level1) TextView txtLevel1;
-    @BindView(R.id.iv_profile_add) CircleImageView ivProfileAdd;
-    @BindView(R.id.imv_back) ImageView imvBack;
-    @BindView(R.id.ll_add_pic) LinearLayout llAddPic;
-    @BindView(R.id.ll_del_pic) LinearLayout llDelPic;
+    @BindView(R.id.txt_level1)
+    TextView txtLevel1;
+    @BindView(R.id.iv_profile_add)
+    CircleImageView ivProfileAdd;
+    @BindView(R.id.imv_back)
+    ImageView imvBack;
+    @BindView(R.id.ll_add_pic)
+    LinearLayout llAddPic;
+    @BindView(R.id.ll_del_pic)
+    LinearLayout llDelPic;
+    @BindView(R.id.rl_appbar)
+    RelativeLayout rlAppbar;
+    @BindView(R.id.toolbar)
+    AppBarLayout toolbar;
+    @BindView(R.id.btn_create)
+    Button btnCreate;
 
     // @BindView(R.id.add_img) ImageView addImg;
 
@@ -60,8 +72,11 @@ public class RegisterPictureFragment extends Fragment {
         this.contentResolver = contentResolver;
     }
 
+
     public interface onClickCreateDataRegisterListener {
         void onSuccessToCreateDataClick(Uri picUri);
+
+        void onBackPictureClick();
     }
 
     public RegisterPictureFragment() {
@@ -98,6 +113,8 @@ public class RegisterPictureFragment extends Fragment {
                 intent.setType("image/*");
                 startActivityForResult(Intent.createChooser(intent
                         , "Select Picture"), REQUEST_GALLERY);
+
+
             }
         });
         llAddPic.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +139,12 @@ public class RegisterPictureFragment extends Fragment {
                 if (next) {
                     mCallBack.onSuccessToCreateDataClick(uri);
                 }
+            }
+        });
+        imvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallBack.onBackPictureClick();
             }
         });
     }

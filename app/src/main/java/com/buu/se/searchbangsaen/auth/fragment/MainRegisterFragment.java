@@ -57,8 +57,13 @@ public class MainRegisterFragment extends Fragment  {
     public void changeToRegisterDetailClick() {
         vpIdentifyCus.setCurrentItem(1,true);
     }
+
     public void changeToRegisterPictureClick() {
         vpIdentifyCus.setCurrentItem(2,true);
+    }
+
+    public void changeToForgotPassClick() {
+        vpIdentifyCus.setCurrentItem(3,true);
     }
 
     public void backToRegisterDetailClick() {
@@ -69,6 +74,8 @@ public class MainRegisterFragment extends Fragment  {
             vpIdentifyCus.setCurrentItem(0, true);
         }else if(vpIdentifyCus.getCurrentItem() == 2){
             vpIdentifyCus.setCurrentItem(1, true);
+        }else if(vpIdentifyCus.getCurrentItem() == 3){
+            vpIdentifyCus.setCurrentItem(2, true);
         }else{
             vpIdentifyCus.setCurrentItem(0, true);
         }

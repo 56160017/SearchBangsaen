@@ -1,9 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/grdnt"
-                tools:context="com.buu.se.searchbangsaen.auth.fragment.RegisterEmailFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/grdnt"
+    tools:context="com.buu.se.searchbangsaen.auth.fragment.RegisterEmailFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -19,36 +20,46 @@
         android:background="@drawable/bg_landing"
         android:alpha="0.3"
         />
-
-    <RelativeLayout
-        android:id="@+id/rl_appbar"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#009a9a">
-        <TextView
-            android:id="@+id/txt_level1"
-            style="@style/SimpleTextCloud.medium.bold"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="ขั้นตอนที่ 1 "
-            />
-        <ImageView
-            android:id="@+id/imv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingLeft="10dp"
-            android:src="@drawable/btn_back_arrow_white"/>
+        android:background="#009a9a"
+        android:alpha="1"
+        app:popupTheme="@style/AppTheme.AppBarOverlay">
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:id="@+id/txt_level1"
+                style="@style/SimpleTextCloud.medium.bold"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="ขั้นตอนที่ 1 "
+                />
+
+            <ImageView
+                android:id="@+id/imv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingLeft="10dp"
+                android:src="@drawable/btn_back_arrow_white"/>
+
+        </RelativeLayout>
+    </android.support.design.widget.AppBarLayout>
 
     <TextView
         style="@style/SimpleTextCloud.large.bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rl_appbar"
+        android:layout_below="@id/toolbar"
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="กรุณากรอกข้อมูลใช้งาน"
@@ -59,8 +70,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
+        android:paddingLeft="60dp"
+        android:paddingRight="60dp"
         >
 
         <LinearLayout
@@ -68,6 +79,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -179,7 +191,6 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="40dp"
-                android:textColor="#ffffff"
                 android:background="#009a9a"
                 android:text="ต่อไป"/>
         </LinearLayout>

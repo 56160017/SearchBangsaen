@@ -11,11 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.buu.se.searchbangsaen.R;
 import com.buu.se.searchbangsaen.add_categories.activity.AddHotelActivity;
 import com.buu.se.searchbangsaen.add_categories.activity.AddRestaurantActivity;
-import com.buu.se.searchbangsaen.auth.adapter.AuthMenuAdapter;
 import com.buu.se.searchbangsaen.auth.dao.AuthDao;
+import com.buu.se.searchbangsaen.R;
+import com.buu.se.searchbangsaen.auth.adapter.AuthMenuAdapter;
 import com.buu.se.searchbangsaen.auth.fragment.LoginFragment;
 import com.buu.se.searchbangsaen.auth.fragment.LoginFragment.onClickRegisterListener;
 import com.buu.se.searchbangsaen.auth.fragment.MainRegisterFragment;
@@ -38,7 +38,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.UUID;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -59,6 +58,7 @@ public class AuthActivity extends AppCompatActivity implements
 
     private ProgressDialog progressDialog;
     private Intent i;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,13 +168,46 @@ public class AuthActivity extends AppCompatActivity implements
             ((MainRegisterFragment) mFragment).changeToRegisterPictureClick();
         }
     }
-
     @Override
     public void onSuccessToCreateDataClick(Uri picUri) {
         mAuthDao.setUri(picUri);
         Log.d("onSuccessToCreateData: ", "onSuccess");
         CreateUser();
+//        Intent i = new Intent(AuthActivity.this, LogoutActivity.class);
+//        startActivity(i);
+       finish();
     }
+
+
+
+    @Override
+    public void onBackPictureClick() {
+        Fragment mFragment = menuAdapter.getAuthFragment(1);
+        if (mFragment instanceof MainRegisterFragment) {
+            ((MainRegisterFragment) mFragment).changeToRegisterDetailClick();
+        }
+    }
+
+    @Override
+    public void onBackDetailClick() {
+        Fragment mFragment = menuAdapter.getAuthFragment(1);
+        if (mFragment instanceof MainRegisterFragment) {
+            ((MainRegisterFragment) mFragment).backToRegisterDetailClick();
+        }
+    }
+
+    @Override
+    public void onSuccessToForgetPassword() {
+        flNonSwipeViewpager.setCurrentItem(2, true);
+    }
+
+    @Override
+    public void onBackMainRegisterClick() {
+        flNonSwipeViewpager.setCurrentItem(0, true);
+
+    }
+
+
 
 
     @Override
@@ -195,6 +228,7 @@ public class AuthActivity extends AppCompatActivity implements
                       /*      userID =  etEmail.getText().toString();
                             pwd = etPwd.getText().toString();*/
                         } else {
+                            task.getResult().getUser().getUid();
                             Toast.makeText(AuthActivity.this, "Add OK.", Toast.LENGTH_SHORT).show();
                             DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
                             mRootRef.child("users").child(task.getResult().getUser().getUid()).child("detail").child("userID").setValue(mAuthDao.getUid());
@@ -257,6 +291,7 @@ public class AuthActivity extends AppCompatActivity implements
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
+
 
 
 }

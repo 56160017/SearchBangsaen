@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/activity_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/activity_main"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
                 android:background="@drawable/grdnt"
     >
     <View
@@ -11,265 +12,285 @@
         android:background="@drawable/bg_landing"
         android:alpha="0.3"
         />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:background="#009a9a">
+        android:background="#009a9a"
+        android:alpha="1"
+        app:popupTheme="@style/AppTheme.AppBarOverlay">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/civ_search"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:src="@drawable/bg_search"
-            android:layout_weight="2"
-            android:layout_marginLeft="10dp"
-            />
-        <TextView
-          android:id="@+id/tv_t"
-            style="@style/SimpleTextCloud.medium.bold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-          android:gravity="center"
-            android:text="Search Bangsean"
-            android:layout_weight="10"
-            android:layout_marginLeft="10dp"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            />
-        <TextView
-            android:layout_weight="6"
-            style="@style/SimpleTextCloud.medium.bold"
-            android:id="@+id/tv_login"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="เข้าสู่ระบบ"
-            android:visibility="gone"
-            android:gravity="right"
-            android:layout_gravity="center"
-            android:textStyle="bold"
-            android:layout_marginRight="5dp"
-            />
-        <RelativeLayout
-            android:id="@+id/rl_profile"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:visibility="visible"
-            android:padding="10dp"
-            android:layout_height="match_parent">
-        <ImageView
-            android:layout_alignParentRight="true"
-            android:id="@+id/iv_profile"
-            android:src="@drawable/user_profile"
-            android:adjustViewBounds="true"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
 
-            />
-        </RelativeLayout>
-    </LinearLayout>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civ_search"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/bg_search" />
+
+            <TextView
+                android:layout_weight="5"
+                style="@style/SimpleTextCloud.medium.bold"
+                android:layout_width="0dp"
+                android:layout_gravity="center"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/civ_search"
+                android:text="Search Bangsean"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_login"
+                android:layout_weight="2"
+                style="@style/SimpleTextCloud.medium.bold"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:text="เข้าสู่ระบบ"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:id="@+id/rl_profile"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:visibility="gone"
+                android:padding="10dp"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/iv_profile"
+
+                    android:src="@drawable/user_profile"
+                    android:adjustViewBounds="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
     <TextView
+        android:id="@+id/txt_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/app_bar_layout"
+        android:gravity="center"
+        android:paddingTop="10dp"
         android:text="เลือกสถานที่ที่คุณอยากค้นหา"
-        android:textSize="30sp"
-        android:paddingTop="10dp"
-        android:textStyle="bold"
         android:textColor="@color/accent_White"
-        android:gravity="center"/>
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
 
     <LinearLayout
+        android:id="@+id/ll_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:layout_below="@id/txt_search"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:weightSum="10">
 
-        >
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            >
 
-            <ImageView
-                android:id="@+id/btn_Restaurant"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:src="@drawable/img_restaurant"
-                android:padding="20dp"
-                android:layout_gravity="center"
-                android:background="@drawable/bg_circle"
-                />
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btn_Restaurant"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/accent_White"
-                android:text="ร้านอาหาร"
-                android:textSize="20sp"/>
-        </LinearLayout>
+                android:orientation="horizontal"
+                android:layout_weight="2"
+                >
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/btn_Hotel"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:src="@drawable/img_hotel"
-                android:layout_gravity="center"
-                android:paddingTop="20dp"
-                android:background="@drawable/bg_circle"
-                />
-            <TextView
-                android:layout_width="wrap_content"
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/btn_Restaurant"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_circle"
+                        android:src="@drawable/img_restaurant" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/btn_Restaurant"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:text="ร้านอาหาร"
+                        android:textColor="@color/accent_White"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/btn_Hotel"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_circle"
+                        android:src="@drawable/img_hotel" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/btn_Hotel"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:text="โรงแรม"
+                        android:textColor="@color/accent_White"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btn_Hotel"
-                android:layout_centerHorizontal="true"
-                android:text="โรงแรม"
-                android:textColor="@color/accent_White"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:textSize="20sp"/>
-        </LinearLayout>
+                android:orientation="horizontal"
+                android:layout_weight="2">
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:orientation="horizontal"
-        >
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            >
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/btn_Coffee"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:padding="20dp"
-                android:src="@drawable/img_coffee"
-                android:layout_gravity="center"
-                android:background="@drawable/bg_circle"
-               />
-            <TextView
-                android:layout_width="wrap_content"
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/btn_Coffee"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_circle"
+                        android:src="@drawable/img_coffee" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/btn_Coffee"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:text="ร้านกาแฟ"
+                        android:textColor="@color/accent_White"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/img_Gift"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_circle"
+                        android:src="@drawable/img_gift" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/img_Gift"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:text="ร้านของฝาก"
+                        android:textColor="@color/accent_White"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btn_Coffee"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/accent_White"
-                android:layout_marginTop="5dp"
-                android:layout_gravity="center"
-                android:text="ร้านกาแฟ"
-                android:textSize="20sp"/>
-        </LinearLayout>
+                android:orientation="horizontal"
+                android:layout_weight="2">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/img_Gift"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:src="@drawable/img_gift"
-                android:paddingTop="20dp"
-                android:layout_gravity="center"
-                android:background="@drawable/bg_circle"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/img_Gift"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/accent_White"
-                android:text="ร้านของฝาก"
-                android:textSize="20sp"/>
-        </LinearLayout>
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/btn_Ws"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_circle"
+                        android:src="@drawable/img_walking" />
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:orientation="horizontal"
-        >
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/btn_Ws"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:text="ถนนคนเดิน"
+                        android:textColor="@color/accent_White"
+                        android:textSize="20sp" />
+                </LinearLayout>
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/btn_Ws"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:paddingTop="20dp"
-                android:src="@drawable/img_walking"
-                android:background="@drawable/bg_circle"
-                android:layout_gravity="center"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/btn_Ws"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/accent_White"
-                android:text="ถนนคนเดิน"
-                android:textSize="20sp"/>
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/img_Festival"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_circle"
+                        android:src="@drawable/img_travel" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/img_Festival"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:paddingTop="20dp"
-                android:src="@drawable/img_travel"
-                android:background="@drawable/bg_circle"
-                android:layout_gravity="center"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/img_Festival"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/accent_White"
-                android:text="แหล่งท่องเที่ยว"
-                android:textSize="20sp"/>
-        </LinearLayout>
-
-    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/img_Festival"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:text="แหล่งท่องเที่ยว"
+                        android:textColor="@color/accent_White"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
     </LinearLayout>
 </RelativeLayout>

@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -40,20 +42,34 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class MainActivity extends AppCompatActivity {
 
 
-    @BindView(R.id.civ_search) CircleImageView civSearch;
-    @BindView(R.id.tv_login) TextView tvLogin;
-    @BindView(R.id.btn_Restaurant) ImageView btnRestaurant;
-    @BindView(R.id.btn_Hotel) CircleImageView btnHotel;
-    @BindView(R.id.btn_Coffee) CircleImageView btnCoffee;
-    @BindView(R.id.img_Gift) CircleImageView imgGift;
-    @BindView(R.id.btn_Ws) CircleImageView btnWs;
-    @BindView(R.id.img_Festival) CircleImageView imgFestival;
-    @BindView(R.id.activity_main) RelativeLayout activityMain;
-    @BindView(R.id.iv_profile) ImageView ivProfile;
-    @BindView(R.id.tv_t) TextView tvT;
-    @BindView(R.id.rl_profile) RelativeLayout rlProfile;
-
-
+    @BindView(R.id.civ_search)
+    CircleImageView civSearch;
+    @BindView(R.id.tv_login)
+    TextView tvLogin;
+    @BindView(R.id.app_bar_layout)
+    AppBarLayout appBarLayout;
+    @BindView(R.id.txt_search)
+    TextView txtSearch;
+    @BindView(R.id.btn_Restaurant)
+    CircleImageView btnRestaurant;
+    @BindView(R.id.btn_Hotel)
+    CircleImageView btnHotel;
+    @BindView(R.id.btn_Coffee)
+    CircleImageView btnCoffee;
+    @BindView(R.id.img_Gift)
+    CircleImageView imgGift;
+    @BindView(R.id.btn_Ws)
+    CircleImageView btnWs;
+    @BindView(R.id.img_Festival)
+    CircleImageView imgFestival;
+    @BindView(R.id.ll_search)
+    LinearLayout llSearch;
+    @BindView(R.id.activity_main)
+    RelativeLayout activityMain;
+    @BindView(R.id.iv_profile)
+    ImageView ivProfile;
+    @BindView(R.id.rl_profile)
+    RelativeLayout rlProfile;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressDialog progressDialog;
@@ -79,17 +95,24 @@ public class MainActivity extends AppCompatActivity {
         };
         mStorage = FirebaseStorage.getInstance().getReference();
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            initProfile(user);
+        }
 
         btnRestaurant.setOnClickListener(OnRestaurantClickListener);
         btnHotel.setOnClickListener(OnHotelClickListener);
         tvLogin.setOnClickListener(OnLoginClickListener);
         ivProfile.setOnClickListener(OnProfileClickListener);
+
+
+
     }
 
 
     @Override
     protected void onResume() {
-
+        super.onResume();
         mView.dismiss();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {

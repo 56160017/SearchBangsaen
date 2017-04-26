@@ -2,7 +2,6 @@ package com.buu.se.searchbangsaen.auth.fragment;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.buu.se.searchbangsaen.R;
@@ -29,18 +29,26 @@ import butterknife.ButterKnife;
 public class LoginFragment extends Fragment {
 
 
-    @BindView(R.id.btn_login) Button btnLogin;
-    @BindView(R.id.btn_register) Button btnRegister;
-    @BindView(R.id.et_user) EditText etUser;
-    @BindView(R.id.et_pass) EditText etPass;
-
+    @BindView(R.id.et_user)
+    EditText etUser;
+    @BindView(R.id.et_pass)
+    EditText etPass;
+    @BindView(R.id.btn_login)
+    Button btnLogin;
+    @BindView(R.id.btn_register)
+    Button btnRegister;
+    @BindView(R.id.forgot_pass)
+    TextView forgotPass;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     private onClickRegisterListener mCallBack;
+
+
     public interface onClickRegisterListener {
         void onSuccessToRegisterClick();
         void onSuccessToUserPageClick();
+        void onSuccessToForgetPassword();
 
     }
 
@@ -61,7 +69,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-      //  etUser.getText();
+        //  etUser.getText();
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
 
@@ -79,12 +87,11 @@ public class LoginFragment extends Fragment {
         };
 
 
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  if(1 == 1){
-                    SignInWithEmailAndPassword();
+                //  if(1 == 1){
+                SignInWithEmailAndPassword();
 //                }else {
 //                    Toast.makeText(getActivity(), "กรุณากรอกข้อมูลให้ครบถ้วน", Toast.LENGTH_SHORT).show();
 //                }
@@ -97,17 +104,25 @@ public class LoginFragment extends Fragment {
                 mCallBack.onSuccessToRegisterClick();
             }
         });
+
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallBack.onSuccessToForgetPassword();
+            }
+        });
     }
+
     private void SignInWithEmailAndPassword() {
         mAuth.signInWithEmailAndPassword(etUser.getText().toString(), etPass.getText().toString())
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete( Task<AuthResult> task) {
+                    public void onComplete(Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            Log.w( "signInWithEmail", task.getException().getMessage());
+                            Log.w("signInWithEmail", task.getException().getMessage());
                             Toast.makeText(getActivity(), "Authentication failed.", Toast.LENGTH_SHORT).show();
 
-                        }else {
+                        } else {
                             Toast.makeText(getActivity(), "Authentication True.", Toast.LENGTH_SHORT).show();
                             mCallBack.onSuccessToUserPageClick();
                         }
@@ -115,12 +130,14 @@ public class LoginFragment extends Fragment {
                     }
                 });
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mCallBack = (onClickRegisterListener) context;
 
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -134,6 +151,7 @@ public class LoginFragment extends Fragment {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
+
     public static Fragment newInstance() {
         return new LoginFragment();
     }

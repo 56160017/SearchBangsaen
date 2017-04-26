@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
+import com.buu.se.searchbangsaen.auth.fragment.ForgotPasswordFragment;
 import com.buu.se.searchbangsaen.auth.fragment.LoginFragment;
 import com.buu.se.searchbangsaen.auth.fragment.MainRegisterFragment;
 
@@ -27,8 +28,10 @@ public class AuthMenuAdapter extends FragmentStatePagerAdapter {
             mFragment = LoginFragment.newInstance();
           //  mFragment = MainLoginFragment.newInstance();
         } else if(1 == position) {
-           // mFragment = RegisterEmailFragment.newInstance();
+            // mFragment = RegisterEmailFragment.newInstance();
             mFragment = MainRegisterFragment.newInstance();
+        } else if(2 == position){
+            mFragment = ForgotPasswordFragment.newInstance();
         } else {
             mFragment = MainRegisterFragment.newInstance();
         }
@@ -38,7 +41,7 @@ public class AuthMenuAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @Override

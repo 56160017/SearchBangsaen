@@ -1,5 +1,6 @@
 package com.buu.se.searchbangsaen;
 
+import android.*;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +30,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -38,7 +40,9 @@ import com.vistrav.ask.annotations.AskDenied;
 import com.vistrav.ask.annotations.AskGranted;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,7 +51,8 @@ import butterknife.ButterKnife;
 public class MapDirectionActivity extends FragmentActivity implements OnMapReadyCallback, DirectionCallback {
 
 
-    @BindView(R.id.tv_direction) TextView tvDirection;
+    @BindView(R.id.tv_direction)
+    TextView tvDirection;
     private GoogleMap mMap;
     private String serverkey;
     private Marker mMarker;
@@ -96,14 +101,23 @@ public class MapDirectionActivity extends FragmentActivity implements OnMapReady
         mapFragment.getMapAsync(this);
 
         serverkey = getResources().getString(R.string.google_maps_key);
-
     }
 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
         // Add a marker in Sydney and move the camera
         //13.281169, 100.936234
         final LatLng FindLoc = new LatLng(locationLatitude, locationLongitude);
@@ -116,7 +130,8 @@ public class MapDirectionActivity extends FragmentActivity implements OnMapReady
                 //  .icon(BitmapDescriptorFactory.fromResource(R.drawable.img_circle_food_small))
         );
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(FindLoc, 15.0f));
-        mMap.setMyLocationEnabled(true);
+
+
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
@@ -148,11 +163,11 @@ public class MapDirectionActivity extends FragmentActivity implements OnMapReady
             if (polyline == null) {
                 polyline = mMap.addPolyline(DirectionConverter.createPolyline(this, directionPositionList, 5, getResources().getColor(R.color.colorPrimary)));
                 Log.d("onDirectionSuccess: ", " " + direction.getRouteList().get(0).getLegList().get(0).getDistance().getText());
-                tvDirection.setText("ระยะทาง: " +direction.getRouteList().get(0).getLegList().get(0).getDistance().getText());
+                tvDirection.setText("ระยะทาง: " + direction.getRouteList().get(0).getLegList().get(0).getDistance().getText());
             } else {
                 polyline.remove();
                 polyline = mMap.addPolyline(DirectionConverter.createPolyline(this, directionPositionList, 5, getResources().getColor(R.color.colorPrimary)));
-                tvDirection.setText("ระยะทาง: " +direction.getRouteList().get(0).getLegList().get(0).getDistance().getText());
+                tvDirection.setText("ระยะทาง: " + direction.getRouteList().get(0).getLegList().get(0).getDistance().getText());
             }
         }
     }
@@ -284,6 +299,16 @@ public class MapDirectionActivity extends FragmentActivity implements OnMapReady
     @AskDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     public void fileAccessDenied() {
         Log.i(TAG, "FILE  DENiED");
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         mMap.setMyLocationEnabled(true);
     }
 

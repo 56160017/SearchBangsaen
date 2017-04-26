@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.buu.se.searchbangsaen.R;
@@ -28,18 +31,32 @@ import butterknife.ButterKnife;
 public class RegisterEmailFragment extends Fragment {
 
 
-    @BindView(R.id.txt_level1) TextView txtLevel1;
-    @BindView(R.id.et_email) EditText etEmail;
-    @BindView(R.id.et_pwd) EditText etPwd;
-    @BindView(R.id.et_conf_pwd) EditText etConfPwd;
-    @BindView(R.id.btn_submit) Button btnSubmit;
+    @BindView(R.id.txt_level1)
+    TextView txtLevel1;
+    @BindView(R.id.et_email)
+    EditText etEmail;
+    @BindView(R.id.et_pwd)
+    EditText etPwd;
+    @BindView(R.id.et_conf_pwd)
+    EditText etConfPwd;
+    @BindView(R.id.btn_submit)
+    Button btnSubmit;
+    @BindView(R.id.imv_back)
+    ImageView imvBack;
+    @BindView(R.id.rl_appbar)
+    RelativeLayout rlAppbar;
+    @BindView(R.id.toolbar)
+    AppBarLayout toolbar;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     private onClickDetailRegisterListener mCallBack;
 
+
     public interface onClickDetailRegisterListener {
         void onSuccessToRegisterDetailClick(String email, String pwd);
+
+        void onBackMainRegisterClick();
     }
 
     @Override
@@ -81,27 +98,34 @@ public class RegisterEmailFragment extends Fragment {
             }
         };
         btnSubmit.setOnClickListener(new View.OnClickListener() {
+                                         @Override
+                                         public void onClick(View v) {
+
+
+                                             if (!isValidEmail(etEmail.getText().toString())) {
+                                                 etEmail.setError("Email is invalid");
+                                                 return;
+                                             }
+                                             if (!isValidPassword(etPwd.getText().toString())) {
+                                                 etPwd.setError("Password is too short (minimum is 6 characters)");
+                                                 return;
+                                             }
+                                             if (!etPwd.getText().toString().equals(etConfPwd.getText().toString())) {
+                                                 // CreateUser();
+                                                 etConfPwd.setError("Password does not match the confirm password.");
+                                                 return;
+                                             }
+                                             mCallBack.onSuccessToRegisterDetailClick(etEmail.getText().toString(), etPwd.getText().toString());
+                                         }
+                                     }
+        );
+
+        imvBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                if (!isValidEmail(etEmail.getText().toString())) {
-                    etEmail.setError("Email is invalid");
-                    return;
-                }
-                if (!isValidPassword(etPwd.getText().toString())) {
-                    etPwd.setError("Password is too short (minimum is 6 characters)");
-                    return;
-                }
-                if (!etPwd.getText().toString().equals(etConfPwd.getText().toString())) {
-                        // CreateUser();
-                    etConfPwd.setError("Password does not match the confirm password.");
-                    return;
-                    }
-                mCallBack.onSuccessToRegisterDetailClick(etEmail.getText().toString(), etPwd.getText().toString());
-                }
+                mCallBack.onBackMainRegisterClick();
             }
-        );
+        });
 
     }
 
@@ -121,6 +145,7 @@ public class RegisterEmailFragment extends Fragment {
         }
         return false;
     }
+
     public static Fragment newInstance() {
         return new RegisterEmailFragment();
     }
