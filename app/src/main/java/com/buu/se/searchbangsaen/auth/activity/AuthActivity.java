@@ -191,6 +191,7 @@ public class AuthActivity extends AppCompatActivity implements
 
                         if (!task.isSuccessful()) {
                             Toast.makeText(AuthActivity.this, "Add failed.", Toast.LENGTH_SHORT).show();
+                            Log.d("onCompleteRegis: ",task.toString());
                       /*      userID =  etEmail.getText().toString();
                             pwd = etPwd.getText().toString();*/
                         } else {

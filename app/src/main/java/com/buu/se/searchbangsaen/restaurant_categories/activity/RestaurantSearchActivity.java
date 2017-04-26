@@ -1,17 +1,27 @@
 package com.buu.se.searchbangsaen.restaurant_categories.activity;
 
+import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.akexorcist.googledirection.DirectionCallback;
 import com.akexorcist.googledirection.GoogleDirection;
@@ -54,7 +64,8 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
     @BindView(R.id.recycler_res) RecyclerView recyclerRes;
     @BindView(R.id.ivBack) ImageView ivBack;
     @BindView(R.id.ivAdd) ImageView ivAdd;
-
+    @BindView(R.id.btn_connecting) Button btnConnecting;
+    @BindView(R.id.fl_connecting) FrameLayout flConnecting;
 
 
     private RecyclerView.LayoutManager mLayoutManager;
@@ -84,9 +95,6 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_search);
         ButterKnife.bind(this);
-        progressDialog = new ProgressDialog(RestaurantSearchActivity.this);
-        progressDialog.show();
-
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -117,9 +125,10 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
         restaurantList.add(test);*/
         ivBack.setOnClickListener(OnClickBackListener);
         ivAdd.setOnClickListener(OnClickAddBackListener);
+        btnConnecting.setOnClickListener(OnClickReconnectBackListener);
 
         serverkey = getResources().getString(R.string.google_maps_key);
-         mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map_fake);
 
     }
@@ -127,14 +136,43 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
     @Override
     protected void onResume() {
         super.onResume();
-        CheckAuth();
-        initRestaurantData();
-        progressDialog.hide();
+
+        if (isNetworkConnected()) {
+            flConnecting.setVisibility(View.GONE);
+            CheckAuth();
+            initRestaurantData();
+        } else {
+            flConnecting.setVisibility(View.VISIBLE);
+            final Dialog dialog = new Dialog(RestaurantSearchActivity.this);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.dialog_disconnect);
+            dialog.setCancelable(true);
+
+            Button button1 = (Button) dialog.findViewById(R.id.button1);
+            button1.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext()
+                            , "Close dialog", Toast.LENGTH_SHORT);
+                    dialog.cancel();
+                }
+            });
+
+           /* TextView textView1 = (TextView) dialog.findViewById(R.id.textView1);
+            textView1.setText("Warning!");*/
+            TextView textView2 = (TextView) dialog.findViewById(R.id.textView2);
+            textView2.setText("Connection to failed");
+
+            dialog.show();
+        }
+
     }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
+    }
+
     private void initRestaurantData() {
-
-
-
         /*final List<String> tfDao = new ArrayList<>();
         tfDao.add("อาหารทะเล");
         tfDao.add("อาหารจานเดียว");
@@ -150,149 +188,178 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
         Query query = mRootRef.child("restaurant");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                 @Override
-                                                 public void onDataChange(DataSnapshot dataSnapshot) {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                                     if (dataSnapshot.exists()) {
-                                                         //Log.d("onDataChange: ","test");
-                                                         // dataSnapshot is the "issue" node with all children with id 0
-                                                         int i=0;
+                if (dataSnapshot.exists()) {
+                    //Log.d("onDataChange: ","test");
+                    // dataSnapshot is the "issue" node with all children with id 0
+                    int i = 0;
 
-                                                         for (DataSnapshot uuid : dataSnapshot.getChildren()) {
-                                                             Log.d("onDataChangeID: ",""+uuid.getKey());
-                                                             RestaurantDao a = new RestaurantDao();
-                                                             BenefitsDao benefitdaos  = new BenefitsDao();
-                                                             TypeResDao typeResDaos = new TypeResDao();
-                                                             DateDao dateDaos = new DateDao();
-
-
-                                                             i++;
-                                                             for (DataSnapshot getuuid : uuid.getChildren()){
-
-                                                                 a.setId(i);
-                                                                 a.setDistance("2");
-                                                            //     a.setTfDao(tfDao);
-                                                           //      a.setBenefitsDao(benefDao);
-                                                                 switch (getuuid.getKey()){
-                                                                     case "name":
-                                                                         a.setName("" + getuuid.getValue());
-                                                                         break;
-                                                                     case "phone": a.setContact("" + getuuid.getValue());
-                                                                         break;
-                                                                     case "time-open": a.setOpen("" + getuuid.getValue());
-                                                                         break;
-                                                                     case "time-close": a.setClose("" + getuuid.getValue());
-                                                                         break;
-                                                                     case "dates-open": a.setDay("" + getuuid.getValue());
-                                                                         break;
-                                                                     case "latitude":  a.setLatitude(Double.parseDouble("" + getuuid.getValue()));
-                                                                         break;
-                                                                     case "longitude": a.setLongitude(Double.parseDouble("" + getuuid.getValue()));
-                                                                         break;
-                                                                     case "address": a.setLocation("" + getuuid.getValue());
-                                                                         break;
-                                                                     case "benefits":
-                                                                         for (DataSnapshot getbenefits : getuuid.getChildren()){
-                                                                             switch (getbenefits.getKey()) {
-                                                                                 case "parking": benefitdaos.setParking(stringToBool("" + getbenefits.getValue()));
-                                                                                     break;
-                                                                                 case "alcohol": benefitdaos.setAlcohol(stringToBool("" + getbenefits.getValue()));
-                                                                                     break;
-                                                                                 case "creditcards": benefitdaos.setCreditCards(stringToBool("" + getbenefits.getValue()));
-                                                                                     break;
-                                                                                 case "livemusic": benefitdaos.setLiveMusic(stringToBool("" + getbenefits.getValue()));
-                                                                                     break;
-                                                                                 case "reservation": benefitdaos.setReservation(stringToBool("" + getbenefits.getValue()));
-                                                                                     break;
-                                                                                 default: break;
-                                                                             }
-                                                                         }
-                                                                         a.setBenefitsDao(benefitdaos);
-                                                                         break;
-                                                                     case "dates":
-                                                                         for (DataSnapshot getdates : getuuid.getChildren()){
-                                                                             switch (getdates.getKey()) {
-                                                                                 case "sunday": dateDaos.setSun(stringToBool("" + getdates.getValue()));
-                                                                                     break;
-                                                                                 case "monday": dateDaos.setMonday(stringToBool("" + getdates.getValue()));
-                                                                                     break;
-                                                                                 case "tuesday": dateDaos.setTuesday(stringToBool("" + getdates.getValue()));
-                                                                                     break;
-                                                                                 case "wednesday": dateDaos.setWed(stringToBool("" + getdates.getValue()));
-                                                                                     break;
-                                                                                 case "thursday": dateDaos.setThursday(stringToBool("" + getdates.getValue()));
-                                                                                     break;
-                                                                                 case "friday": dateDaos.setFriday(stringToBool("" + getdates.getValue()));
-                                                                                     break;
-                                                                                 case "saturday": dateDaos.setSaturday(stringToBool("" + getdates.getValue()));
-                                                                                     break;
-                                                                                 default: break;
-                                                                             }
-                                                                        //     a.setDateDao(dateDaos);ยังไม่ได้สร้าง
-                                                                         }
-                                                                         break;
-                                                                     case "typefoods":
-                                                                         for (DataSnapshot gettypefoods : getuuid.getChildren()){
-                                                                             switch (gettypefoods.getKey()) {
-                                                                                 case "buffet": typeResDaos.setChkBuffet(stringToBool("" + gettypefoods.getValue()));
-                                                                                     Log.d("test-"+ gettypefoods.getKey(), ""+ typeResDaos.isChkBuffet());
-                                                                                     break;
-                                                                                 case "esan-food": typeResDaos.setChkEsanfood(stringToBool("" + gettypefoods.getValue()));
-                                                                                     Log.d("test-"+ gettypefoods.getKey(), ""+ typeResDaos.isChkEsanfood());
-                                                                                     break;
-                                                                                 case "sea-food": typeResDaos.setChkSea(stringToBool("" + gettypefoods.getValue()));
-                                                                                     Log.d("pa"+ gettypefoods.getKey(), ""+ gettypefoods.getValue());
-                                                                                     break;
-                                                                                 case "single-food": typeResDaos.setChkSingleFood(stringToBool("" + gettypefoods.getValue()));
-                                                                                     Log.d("pa"+ gettypefoods.getKey(), ""+ gettypefoods.getValue());
-                                                                                     break;
-                                                                                 case "thai-food": typeResDaos.setChkThai(stringToBool("" + gettypefoods.getValue()));
-                                                                                     Log.d("pa"+ gettypefoods.getKey(), ""+ gettypefoods.getValue());
-                                                                                     break;
-                                                                                 case "wild-food": typeResDaos.setChkWildfood(stringToBool("" + gettypefoods.getValue()));
-                                                                                     Log.d("pa"+ gettypefoods.getKey(), ""+ gettypefoods.getValue());
-                                                                                     break;
-                                                                                 default: break;
-                                                                             }
-
-                                                                         }
-                                                                         a.setTypeResDao(typeResDaos);
-                                                                         break;
-
-                                                                     default: break;
-                                                                 }
-                                                                 Log.d("onDataChange: ",""+getuuid.getValue());
-                                                             }
-                                                             //String timeStamp = new SimpleDateFormat("HH.mm.ss").format(Calendar.getInstance().getTime());
-                                                             String timeStamp = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
-                                                             if(Integer.parseInt(a.getOpen().substring(0,2)) <= Integer.parseInt(timeStamp) &&
-                                                                     Integer.parseInt(a.getClose().substring(0,2)) > Integer.parseInt(timeStamp) ){
-
-                                                                 Log.d( "CheckDate: ","open");
-                                                                 a.setStatus(true);
-                                                             }else{
-                                                                 Log.d( "CheckDate: ","close");
-                                                                 a.setStatus(false);
-                                                             }
-                                                             Log.d("onDataChangeaName: ",""+a.getName());
-
-                                                             restaurantList.add(a);
+                    for (DataSnapshot uuid : dataSnapshot.getChildren()) {
+                        Log.d("onDataChangeID: ", "" + uuid.getKey());
+                        RestaurantDao a = new RestaurantDao();
+                        BenefitsDao benefitdaos = new BenefitsDao();
+                        TypeResDao typeResDaos = new TypeResDao();
+                        DateDao dateDaos = new DateDao();
 
 
-                                                         }
+                        i++;
+                        for (DataSnapshot getuuid : uuid.getChildren()) {
+
+                            a.setId(i);
+                            a.setDistance("2");
+                            //     a.setTfDao(tfDao);
+                            //      a.setBenefitsDao(benefDao);
+                            switch (getuuid.getKey()) {
+                                case "name":
+                                    a.setName("" + getuuid.getValue());
+                                    break;
+                                case "phone":
+                                    a.setContact("" + getuuid.getValue());
+                                    break;
+                                case "time-open":
+                                    a.setOpen("" + getuuid.getValue());
+                                    break;
+                                case "time-close":
+                                    a.setClose("" + getuuid.getValue());
+                                    break;
+                                case "dates-open":
+                                    a.setDay("" + getuuid.getValue());
+                                    break;
+                                case "latitude":
+                                    a.setLatitude(Double.parseDouble("" + getuuid.getValue()));
+                                    break;
+                                case "longitude":
+                                    a.setLongitude(Double.parseDouble("" + getuuid.getValue()));
+                                    break;
+                                case "address":
+                                    a.setLocation("" + getuuid.getValue());
+                                    break;
+                                case "benefits":
+                                    for (DataSnapshot getbenefits : getuuid.getChildren()) {
+                                        switch (getbenefits.getKey()) {
+                                            case "parking":
+                                                benefitdaos.setParking(stringToBool("" + getbenefits.getValue()));
+                                                break;
+                                            case "alcohol":
+                                                benefitdaos.setAlcohol(stringToBool("" + getbenefits.getValue()));
+                                                break;
+                                            case "creditcards":
+                                                benefitdaos.setCreditCards(stringToBool("" + getbenefits.getValue()));
+                                                break;
+                                            case "livemusic":
+                                                benefitdaos.setLiveMusic(stringToBool("" + getbenefits.getValue()));
+                                                break;
+                                            case "reservation":
+                                                benefitdaos.setReservation(stringToBool("" + getbenefits.getValue()));
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                    a.setBenefitsDao(benefitdaos);
+                                    break;
+                                case "dates":
+                                    for (DataSnapshot getdates : getuuid.getChildren()) {
+                                        switch (getdates.getKey()) {
+                                            case "sunday":
+                                                dateDaos.setSun(stringToBool("" + getdates.getValue()));
+                                                break;
+                                            case "monday":
+                                                dateDaos.setMonday(stringToBool("" + getdates.getValue()));
+                                                break;
+                                            case "tuesday":
+                                                dateDaos.setTuesday(stringToBool("" + getdates.getValue()));
+                                                break;
+                                            case "wednesday":
+                                                dateDaos.setWed(stringToBool("" + getdates.getValue()));
+                                                break;
+                                            case "thursday":
+                                                dateDaos.setThursday(stringToBool("" + getdates.getValue()));
+                                                break;
+                                            case "friday":
+                                                dateDaos.setFriday(stringToBool("" + getdates.getValue()));
+                                                break;
+                                            case "saturday":
+                                                dateDaos.setSaturday(stringToBool("" + getdates.getValue()));
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        //     a.setDateDao(dateDaos);ยังไม่ได้สร้าง
+                                    }
+                                    break;
+                                case "typefoods":
+                                    for (DataSnapshot gettypefoods : getuuid.getChildren()) {
+                                        switch (gettypefoods.getKey()) {
+                                            case "buffet":
+                                                typeResDaos.setChkBuffet(stringToBool("" + gettypefoods.getValue()));
+                                                Log.d("test-" + gettypefoods.getKey(), "" + typeResDaos.isChkBuffet());
+                                                break;
+                                            case "esan-food":
+                                                typeResDaos.setChkEsanfood(stringToBool("" + gettypefoods.getValue()));
+                                                Log.d("test-" + gettypefoods.getKey(), "" + typeResDaos.isChkEsanfood());
+                                                break;
+                                            case "sea-food":
+                                                typeResDaos.setChkSea(stringToBool("" + gettypefoods.getValue()));
+                                                Log.d("pa" + gettypefoods.getKey(), "" + gettypefoods.getValue());
+                                                break;
+                                            case "single-food":
+                                                typeResDaos.setChkSingleFood(stringToBool("" + gettypefoods.getValue()));
+                                                Log.d("pa" + gettypefoods.getKey(), "" + gettypefoods.getValue());
+                                                break;
+                                            case "thai-food":
+                                                typeResDaos.setChkThai(stringToBool("" + gettypefoods.getValue()));
+                                                Log.d("pa" + gettypefoods.getKey(), "" + gettypefoods.getValue());
+                                                break;
+                                            case "wild-food":
+                                                typeResDaos.setChkWildfood(stringToBool("" + gettypefoods.getValue()));
+                                                Log.d("pa" + gettypefoods.getKey(), "" + gettypefoods.getValue());
+                                                break;
+                                            default:
+                                                break;
+                                        }
+
+                                    }
+                                    a.setTypeResDao(typeResDaos);
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                            Log.d("onDataChange: ", "" + getuuid.getValue());
+                        }
+                        //String timeStamp = new SimpleDateFormat("HH.mm.ss").format(Calendar.getInstance().getTime());
+                        String timeStamp = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
+                        if (Integer.parseInt(a.getOpen().substring(0, 2)) <= Integer.parseInt(timeStamp) &&
+                                Integer.parseInt(a.getClose().substring(0, 2)) > Integer.parseInt(timeStamp)) {
+
+                            Log.d("CheckDate: ", "open");
+                            a.setStatus(true);
+                        } else {
+                            Log.d("CheckDate: ", "close");
+                            a.setStatus(false);
+                        }
+                        Log.d("onDataChangeaName: ", "" + a.getName());
+
+                        restaurantList.add(a);
 
 
-                                                         mAdapter = new CardRestaurantSearchAdapter(RestaurantSearchActivity.this, restaurantList);
-                                                         recyclerRes.setAdapter(mAdapter);
-                                                         mapFragment.getMapAsync(RestaurantSearchActivity.this);
-                                                     }
-                                                 }
+                    }
 
-                                                 @Override
-                                                 public void onCancelled(DatabaseError databaseError) {
 
-                                                 }
-                                             });
+                    mAdapter = new CardRestaurantSearchAdapter(RestaurantSearchActivity.this, restaurantList);
+                    recyclerRes.setAdapter(mAdapter);
+                    mapFragment.getMapAsync(RestaurantSearchActivity.this);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -301,7 +368,7 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
             return true;
         if (s.equals("false"))
             return false;
-        throw new IllegalArgumentException(s+" is not a bool. Only 1 and 0 are.");
+        throw new IllegalArgumentException(s + " is not a bool. Only 1 and 0 are.");
     }
 
     private void CheckAuth() {
@@ -330,6 +397,39 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
 
         }
     };
+    private View.OnClickListener  OnClickReconnectBackListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (isNetworkConnected()) {
+                flConnecting.setVisibility(View.GONE);
+                CheckAuth();
+                initRestaurantData();
+            } else {
+                flConnecting.setVisibility(View.VISIBLE);
+                final Dialog dialog = new Dialog(RestaurantSearchActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_disconnect);
+                dialog.setCancelable(true);
+
+                Button button1 = (Button) dialog.findViewById(R.id.button1);
+                button1.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext()
+                                , "Close dialog", Toast.LENGTH_SHORT);
+                        dialog.cancel();
+                    }
+                });
+
+                TextView textView2 = (TextView) dialog.findViewById(R.id.textView2);
+                textView2.setText("Connection to failed");
+
+                dialog.show();
+            }
+
+
+        }
+    };
+
 
     @Override
     public void onDirectionSuccess(Direction direction, String rawBody) {
@@ -372,9 +472,19 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        Log.d("getItemCount2: ",""+ mAdapter.getItemCount());
-       mMap.setMyLocationEnabled(true);
-       // final LatLng FindLoc = new LatLng(13.281169, 100.936234);
+        Log.d("getItemCount2: ", "" + mAdapter.getItemCount());
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+        // final LatLng FindLoc = new LatLng(13.281169, 100.936234);
         Log.d("park:restaurantList: ", "" + restaurantList.size());
         for (int i = 0; i < restaurantList.size(); i++) {
             LatLng FindLoc = new LatLng(restaurantList.get(i).getLatitude(), restaurantList.get(i).getLongitude());
@@ -393,13 +503,13 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
                 //  mMarker = mMap.addMarker(new MarkerOptions().position(loc));
                 if (mMap != null) {
                     requestDirection(myloc, findLoc);
-     //               restaurantList.get(i).setDistance(Dir);
-           //         Log.d( "onMyLocationChange: ",Dir);
+                    //               restaurantList.get(i).setDistance(Dir);
+                    //         Log.d( "onMyLocationChange: ",Dir);
 
                 } else {
                     requestDirection(myloc, findLoc);
-         //           restaurantList.get(i).setDistance(Dir);
-             //       Log.d( "onMyLocationChange: ",Dir);
+                    //           restaurantList.get(i).setDistance(Dir);
+                    //       Log.d( "onMyLocationChange: ",Dir);
                 }
 
             }

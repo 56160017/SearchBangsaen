@@ -13,20 +13,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.buu.se.searchbangsaen.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class RegisterEmailFragment extends Fragment {
@@ -39,10 +35,6 @@ public class RegisterEmailFragment extends Fragment {
     @BindView(R.id.btn_submit) Button btnSubmit;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
-    private String userID;
-    private String email;
-    private String pwd;
 
     private onClickDetailRegisterListener mCallBack;
 
@@ -91,17 +83,44 @@ public class RegisterEmailFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (etEmail != null && etPwd != null) {
-                    if (etPwd.getText().toString().equals(etConfPwd.getText().toString())) {
+
+
+                if (!isValidEmail(etEmail.getText().toString())) {
+                    etEmail.setError("Email is invalid");
+                    return;
+                }
+                if (!isValidPassword(etPwd.getText().toString())) {
+                    etPwd.setError("Password is too short (minimum is 6 characters)");
+                    return;
+                }
+                if (!etPwd.getText().toString().equals(etConfPwd.getText().toString())) {
                         // CreateUser();
-                        mCallBack.onSuccessToRegisterDetailClick(etEmail.getText().toString(), etPwd.getText().toString());
+                    etConfPwd.setError("Password does not match the confirm password.");
+                    return;
                     }
+                mCallBack.onSuccessToRegisterDetailClick(etEmail.getText().toString(), etPwd.getText().toString());
                 }
             }
-        });
+        );
 
     }
 
+    private boolean isValidEmail(String email) {
+        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    // validating password with retype password
+    private boolean isValidPassword(String pass) {
+        if (pass != null && pass.length() > 5) {
+            return true;
+        }
+        return false;
+    }
     public static Fragment newInstance() {
         return new RegisterEmailFragment();
     }

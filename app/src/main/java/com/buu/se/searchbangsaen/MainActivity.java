@@ -79,26 +79,23 @@ public class MainActivity extends AppCompatActivity {
         };
         mStorage = FirebaseStorage.getInstance().getReference();
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            initProfile(user);
-        }
 
         btnRestaurant.setOnClickListener(OnRestaurantClickListener);
         btnHotel.setOnClickListener(OnHotelClickListener);
         tvLogin.setOnClickListener(OnLoginClickListener);
         ivProfile.setOnClickListener(OnProfileClickListener);
-
-
-
     }
 
 
     @Override
     protected void onResume() {
-        super.onResume();
-        mView.dismiss();
 
+        mView.dismiss();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            initProfile(user);
+        }
+        super.onResume();
     }
 
 

@@ -55,8 +55,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:paddingLeft="60dp"
-        android:paddingRight="60dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
         >
 
         <LinearLayout
@@ -84,6 +84,7 @@
                     android:layout_marginLeft="15dp"
                     android:background="#00000000"
                     android:hint="ชื่อ"
+                    android:lines="1"
                     android:inputType="text"
                     android:letterSpacing="0.1"
                     android:textColor="#fff"
@@ -117,6 +118,7 @@
                     android:layout_marginLeft="15dp"
                     android:background="#00000000"
                     android:hint="นามสกุล"
+                    android:lines="1"
                     android:inputType="text"
                     android:letterSpacing="0.1"
                     android:textColor="#fff"
@@ -150,7 +152,9 @@
                     android:layout_marginLeft="15dp"
                     android:background="#00000000"
                     android:hint="เบอร์โทรศัพท์"
-                    android:inputType="textPassword"
+                    android:maxLength="10"
+                    android:lines="1"
+                    android:inputType="number"
                     android:letterSpacing="0.1"
                     android:textColor="#fff"
                     android:textColorHint="#d9e5f3"
@@ -178,12 +182,13 @@
 
                 <EditText
                     android:id="@+id/et_email"
+                    android:lines="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:background="#00000000"
                     android:hint="อีเมล"
-                    android:inputType="textPassword"
+                    android:inputType="textEmailAddress"
                     android:letterSpacing="0.1"
                     android:textColor="#fff"
                     android:textColorHint="#d9e5f3"
@@ -204,6 +209,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="40dp"
                 android:background="#009a9a"
+                android:textColor="#ffffff"
                 android:text="ต่อไป"/>
         </LinearLayout>
         /

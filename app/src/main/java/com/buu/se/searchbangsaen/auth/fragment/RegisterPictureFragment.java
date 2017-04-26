@@ -13,10 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.buu.se.searchbangsaen.R;
-import com.google.firebase.storage.StorageReference;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -38,12 +39,16 @@ public class RegisterPictureFragment extends Fragment {
     @BindView(R.id.btn_create) Button btnCreate;
     @BindView(R.id.txt_level1) TextView txtLevel1;
     @BindView(R.id.iv_profile_add) CircleImageView ivProfileAdd;
+    @BindView(R.id.imv_back) ImageView imvBack;
+    @BindView(R.id.ll_add_pic) LinearLayout llAddPic;
+    @BindView(R.id.ll_del_pic) LinearLayout llDelPic;
+
     // @BindView(R.id.add_img) ImageView addImg;
 
     private onClickCreateDataRegisterListener mCallBack;
     private MediaStore.Images.Media contentResolver;
     public static final int REQUEST_GALLERY = 1;
-
+    private boolean next;
     private Bitmap bitmap;
     private Uri uri;
 
@@ -76,8 +81,7 @@ public class RegisterPictureFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_register_picture, container, false);
         ButterKnife.bind(this, view);
 //        addImgOnClickListener();
-
-
+        next = false;
 
         return view;
     }
@@ -94,22 +98,37 @@ public class RegisterPictureFragment extends Fragment {
                 intent.setType("image/*");
                 startActivityForResult(Intent.createChooser(intent
                         , "Select Picture"), REQUEST_GALLERY);
-
-
             }
         });
-
+        llAddPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent
+                        , "Select Picture"), REQUEST_GALLERY);
+            }
+        });
+        llDelPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ivProfileAdd.setImageDrawable(getResources().getDrawable(R.drawable.user_profile));
+                next = false;
+            }
+        });
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallBack.onSuccessToCreateDataClick(uri);
+                if (next) {
+                    mCallBack.onSuccessToCreateDataClick(uri);
+                }
             }
         });
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_GALLERY && resultCode == RESULT_OK) {
-         uri = data.getData();
+            uri = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
                 ivProfileAdd.setImageBitmap(bitmap);
@@ -119,8 +138,10 @@ public class RegisterPictureFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            next = true;
         }
     }
+
     public static Fragment newInstance() {
         return new RegisterPictureFragment();
     }

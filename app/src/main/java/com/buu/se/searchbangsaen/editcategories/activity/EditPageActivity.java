@@ -3,24 +3,46 @@ package com.buu.se.searchbangsaen.editcategories.activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 
+import com.buu.se.searchbangsaen.MainActivity;
 import com.buu.se.searchbangsaen.R;
 
+import com.buu.se.searchbangsaen.add_categories.dao.AddRestaurantDao;
+import com.buu.se.searchbangsaen.add_categories.fragment.AddDetailResFragment;
+import com.buu.se.searchbangsaen.editcategories.adapter.EditPageShopInAccountAdapter;
 import com.buu.se.searchbangsaen.editcategories.fragment.EditDataPageFragment;
 import com.buu.se.searchbangsaen.editcategories.fragment.EditHotelFragment;
 import com.buu.se.searchbangsaen.editcategories.fragment.EditProfilePageFragment;
+import com.buu.se.searchbangsaen.editcategories.fragment.EditRestarantFragment;
+import com.buu.se.searchbangsaen.utils.CircleTransform;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +55,8 @@ import yalantis.com.sidemenu.interfaces.Resourceble;
 import yalantis.com.sidemenu.interfaces.ScreenShotable;
 import yalantis.com.sidemenu.model.SlideMenuItem;
 
-public class EditPageActivity extends AppCompatActivity implements yalantis.com.sidemenu.util.ViewAnimator.ViewAnimatorListener{
+public class EditPageActivity extends AppCompatActivity implements yalantis.com.sidemenu.util.ViewAnimator.ViewAnimatorListener
+,EditPageShopInAccountAdapter.onEditShopSuccessClickNextListener{
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private List<SlideMenuItem> list = new ArrayList<>();
@@ -44,7 +67,8 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private EditHotelFragment editHotelFragment;
-
+    private StorageReference mStorage;
+    private Uri mUri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +104,13 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
 
             }
         };
+        mStorage = FirebaseStorage.getInstance().getReference();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+           /* initProfile(user);*/
+        }
+
+
     }
 
     private void createMenuList() {
@@ -234,10 +265,47 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
+ /*   private void initProfile(FirebaseUser user) {
+        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+        mRootRef.child("users").child(user.getUid()).child("detail").child("pic").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                StorageReference filepath = mStorage.child("profile").child("" + dataSnapshot.getValue());
+                filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        mUri = uri;
+                    *//* Picasso.with(EditPageActivity.this).load(uri.toString()).transform(new CircleTransform())
+                                .placeholder(getResources().getDrawable(R.drawable.user_profile)).into(ivProfile);*//*
+                    }
+                });
+                //
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }*/
 
 
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
+
+    @Override
+    public void onSuccessToEditClick(AddRestaurantDao addRestaurantDao) {
+        Log.d( "onSuccessToEditClick: ","test");
+
+        EditRestarantFragment myFragment = new EditRestarantFragment(addRestaurantDao);
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.content_frame, myFragment);
+        transaction.commit();
+    }
+
+
 }

@@ -17,6 +17,9 @@ import android.widget.TextView;
 
 import com.buu.se.searchbangsaen.R;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -64,6 +67,24 @@ public class RegisterDetailFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (etName.getText().toString().trim().matches("")) {
+                    etName.setError("Username is invalid");
+                    return;
+                }
+                if(etSname.getText().toString().trim().matches("")){
+                    etName.setError("Surname is invalid");
+                    return;
+                }
+                if(etNbPhone.getText().toString().trim().matches("")){
+                    etNbPhone.setError("Number Phone is invalid");
+                    return;
+                }
+                if(!isValidEmail(etEmail.getText().toString())){
+                    etEmail.setError("Email is invalid");
+                    return;
+                }
+
+
                 mCallBack.onSuccessToRegisterPictureClick(etName.getText().toString(), etSname.getText().toString()
                         , etNbPhone.getText().toString(), etEmail.getText().toString());
             }
@@ -79,7 +100,22 @@ public class RegisterDetailFragment extends Fragment {
             }
         });
     }
+    private boolean isValidEmail(String email) {
+        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    // validating password with retype password
+    private boolean isValidPassword(String pass) {
+        if (pass != null && pass.length() > 5) {
+            return true;
+        }
+        return false;
+    }
     public static Fragment newInstance() {
         return new RegisterDetailFragment();
     }

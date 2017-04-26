@@ -67,11 +67,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
-        <activity
-            android:name=".hotel_categories.activity.DetailHotelActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+
         <activity
             android:name=".MapDirectionActivity"
             android:label="@string/title_activity_map_direction"
@@ -85,7 +81,8 @@
         <activity
             android:name=".editcategories.activity.EditPageActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
         <activity
             android:name=".add_categories.activity.AddRestaurantActivity"
