@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.buu.se.searchbangsaen.add_categories.fragment.AddBenefitsResFragment;
 import com.buu.se.searchbangsaen.add_categories.fragment.AddDetailResFragment;
 import com.buu.se.searchbangsaen.add_categories.fragment.AddLatLngResFragment;
+import com.buu.se.searchbangsaen.add_categories.fragment.AddPictureResFragment;
 
 /**
  * Created by Dell on 10/04/2560.
@@ -30,7 +31,9 @@ public class AddRestaurantAdapter extends FragmentStatePagerAdapter {
         } else if (1 == position) {
                 // mFragment = RegisterEmailFragment.newInstance();
                 mFragment = AddLatLngResFragment.newInstance();
-            }else{
+        } else if (2 == position) {
+            mFragment = AddPictureResFragment.newInstance();
+        } else {
             mFragment = AddBenefitsResFragment.newInstance();
             }
         return mFragment;
@@ -38,7 +41,7 @@ public class AddRestaurantAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @Override

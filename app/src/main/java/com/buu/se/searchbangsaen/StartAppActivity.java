@@ -1,15 +1,11 @@
 package com.buu.se.searchbangsaen;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.PorterDuff;
-import android.graphics.Rect;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.LayoutDirection;
 
 import com.codemybrainsout.onboarder.AhoyOnboarderActivity;
 import com.codemybrainsout.onboarder.AhoyOnboarderCard;
@@ -24,7 +20,18 @@ public class StartAppActivity extends AhoyOnboarderActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_start_app);
+        SharedPreferences sp = getSharedPreferences("landding_pg", Context.MODE_PRIVATE);
+        int pg_id = sp.getInt("pg", 0);
+        if (pg_id == 1) {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        sp = getSharedPreferences("landding_pg", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("pg", 1);
+        editor.commit();
+
         AhoyOnboarderCard ahoyOnboarderCardFirst = new AhoyOnboarderCard("Search Bangsean", "Easy Sreach Easy Go!!", R.drawable.ic_coconut);
         ahoyOnboarderCardFirst.setTitleTextSize(30);
         ahoyOnboarderCardFirst.setDescriptionTextSize(25);
@@ -36,7 +43,7 @@ public class StartAppActivity extends AhoyOnboarderActivity {
         ahoyOnboarderCard2.setDescriptionTextSize(25);
         AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("เริ่มใช้งานกันเลย!!", "", R.drawable.ic_reward);
         ahoyOnboarderCard3.setTitleTextSize(30);
-      //  ahoyOnboarderCard2.setDescriptionTextSize(25);
+
 
         ahoyOnboarderCardFirst.setBackgroundColor(R.color.black_transparent);
         ahoyOnboarderCard1.setBackgroundColor(R.color.black_transparent);
@@ -51,15 +58,12 @@ public class StartAppActivity extends AhoyOnboarderActivity {
             page.setTitleColor(R.color.white);
             page.setDescriptionColor(R.color.grey_200);
         }
-       // ahoyOnboarderCardFirst.setIconLayoutParams(500,500,50,0,0,0);
+
 
         setFinishButtonTitle("เริ่มต้นใช้งาน");
         setFinishButtonDrawableStyle(getResources().getDrawable(R.drawable.btn_submit_first_page));
         showNavigationControls(false);
 
-        //setGradientBackground();
-       // setImageBackground(R.drawable.bg_landing);
-          //  setImageBackground(R.drawable.bg_landing);
 
         List<Integer> colorList = new ArrayList<>();
         colorList.add(R.color.solid_frist);
@@ -72,8 +76,7 @@ public class StartAppActivity extends AhoyOnboarderActivity {
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/DB_ThaiText/DB_ThaiText_Bold_X.ttf");
 
         setFont(face);
-//        setInactiveIndicatorColor(R.color.grey_600);
-//        setActiveIndicatorColor(R.color.white);
+
         setOnboardPages(pages);
     }
 
@@ -86,7 +89,6 @@ public class StartAppActivity extends AhoyOnboarderActivity {
 
     @Override
     public void onFinishButtonPressed() {
-       // Toast.makeText(this, "Finish Pressed", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
         finish();

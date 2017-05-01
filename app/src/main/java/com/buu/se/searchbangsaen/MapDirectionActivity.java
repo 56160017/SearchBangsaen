@@ -1,6 +1,5 @@
 package com.buu.se.searchbangsaen;
 
-import android.*;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -9,11 +8,15 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.akexorcist.googledirection.DirectionCallback;
 import com.akexorcist.googledirection.GoogleDirection;
@@ -30,19 +33,13 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
-import com.vistrav.ask.Ask;
-import com.vistrav.ask.annotations.AskDenied;
-import com.vistrav.ask.annotations.AskGranted;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,6 +50,8 @@ public class MapDirectionActivity extends FragmentActivity implements OnMapReady
 
     @BindView(R.id.tv_direction)
     TextView tvDirection;
+
+    private static final int REQUEST_LOCATION_PER = 103;
     private GoogleMap mMap;
     private String serverkey;
     private Marker mMarker;
@@ -72,7 +71,7 @@ public class MapDirectionActivity extends FragmentActivity implements OnMapReady
     private double locationLatitude = 0;
     private double locationLongitude = 0;
 
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -86,14 +85,7 @@ public class MapDirectionActivity extends FragmentActivity implements OnMapReady
         locationLongitude = in.getDoubleExtra("lng", 0.00);
         locationName = in.getStringExtra("name");
         locationLoc = in.getStringExtra("loc");
-        Ask.on(this)
-                .forPermissions(Manifest.permission.ACCESS_COARSE_LOCATION
-                        , Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        , Manifest.permission.ACCESS_FINE_LOCATION
-                        , Manifest.permission.ACCESS_FINE_LOCATION)
-                .withRationales("Location permission need for map to work properly",
-                        "In order to save file you will need to grant storage permission") //optional
-                .go();
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -101,13 +93,19 @@ public class MapDirectionActivity extends FragmentActivity implements OnMapReady
         mapFragment.getMapAsync(this);
 
         serverkey = getResources().getString(R.string.google_maps_key);
+
     }
 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {  //เช็ค permission
+            checkLocationPermission();
+        } else {
+            mMap.setMyLocationEnabled(true);
+        }
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -115,9 +113,8 @@ public class MapDirectionActivity extends FragmentActivity implements OnMapReady
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        mMap.setMyLocationEnabled(true);
+
+
         // Add a marker in Sydney and move the camera
         //13.281169, 100.936234
         final LatLng FindLoc = new LatLng(locationLatitude, locationLongitude);
@@ -136,6 +133,7 @@ public class MapDirectionActivity extends FragmentActivity implements OnMapReady
             @Override
             public void onMyLocationChange(Location location) {
                 LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+                Log.d("onMyLocationChange2: ", "getLatitude:" + loc.latitude + "  getLongitude:" + loc.longitude);
                 //  mMarker = mMap.addMarker(new MarkerOptions().position(loc));
                 if (mMap != null) {
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 15.0f));
@@ -155,6 +153,40 @@ public class MapDirectionActivity extends FragmentActivity implements OnMapReady
                 .execute(MapDirectionActivity.this);
 
     }
+
+    private boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PER);
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PER);
+            }
+            return false;
+        }
+        return true;
+    }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_LOCATION_PER: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                     /*   if(mGoogleApiClient == null){
+                            build
+
+                        }*/
+                        mMap.setMyLocationEnabled(true);
+                    }
+                } else {
+                    Toast.makeText(this, "Permission false", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
 
     @Override
     public void onDirectionSuccess(Direction direction, String rawBody) {
@@ -231,7 +263,6 @@ public class MapDirectionActivity extends FragmentActivity implements OnMapReady
                 continue;
             }
             if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
-                // Found best last known location: %s", l);
                 bestLocation = l;
             }
         }
@@ -241,14 +272,6 @@ public class MapDirectionActivity extends FragmentActivity implements OnMapReady
     private LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
-//            CameraPosition cameraPosition = new CameraPosition.Builder()
-//                    .target(new LatLng(location.getLatitude(), location.getLongitude()))
-//                    .zoom(14)
-//                    .build();
-//
-//            if (mMap != null) {
-//                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-//            }
             getMyLocation();
         }
 
@@ -288,53 +311,6 @@ public class MapDirectionActivity extends FragmentActivity implements OnMapReady
     @Override
     public void onDirectionFailure(Throwable t) {
 
-    }
-
-    @AskGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    public void fileAccessGranted() {
-        Log.i(TAG, "FILE  GRANTED");
-    }
-
-    //optional
-    @AskDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    public void fileAccessDenied() {
-        Log.i(TAG, "FILE  DENiED");
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        mMap.setMyLocationEnabled(true);
-    }
-
-    //optional
-    @AskGranted(Manifest.permission.ACCESS_COARSE_LOCATION)
-    public void mapAccessGranted() {
-        Log.i(TAG, "MAP GRANTED");
-    }
-
-    //optional
-    @AskDenied(Manifest.permission.ACCESS_COARSE_LOCATION)
-    public void mapAccessDenied() {
-        Log.i(TAG, "MAP DENIED");
-    }
-
-    //optional
-    @AskGranted(Manifest.permission.ACCESS_COARSE_LOCATION)
-    public void myLocationGranted() {
-        //  mMap.setMyLocationEnabled(true);
-        Log.i(TAG, "MAP GRANTED");
-    }
-
-    //optional
-    @AskDenied(Manifest.permission.ACCESS_COARSE_LOCATION)
-    public void myLocationDenied() {
-        Log.i(TAG, "MAP DENIED");
     }
 
     @Override

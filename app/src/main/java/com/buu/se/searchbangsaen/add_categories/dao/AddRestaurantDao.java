@@ -1,6 +1,10 @@
 package com.buu.se.searchbangsaen.add_categories.dao;
 
+import android.net.Uri;
+
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.List;
 
 /**
  * Created by Dell on 10/04/2560.
@@ -17,6 +21,9 @@ public class AddRestaurantDao {
     private String resDate;
     private String resAddress;
     private LatLng resLatLng;
+    private List<Uri> mUri;
+
+
 
     public DateDao getResDateDao() {
         return resDateDao;
@@ -96,5 +103,13 @@ public class AddRestaurantDao {
 
     public void setResLatLng(LatLng resLatLng) {
         this.resLatLng = resLatLng;
+    }
+
+    public List<Uri> getmUri() {
+        return mUri;
+    }
+
+    public void setmUri(List<Uri> mUri) {
+        this.mUri = mUri;
     }
 }

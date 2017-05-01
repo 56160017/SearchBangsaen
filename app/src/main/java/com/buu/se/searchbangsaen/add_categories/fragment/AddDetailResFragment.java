@@ -9,13 +9,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.buu.se.searchbangsaen.R;
 import com.buu.se.searchbangsaen.add_categories.dao.DateDao;
@@ -44,6 +43,7 @@ public class AddDetailResFragment extends Fragment {
     @BindView(R.id.chkFriday) CheckBox chkFriday;
     @BindView(R.id.chkSaturday) CheckBox chkSaturday;
     @BindView(R.id.et_address) EditText etAddress;
+    @BindView(R.id.text_error) TextView textError;
     private onAddDetailSuccessClickNextListener mCallBack;
     private String TimeOpen;
     private String TimeClose;
@@ -52,9 +52,10 @@ public class AddDetailResFragment extends Fragment {
 
 
     public interface onAddDetailSuccessClickNextListener {
-        void onSuccessToAddDetailClick(String NameFood,String PhoneNumber
-                                        ,String TimeOpen,String TimeClose,DateDao dateDao,String Date
-                                        ,String Address);
+        void onSuccessToAddDetailClick(String NameFood, String PhoneNumber
+                , String TimeOpen, String TimeClose, DateDao dateDao, String Date
+                , String Address);
+
         void onDetailBackPress();
     }
 
@@ -87,9 +88,10 @@ public class AddDetailResFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Validate();
-                AddDataChkDate();
-                AddDataToActivity();
+                if (Validate()) {
+                    AddDataChkDate();
+                    AddDataToActivity();
+                }
             }
         });
 
@@ -97,7 +99,7 @@ public class AddDetailResFragment extends Fragment {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               mCallBack.onDetailBackPress();
+                mCallBack.onDetailBackPress();
 
             }
         });
@@ -171,7 +173,7 @@ public class AddDetailResFragment extends Fragment {
 
 
     private void AddDataChkDate() {
-       // dateDao.setSun(chkSun.isChecked());
+        // dateDao.setSun(chkSun.isChecked());
         dateDao.setSun(chkSun.isChecked());
         dateDao.setMonday(chkMonday.isChecked());
         dateDao.setTuesday(chktuesday.isChecked());
@@ -180,25 +182,25 @@ public class AddDetailResFragment extends Fragment {
         dateDao.setFriday(chkFriday.isChecked());
         dateDao.setSaturday(chkSaturday.isChecked());
         sDate = "";
-        if(chkSun.isChecked()){
+        if (chkSun.isChecked()) {
             sDate += "อา. ";
         }
-        if(chkMonday.isChecked()){
+        if (chkMonday.isChecked()) {
             sDate += "จ. ";
         }
-        if(chktuesday.isChecked()){
+        if (chktuesday.isChecked()) {
             sDate += "อ. ";
         }
-        if(chkWed.isChecked()){
+        if (chkWed.isChecked()) {
             sDate += "พ. ";
         }
-        if(chkThursday.isChecked()){
+        if (chkThursday.isChecked()) {
             sDate += "พฤ. ";
         }
-        if(chkFriday.isChecked()){
+        if (chkFriday.isChecked()) {
             sDate += "ศ. ";
         }
-        if(chkSaturday.isChecked()){
+        if (chkSaturday.isChecked()) {
             sDate += "ส.";
         }
 
@@ -209,19 +211,69 @@ public class AddDetailResFragment extends Fragment {
         mCallBack.onSuccessToAddDetailClick(
                 etAddFood.getText().toString()
                 , etAddPhone.getText().toString()
-                , TimeOpen, TimeClose, dateDao,sDate
+                , TimeOpen, TimeClose, dateDao, sDate
                 , etAddress.getText().toString()
-                );
+        );
     }
-    private void Validate(){
-        /*if(etAddFood.getText() == null || etAddFood.getText().toString() == ""){
-            etAddFood.setHint("กรุณากรอก");
-            etAddFood.setHintTextColor(getResources().getColor(R.color.Text_error));
 
-            return true;
+    private Boolean Validate() {
+        if (etAddFood.getText().toString().trim().matches("")) {
+            etAddFood.setError("กรุณากรอกให้ครบถ้วน");
+            return false;
+        }
+       if (etAddPhone.getText().toString().matches("")) {
+            etAddPhone.setError("กรุณากรอกให้ครบถ้วน");
+            return false;
+        }
+        if (etAddress.getText().toString().trim().matches("")) {
+            etAddress.setError("กรุณากรอกให้ครบถ้วน");
+            return false;
+        }
+        if (etTimeOpen.getText().toString().trim().matches("")) {
+
+            return false;
+        }
+        if (etTimeClose.getText().toString().trim().matches("")) {
+
+            return false;
+        }
+    /*    if (dateDao.isSun() || dateDao.isMonday() || dateDao.isTuesday() || dateDao.isWed() || dateDao.isThursday() || dateDao.isFriday() || dateDao.isSaturday()) {
+            return false;
+        }*/
+
+        if (!chkDay()) {
+            textError.setVisibility(View.VISIBLE);
+            return false;
+        }else{
+            textError.setVisibility(View.GONE);
         }
 
-       return false;*/
+        return true;
+    }
+
+    private boolean chkDay() {
+        if (chkSun.isChecked()) {
+            return true;
+        }
+        if (chkMonday.isChecked()) {
+            return true;
+        }
+        if (chktuesday.isChecked()) {
+            return true;
+        }
+        if (chkWed.isChecked()) {
+            return true;
+        }
+        if (chkThursday.isChecked()) {
+            return true;
+        }
+        if (chkFriday.isChecked()) {
+            return true;
+        }
+        if (chkSaturday.isChecked()) {
+            return true;
+        }
+        return false;
     }
 
 

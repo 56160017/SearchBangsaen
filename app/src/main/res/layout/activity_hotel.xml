@@ -5,17 +5,27 @@
     android:id="@+id/activity_hotel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context="com.buu.se.searchbangsaen.hotel_categories.activity.HotelActivity">
 
     <include layout="@layout/toolbar"
         />
+    <RelativeLayout
+        android:layout_below="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/bg_hotel"
+            android:layout_height="match_parent">
+        </FrameLayout>
     <android.support.v7.widget.RecyclerView
         style="@style/TextViewDBThaiText"
         android:id="@+id/recycler_hotel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tvTitle"
-        android:background="@color/background_detail"
+
         android:overScrollMode="never"
         android:scrollbars="vertical"/>
+    </RelativeLayout>
 </RelativeLayout>

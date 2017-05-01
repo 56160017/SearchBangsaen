@@ -11,5 +11,10 @@
         android:id="@+id/fl_add_swipe_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
+    <FrameLayout
+        android:background="@android:color/transparent"
+        android:id="@+id/fl_pg"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

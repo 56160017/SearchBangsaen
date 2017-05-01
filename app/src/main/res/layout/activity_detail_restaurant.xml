@@ -246,6 +246,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
+            android:textColor="#60d9cb"
             android:layout_margin="5dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/btn_border_submit"

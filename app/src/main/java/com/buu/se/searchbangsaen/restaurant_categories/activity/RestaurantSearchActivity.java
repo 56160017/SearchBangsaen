@@ -8,9 +8,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.ConnectivityManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,16 +32,20 @@ import com.akexorcist.googledirection.GoogleDirection;
 import com.akexorcist.googledirection.constant.TransportMode;
 import com.akexorcist.googledirection.constant.Unit;
 import com.akexorcist.googledirection.model.Direction;
+import com.bluehomestudio.progressimage.ProgressPicture;
 import com.buu.se.searchbangsaen.R;
-import com.buu.se.searchbangsaen.add_categories.dao.DateDao;
 import com.buu.se.searchbangsaen.add_categories.dao.TypeResDao;
 import com.buu.se.searchbangsaen.auth.activity.AuthActivity;
 import com.buu.se.searchbangsaen.restaurant_categories.adapter.CardRestaurantSearchAdapter;
 import com.buu.se.searchbangsaen.restaurant_categories.dao.BenefitsDao;
+import com.buu.se.searchbangsaen.restaurant_categories.dao.DatesDao;
 import com.buu.se.searchbangsaen.restaurant_categories.dao.RestaurantDao;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.location.LocationAvailability;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,51 +58,67 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class RestaurantSearchActivity extends AppCompatActivity implements OnMapReadyCallback, DirectionCallback, GoogleMap.OnMyLocationChangeListener {
+public class RestaurantSearchActivity extends AppCompatActivity implements
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     @BindView(R.id.recycler_res) RecyclerView recyclerRes;
     @BindView(R.id.ivBack) ImageView ivBack;
     @BindView(R.id.ivAdd) ImageView ivAdd;
     @BindView(R.id.btn_connecting) Button btnConnecting;
     @BindView(R.id.fl_connecting) FrameLayout flConnecting;
+    @BindView(R.id.fl_map) FrameLayout flMap;
 
 
     private RecyclerView.LayoutManager mLayoutManager;
     private CardRestaurantSearchAdapter mAdapter;
 
     //map
-    private GoogleMap mMap;
     private String serverkey;
     private GoogleApiClient googleApiClient;
-    private Location location;
-    private String Dir;
+
+
+    //permission
+    private static final int REQUEST_LOCATION_PER = 103;
+
 
     private List<RestaurantDao> restaurantList;
 
     //FirebaseAuth
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private ProgressDialog progressDialog;
-    private StorageReference mStorage; //test
-    private SupportMapFragment mapFragment;
+    private StorageReference mStorage;
+    private int incheckData;
+    private ProgressPicture progressPicture;
 
-    public RestaurantSearchActivity() {
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_search);
         ButterKnife.bind(this);
+        Log.d("test", "onCreate");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {  //เช็ค permission
+            checkLocationPermission();
+        }
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -117,29 +141,64 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
             }
         };
 
-         /*   restaurantList.add(new RestaurantDao(1, "ครัวน้องเบสท์", "จันทร์ - ศุกร์", "10.00", "22.00", "06-28354459", "27/1 บางแสนสาย 4 เหนือ ต.แสนสุข อ.เมือง จ.ชลบุรี", "OPEN", "2", 13.290641, 100.926289, tfDao, benefDao));
-        restaurantList.add(new RestaurantDao(2, "ชาบูบู๊ตึ๊ง", "จันทร์ - พฤหัสบดี", "10.30", "22.30", "087-3377878", "19/15 บางแสนสาย 4 ใต้ ต.แสนสุข อ อ.เมือง จ.ชลบุรี", "OPEN", "3", 13.283835, 100.928929, tfDao, benefDao2));
-        restaurantList.add(new RestaurantDao(3, "เตี๋ยวลิงลงเรือ", "พุธ - อาทิตย์", "08.00", "19.00", "089-2526163", "18/1 ถ.วชิรปราการ ต.บางปลาสร้อย อ.เมือง จ.ชลบุรี", "OPEN", "5.2", 13.357047, 100.982697, tfDao, benefDao3));
-        restaurantList.add(new RestaurantDao(4, "ก๋วยเตี๋ยวไง บางแสน", "จันทร์ - เสาร์", "11.30", "20.00", "093-9655565 ", "ก่อนถึง ม.บูรพา เจอร้าน ม.หมูกะทะ เลี้ยวซ้ายไปประมาณ 100 เมตรร้านอยู่ขวามือ", "OPEN", "9.4", 13.285760, 100.931292, tfDao, benefDao5));
-        RestaurantDao test = new RestaurantDao(5, "ก๋วยเตี๋ยวไง บางแสน", "จันทร์ - เสาร์", "11.30", "20.00", "093-9655565 ", "ก่อนถึง ม.บูรพา เจอร้าน ม.หมูกะทะ เลี้ยวซ้ายไปประมาณ 100 เมตรร้านอยู่ขวามือ", "OPEN", "9.4", 13.285760, 100.931292, tfDao, benefDao5);
-        restaurantList.add(test);*/
         ivBack.setOnClickListener(OnClickBackListener);
         ivAdd.setOnClickListener(OnClickAddBackListener);
         btnConnecting.setOnClickListener(OnClickReconnectBackListener);
 
         serverkey = getResources().getString(R.string.google_maps_key);
-        mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map_fake);
+            checkInternet();
 
+
+
+
+
+    }
+
+    private boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PER);
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PER);
+            }
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_LOCATION_PER: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                     /*   if(mGoogleApiClient == null){
+                            build
+
+                        }*/
+
+                    }
+                } else {
+                    Toast.makeText(this, "Permission false", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        //checkInternet();
+        Log.d("test", "onResume");
+    }
 
+    private void checkInternet() {
         if (isNetworkConnected()) {
             flConnecting.setVisibility(View.GONE);
-            CheckAuth();
+
             initRestaurantData();
         } else {
             flConnecting.setVisibility(View.VISIBLE);
@@ -156,15 +215,10 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
                     dialog.cancel();
                 }
             });
-
-           /* TextView textView1 = (TextView) dialog.findViewById(R.id.textView1);
-            textView1.setText("Warning!");*/
             TextView textView2 = (TextView) dialog.findViewById(R.id.textView2);
             textView2.setText("Connection to failed");
-
             dialog.show();
         }
-
     }
 
     private boolean isNetworkConnected() {
@@ -173,17 +227,6 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
     }
 
     private void initRestaurantData() {
-        /*final List<String> tfDao = new ArrayList<>();
-        tfDao.add("อาหารทะเล");
-        tfDao.add("อาหารจานเดียว");
-        tfDao.add("อาหารตามสั่ง");
-        tfDao.add("อาหารไทย");*/
-        //add befinet
-    /*    final BenefitsDao benefDao = new BenefitsDao(true, true, true, true, true);
-        BenefitsDao benefDao2 = new BenefitsDao(false, false, false, false, false);
-        BenefitsDao benefDao3 = new BenefitsDao(false, true, false, true, false);
-        BenefitsDao benefDao5 = new BenefitsDao(true, false, false, false, true);
-*/
         restaurantList = new ArrayList<>();
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
         Query query = mRootRef.child("restaurant");
@@ -192,25 +235,19 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists()) {
-                    //Log.d("onDataChange: ","test");
-                    // dataSnapshot is the "issue" node with all children with id 0
                     int i = 0;
-
                     for (DataSnapshot uuid : dataSnapshot.getChildren()) {
                         Log.d("onDataChangeID: ", "" + uuid.getKey());
                         RestaurantDao a = new RestaurantDao();
                         BenefitsDao benefitdaos = new BenefitsDao();
                         TypeResDao typeResDaos = new TypeResDao();
-                        DateDao dateDaos = new DateDao();
-
-
+                        DatesDao dateDaos = new DatesDao();
+                        List<Uri> mUri = new ArrayList<Uri>();
                         i++;
                         for (DataSnapshot getuuid : uuid.getChildren()) {
 
                             a.setId(i);
-                            a.setDistance("2");
-                            //     a.setTfDao(tfDao);
-                            //      a.setBenefitsDao(benefDao);
+                            a.setDistance("กำลังคำนวณ");
                             switch (getuuid.getKey()) {
                                 case "name":
                                     a.setName("" + getuuid.getValue());
@@ -287,7 +324,7 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
                                             default:
                                                 break;
                                         }
-                                        //     a.setDateDao(dateDaos);ยังไม่ได้สร้าง
+                                        a.setDatesDao(dateDaos);//ยังไม่ได้สร้าง
                                     }
                                     break;
                                 case "typefoods":
@@ -324,24 +361,27 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
                                     }
                                     a.setTypeResDao(typeResDaos);
                                     break;
-
+                                //////////////////
+                                case "pic":
+                                    for (DataSnapshot getpics : getuuid.getChildren()) {
+                                        mUri.add(Uri.parse("" + getpics.getValue()));
+                                        Log.d("getpics//" + getpics.getKey() + ":", " " + getpics.getValue());
+                                    }
+                                    //    a.setTypeResDao(typeResDaos);
+                                    a.setmUri(mUri);
+                                    break;
+//////////////////////////
                                 default:
                                     break;
                             }
                             Log.d("onDataChange: ", "" + getuuid.getValue());
                         }
                         //String timeStamp = new SimpleDateFormat("HH.mm.ss").format(Calendar.getInstance().getTime());
-                        String timeStamp = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
-                        if (Integer.parseInt(a.getOpen().substring(0, 2)) <= Integer.parseInt(timeStamp) &&
-                                Integer.parseInt(a.getClose().substring(0, 2)) > Integer.parseInt(timeStamp)) {
 
-                            Log.d("CheckDate: ", "open");
-                            a.setStatus(true);
-                        } else {
-                            Log.d("CheckDate: ", "close");
-                            a.setStatus(false);
-                        }
-                        Log.d("onDataChangeaName: ", "" + a.getName());
+                        String timeStamp = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
+                        Log.d("a.getOpen()", a.getOpen());
+
+                        a.setStatus(isRestaurantopne(a, timeStamp));
 
                         restaurantList.add(a);
 
@@ -350,8 +390,9 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
 
 
                     mAdapter = new CardRestaurantSearchAdapter(RestaurantSearchActivity.this, restaurantList);
-                    recyclerRes.setAdapter(mAdapter);
-                    mapFragment.getMapAsync(RestaurantSearchActivity.this);
+                    //  recyclerRes.setAdapter(mAdapter);
+
+                    //    mapFragment.getMapAsync(RestaurantSearchActivity.this);
                 }
             }
 
@@ -363,6 +404,36 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
 
     }
 
+    private boolean isRestaurantopne(RestaurantDao a, String timeStamp) {
+        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
+        String format = s.format(new Date());
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date;
+        try {
+            date = dateformat.parse(format);
+            DateFormat dayFormate = new SimpleDateFormat("EEEE");
+            String dayFromDate = dayFormate.format(date);
+            Log.d("asd", "----------:: " + dayFromDate);
+           /* if (dayFromDate.matches(a.getDateDao().isFriday())) {
+
+            }*/
+            if (a.getDatesDao().isSun()) {
+                if (dayFromDate.matches("วันอาทิตย์")) {
+                    if (Integer.parseInt(a.getOpen().substring(0, 2)) <= Integer.parseInt(timeStamp) &&
+                            Integer.parseInt(a.getClose().substring(0, 2)) > Integer.parseInt(timeStamp)) {
+                        Log.d("CheckDate: ", "open");
+                        return true;
+                    }
+                }
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     public static boolean stringToBool(String s) {
         if (s.equals("true"))
             return true;
@@ -371,15 +442,6 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
         throw new IllegalArgumentException(s + " is not a bool. Only 1 and 0 are.");
     }
 
-    private void CheckAuth() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            Log.d("CheckAuth: ", user.getUid());
-
-        } else {
-
-        }
-    }
 
 
     private View.OnClickListener OnClickBackListener = new View.OnClickListener() {
@@ -397,82 +459,102 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
 
         }
     };
-    private View.OnClickListener  OnClickReconnectBackListener = new View.OnClickListener() {
+    private View.OnClickListener OnClickReconnectBackListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (isNetworkConnected()) {
-                flConnecting.setVisibility(View.GONE);
-                CheckAuth();
-                initRestaurantData();
-            } else {
-                flConnecting.setVisibility(View.VISIBLE);
-                final Dialog dialog = new Dialog(RestaurantSearchActivity.this);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.dialog_disconnect);
-                dialog.setCancelable(true);
-
-                Button button1 = (Button) dialog.findViewById(R.id.button1);
-                button1.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        Toast.makeText(getApplicationContext()
-                                , "Close dialog", Toast.LENGTH_SHORT);
-                        dialog.cancel();
-                    }
-                });
-
-                TextView textView2 = (TextView) dialog.findViewById(R.id.textView2);
-                textView2.setText("Connection to failed");
-
-                dialog.show();
-            }
+            checkInternet();
 
 
         }
     };
 
 
-    @Override
+  /*  @Override
     public void onDirectionSuccess(Direction direction, String rawBody) {
         Log.d("park:DirectionSuccess: ", direction.getStatus());
         Log.d("park:DirectionSuccess: ", " " + direction.getRouteList().get(0).getLegList().get(0).getDistance().getText());
-        Dir = direction.getRouteList().get(0).getLegList().get(0).getDistance().getText();
+      *//*  Dir.add(""+direction.getRouteList().get(0).getLegList().get(0).getDistance().getText());
+      *//*
+        restaurantList.get(0).setDistance(""+direction.getRouteList().get(0).getLegList().get(0).getDistance().getText());
     }
 
     @Override
     public void onDirectionFailure(Throwable t) {
         Log.d("onDirectionSuccess: ", "bad");
     }
+*/
 
-
-    private void requestDirection(LatLng current, LatLng destination) {
+    private void requestDirection(LatLng current, LatLng destination, final int i) {
         GoogleDirection.withServerKey(serverkey)
                 .from(current)
                 .to(destination)
                 .transportMode(TransportMode.DRIVING)
                 .unit(Unit.METRIC)
-                .execute(RestaurantSearchActivity.this);
+                .execute(new DirectionCallback() {
+                    @Override
+                    public void onDirectionSuccess(Direction direction, String rawBody) {
+                        Log.d("park:DirectionSuccess: ", " " + direction.getRouteList().get(0).getLegList().get(0).getDistance().getText());
+                        restaurantList.get(i).setDistance("" + direction.getRouteList().get(0).getLegList().get(0).getDistance().getText());
+
+                    }
+
+                    @Override
+                    public void onDirectionFailure(Throwable t) {
+                        Log.d("park:DirectionSuccess: ", "false");
+                    }
+                });
     }
 
 
     @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    public void onLocationChanged(Location location) {
+        // TODO Auto-generated method stub
+
+        Double latitude = (location.getLatitude());
+        Double longitude = (location.getLongitude());
+        Log.d("onMyLocationChange1", "Latitude: " + latitude + ", Longitude: " + longitude);
+        LatLng myLoc = new LatLng(latitude, longitude);
+        //  Log.d("park:restaurantList: ", "" + restaurantList.size());
+        // requestDirection(myLoc,);
+        // LatLng FindLoc = new LatLng(13.290419, 100.926324);
+        //distance
+        LatLng FindLoc;
+        for (int i = 0; i < restaurantList.size(); i++) {
+            FindLoc = new LatLng(restaurantList.get(i).getLatitude(), restaurantList.get(i).getLongitude());
+            requestDirection(myLoc, FindLoc, i);
+
+            Log.d("park:DirectionSuccess23: ", restaurantList.get(i).getName());
+
+        }
+
+        mAdapter = new CardRestaurantSearchAdapter(RestaurantSearchActivity.this, restaurantList);
+        recyclerRes.setAdapter(mAdapter);
+
     }
 
-
     @Override
-    public void onMyLocationChange(Location location) {
-
-        final LatLng FindLoc = new LatLng(13.281169, 100.936234);
-        final LatLng myLoc = new LatLng(location.getLatitude(), location.getLongitude());
-        requestDirection(myLoc, FindLoc);
+    public void onStart() {
+        super.onStart();
+        Log.d("test", "onStart");
+        mAuth.addAuthStateListener(mAuthListener);
+        googleApiClient.connect();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+        if (googleApiClient != null && googleApiClient.isConnected()) {
+            // Disconnect Google API Client if available and connected
+            googleApiClient.disconnect();
+        }
+        Log.d("test", "onStop");
+    }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        Log.d("getItemCount2: ", "" + mAdapter.getItemCount());
+    public void onConnected(@Nullable Bundle bundle) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -483,52 +565,32 @@ public class RestaurantSearchActivity extends AppCompatActivity implements OnMap
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        mMap.setMyLocationEnabled(true);
-        // final LatLng FindLoc = new LatLng(13.281169, 100.936234);
-        Log.d("park:restaurantList: ", "" + restaurantList.size());
-        for (int i = 0; i < restaurantList.size(); i++) {
-            LatLng FindLoc = new LatLng(restaurantList.get(i).getLatitude(), restaurantList.get(i).getLongitude());
-            //SetmLocToLct(FindLoc,i);
-            // requestDirection(myloc, findLoc);
-        }
-       /* mAdapter = new CardRestaurantSearchAdapter(RestaurantSearchActivity.this, restaurantList);
-        recyclerRes.setAdapter(mAdapter);*/
-    }
-
-    private void SetmLocToLct(final LatLng findLoc, final int i) {
-        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-            @Override
-            public void onMyLocationChange(Location location) {
-                LatLng myloc = new LatLng(location.getLatitude(), location.getLongitude());
-                //  mMarker = mMap.addMarker(new MarkerOptions().position(loc));
-                if (mMap != null) {
-                    requestDirection(myloc, findLoc);
-                    //               restaurantList.get(i).setDistance(Dir);
-                    //         Log.d( "onMyLocationChange: ",Dir);
-
-                } else {
-                    requestDirection(myloc, findLoc);
-                    //           restaurantList.get(i).setDistance(Dir);
-                    //       Log.d( "onMyLocationChange: ",Dir);
-                }
-
-            }
-        });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
+        LocationAvailability locationAvailability = LocationServices.FusedLocationApi.getLocationAvailability(googleApiClient);
+        if (locationAvailability.isLocationAvailable()) {
+            LocationRequest locationRequest = new LocationRequest()
+                    .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                    .setNumUpdates(1)
+                    .setInterval(0);
+            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+            Log.d("onConnected: ", "False");
+        } else {
+            // Do something when location provider not available
+            Log.d("onConnected: ", "False");
         }
     }
 
+    @Override
+    public void onConnectionSuspended(int i) {
 
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 }

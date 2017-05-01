@@ -16,8 +16,10 @@ import android.widget.TextView;
 import com.buu.se.searchbangsaen.MapDirectionActivity;
 import com.buu.se.searchbangsaen.R;
 import com.buu.se.searchbangsaen.hotel_categories.adapter.BenefitshotelAdapter;
+import com.buu.se.searchbangsaen.hotel_categories.adapter.RelaxhotelAdapter;
 import com.buu.se.searchbangsaen.hotel_categories.dao.BenefitsHotelDao;
 import com.buu.se.searchbangsaen.hotel_categories.dao.HotelDao;
+import com.buu.se.searchbangsaen.hotel_categories.dao.RelaxsDao;
 
 import java.text.DecimalFormat;
 
@@ -40,11 +42,12 @@ public class DetailHotelActivity extends AppCompatActivity {
     @BindView(R.id.tv_emtry_room) TextView tvEmtryRoom;
     @BindView(R.id.tv_price_f) TextView tvPriceF;
     @BindView(R.id.tv_price_t) TextView tvPriceT;
+    @BindView(R.id.gv_relax) GridView gvRelax;
 
 
     private HotelDao hotelListDao;
     private BenefitsHotelDao benefitsHotelDao;
-
+    private RelaxsDao relaxDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,7 @@ public class DetailHotelActivity extends AppCompatActivity {
         int intValue = mIntent.getIntExtra("key", 0);
         hotelListDao = mIntent.getParcelableExtra("data");
 
+
         tvNameTitle.setText(hotelListDao.getName());
         tvName.setText(hotelListDao.getName());
         tvLocation.setText(hotelListDao.getContact());
@@ -70,18 +74,29 @@ public class DetailHotelActivity extends AppCompatActivity {
         tvPriceT.setText("THB " + formatter.format(Integer.parseInt(hotelListDao.getPrice_t())));
 
 
-        benefitsHotelDao = new BenefitsHotelDao();
-        benefitsHotelDao.setChk_internat(true);
-        benefitsHotelDao.setChk_dry(true);
-        benefitsHotelDao.setChk_shop(true);
-        benefitsHotelDao.setChk_parking(false);
-        benefitsHotelDao.setChk_taxi(true);
+        setBenefit();
 
-        gvBenefit.setNumColumns(3);
-        gvBenefit.setAdapter(new BenefitshotelAdapter(this, benefitsHotelDao));
+        relaxDao = new RelaxsDao();
+        relaxDao.setSwim(hotelListDao.getRelaxDao().isSwim());
+        relaxDao.setFitness(hotelListDao.getRelaxDao().isFitness());
+        relaxDao.setPlayground(hotelListDao.getRelaxDao().isPlayground());
+        relaxDao.setGolf(hotelListDao.getRelaxDao().isGolf());
 
+        gvRelax.setNumColumns(3);
+        gvRelax.setAdapter(new RelaxhotelAdapter(this,relaxDao));
 
         btnMap.setOnClickListener(OnClickMapListener);
+    }
+
+    private void setBenefit() {
+        benefitsHotelDao = new BenefitsHotelDao();
+        benefitsHotelDao.setChk_internat(hotelListDao.getBenefitHotelDao().isChk_internat());
+        benefitsHotelDao.setChk_dry(hotelListDao.getBenefitHotelDao().isChk_dry());
+        benefitsHotelDao.setChk_shop(hotelListDao.getBenefitHotelDao().isChk_shop());
+        benefitsHotelDao.setChk_parking(hotelListDao.getBenefitHotelDao().isChk_parking());
+        benefitsHotelDao.setChk_taxi(hotelListDao.getBenefitHotelDao().isChk_taxi());
+        gvBenefit.setNumColumns(3);
+        gvBenefit.setAdapter(new BenefitshotelAdapter(this, benefitsHotelDao));
     }
 
     private void setBgPage() {
@@ -101,10 +116,10 @@ public class DetailHotelActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent i = new Intent(DetailHotelActivity.this, MapDirectionActivity.class);
-            i.putExtra("name",hotelListDao.getName());
-            i.putExtra("loc",hotelListDao.getContact());
-            i.putExtra("lat",hotelListDao.getLatitude());
-            i.putExtra("lng",hotelListDao.getLongitude());
+            i.putExtra("name", hotelListDao.getName());
+            i.putExtra("loc", hotelListDao.getContact());
+            i.putExtra("lat", hotelListDao.getLatitude());
+            i.putExtra("lng", hotelListDao.getLongitude());
             startActivity(i);
         }
     };

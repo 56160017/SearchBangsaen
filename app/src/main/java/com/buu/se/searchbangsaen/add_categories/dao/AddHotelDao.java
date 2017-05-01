@@ -1,5 +1,6 @@
 package com.buu.se.searchbangsaen.add_categories.dao;
 
+import com.buu.se.searchbangsaen.hotel_categories.dao.BenefitsHotelDao;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
@@ -14,6 +15,24 @@ public class AddHotelDao {
     private String hotelPrice_t;
     private String hotelAddress;
     private LatLng hotelLatLng;
+    private RelaxDao relaxDao;
+    private BenefitHotelDao addbenefitDao;
+
+    public RelaxDao getRelaxDao() {
+        return relaxDao;
+    }
+
+    public void setRelaxDao(RelaxDao relaxDao) {
+        this.relaxDao = relaxDao;
+    }
+
+    public BenefitHotelDao getBenefitHotelDao() {
+        return addbenefitDao;
+    }
+
+    public void setBenefitHotelDao(BenefitHotelDao addbenefitDao) {
+        this.addbenefitDao = addbenefitDao;
+    }
 
     public String getNameHotel() {
         return nameHotel;

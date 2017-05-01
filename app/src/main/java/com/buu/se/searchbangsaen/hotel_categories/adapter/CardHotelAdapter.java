@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +58,8 @@ public class CardHotelAdapter extends RecyclerView.Adapter<CardHotelAdapter.View
         holder.tvPriceTitleF.setText("THB " + formatter.format(Integer.parseInt(hotelList.get(position).getPrice_f())));
         holder.tvPriceTitleF.setPaintFlags(holder.tvPriceTitleF.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.tvPriceTitleT.setText("THB " + formatter.format(Integer.parseInt(hotelList.get(position).getPrice_t())));
-        holder.tvDistance.setText(hotelList.get(position).getDistance() + " กม.");
+
+        holder.tvDistance.setText(hotelList.get(position).getDistance());
 
         //img
         if (position == 0) {

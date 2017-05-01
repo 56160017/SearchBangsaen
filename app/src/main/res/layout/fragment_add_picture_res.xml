@@ -1,0 +1,110 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@drawable/bg_landing"
+              tools:context="com.buu.se.searchbangsaen.add_categories.fragment.AddPictureHotelFragment">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:cardBackgroundColor="#ff9100"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="3dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:padding="15dp"
+                android:paddingTop="15dp"
+                android:src="@drawable/btn_back"/>
+
+            <TextView
+                android:id="@+id/tvNameTitle"
+                style="@style/SimpleTextCloud.medium.bold"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:lines="1"
+                android:text="อัปเดตรูปภาพ"
+                android:textColor="#ffffffff"
+                />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="310dp"
+        android:background="#ffffff"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <GridView
+            android:id="@+id/gv_image"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:columnWidth="120dp"
+            android:gravity="center"
+            android:horizontalSpacing="4dp"
+            android:numColumns="3"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="4dp">
+        </GridView>
+<RelativeLayout
+    android:id="@+id/rl_error"
+    android:visibility="gone"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:text="เพิ่มรูปภาพอย่างน้อย 1 รูป"
+        android:gravity="center"
+        android:textColor="@color/Text_error"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+      android:layout_gravity="bottom"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/btn_add_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_border_submit_add"
+            android:text="เพิ่มรูปภาพ"
+            android:textColor="#FF9800"/>
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_add_image"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_border_submit"
+            android:text="ยืนยัน"
+            android:textColor="#60d9cb"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

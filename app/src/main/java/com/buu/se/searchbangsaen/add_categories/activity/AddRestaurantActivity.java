@@ -1,34 +1,35 @@
 package com.buu.se.searchbangsaen.add_categories.activity;
 
-import android.accessibilityservice.AccessibilityService;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
-
+import com.bluehomestudio.progressimage.ProgressPicture;
 import com.buu.se.searchbangsaen.R;
-import com.buu.se.searchbangsaen.add_categories.dao.AddRestaurantDao;
 import com.buu.se.searchbangsaen.add_categories.adapter.AddRestaurantAdapter;
+import com.buu.se.searchbangsaen.add_categories.dao.AddRestaurantDao;
 import com.buu.se.searchbangsaen.add_categories.dao.BenefitDao;
 import com.buu.se.searchbangsaen.add_categories.dao.DateDao;
 import com.buu.se.searchbangsaen.add_categories.dao.TypeResDao;
 import com.buu.se.searchbangsaen.add_categories.fragment.AddBenefitsResFragment;
 import com.buu.se.searchbangsaen.add_categories.fragment.AddDetailResFragment;
 import com.buu.se.searchbangsaen.add_categories.fragment.AddLatLngResFragment;
+import com.buu.se.searchbangsaen.add_categories.fragment.AddPictureResFragment;
 import com.buu.se.searchbangsaen.utils.SearchNonSwipeableViewPager;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.List;
 import java.util.UUID;
@@ -40,18 +41,22 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class AddRestaurantActivity extends AppCompatActivity implements
         AddDetailResFragment.onAddDetailSuccessClickNextListener,
         AddLatLngResFragment.onAddMapSuccessClickNextListener,
+        AddPictureResFragment.onAddpictureSuccessClickNextListener,
         AddBenefitsResFragment.onAddBenefitsSuccessClickNextListener {
 
     @BindView(R.id.fl_add_swipe_viewpager) SearchNonSwipeableViewPager flAddSwipeViewpager;
+    @BindView(R.id.fl_pg) FrameLayout flPg;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private AddRestaurantAdapter addAdapter;
     private AddRestaurantDao addRestaurantDao;
-
+    private StorageReference mStorage;
 
     int PICK_IMAGE_MULTIPLE = 1;
     String imageEncoded;
     List<String> imagesEncodedList;
+    private ProgressPicture progressPicture;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +73,7 @@ public class AddRestaurantActivity extends AppCompatActivity implements
 
             }
         };
-
-
+        mStorage = FirebaseStorage.getInstance().getReference();
     }
 
     @Override
@@ -89,20 +93,19 @@ public class AddRestaurantActivity extends AppCompatActivity implements
     @Override
     public void onSuccessToAddDetailClick(String NameFood, String PhoneNumber, String TimeOpen,
                                           String TimeClose, DateDao dateDao, String Date, String Address) {
-       addRestaurantDao.setNameRestaurant(NameFood);
+        addRestaurantDao.setNameRestaurant(NameFood);
         addRestaurantDao.setResPhone(PhoneNumber);
         addRestaurantDao.setResOpen(TimeOpen);
         addRestaurantDao.setResClose(TimeClose);
         addRestaurantDao.setResDateDao(dateDao);
         addRestaurantDao.setResDate(Date);
         addRestaurantDao.setResAddress(Address);
-
         flAddSwipeViewpager.setCurrentItem(1, true);
     }
 
     @Override
     public void onDetailBackPress() {
-            onBackPressed();
+        onBackPressed();
     }
 
     @Override
@@ -113,6 +116,23 @@ public class AddRestaurantActivity extends AppCompatActivity implements
 
     @Override
     public void onLatLngBackPress() {
+        onBackPressed();
+    }
+
+
+    /*@Override
+    public void onSuccessToAddPictureClick() {
+        //flAddSwipeViewpager.setCurrentItem(3, true);
+    }*/
+
+    @Override
+    public void onSuccessToAddPictureClick(List<Uri> mUri) {
+        addRestaurantDao.setmUri(mUri);
+        flAddSwipeViewpager.setCurrentItem(3, true);
+    }
+
+    @Override
+    public void onBackClick() {
         onBackPressed();
     }
 
@@ -137,8 +157,10 @@ public class AddRestaurantActivity extends AppCompatActivity implements
                 finish();
             } else if (mFragmentStep instanceof AddLatLngResFragment) {
                 flAddSwipeViewpager.setCurrentItem(0, true);
-            } else if (mFragmentStep instanceof AddBenefitsResFragment) {
+            } else if (mFragmentStep instanceof AddPictureResFragment) {
                 flAddSwipeViewpager.setCurrentItem(1, true);
+            } else if (mFragmentStep instanceof AddBenefitsResFragment) {
+                flAddSwipeViewpager.setCurrentItem(2, true);
             }
         } catch (ClassCastException e) {
             super.onBackPressed();
@@ -146,11 +168,15 @@ public class AddRestaurantActivity extends AppCompatActivity implements
     }
 
 
-
-
     private void AddDatatoFirebase() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         if (user.getUid() != null) {
+            progressPicture = new ProgressPicture(AddRestaurantActivity.this, ProgressPicture.Animations.SCALE);
+            progressPicture.setImageResource(R.drawable.dolphin);
+
+            flPg.addView(progressPicture);
+
             DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
 
             String uuid = UUID.randomUUID().toString();
@@ -189,8 +215,41 @@ public class AddRestaurantActivity extends AppCompatActivity implements
             // latitude longitude
             mRootRef.child("restaurant").child(uuid).child("latitude").setValue("" + addRestaurantDao.getResLatLng().latitude);
             mRootRef.child("restaurant").child(uuid).child("longitude").setValue("" + addRestaurantDao.getResLatLng().longitude);
-          
-            Query query = mRootRef.child("restaurant").orderByChild("uid").equalTo(user.getUid());
+
+            // uri image
+            for (int i = 0; i < addRestaurantDao.getmUri().size(); i++) {
+                String photo_uuid = "pt-" + UUID.randomUUID().toString();
+                mRootRef.child("restaurant").child(uuid).child("pic").child(String.valueOf(i)).setValue(photo_uuid);
+                StorageReference filepath = mStorage.child("restaurant").child(photo_uuid);
+                final int finalI = i;
+                filepath.putFile(addRestaurantDao.getmUri().get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(AddRestaurantActivity.this, "upload pic. Good", Toast.LENGTH_SHORT).show();
+                        if (finalI == addRestaurantDao.getmUri().size() - 1) {
+                            finish();
+                        }
+
+                    }
+
+                });
+            }
+        /*    String photo_uuid = "pt-" + UUID.randomUUID().toString();
+
+            mRootRef.child("users").child(task.getResult().getUser().getUid()).child("detail").child("pic").setValue(photo_uuid);
+            StorageReference filepath = mStorage.child("profile").child(photo_uuid);
+            filepath.putFile(mAuthDao.getUri()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(AuthActivity.this, "upload pic. Good", Toast.LENGTH_SHORT).show();
+                }
+
+            });
+            */
+
+
+            /*Query query = mRootRef.child("restaurant").orderByChild("uid").equalTo(user.getUid());
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -208,10 +267,7 @@ public class AddRestaurantActivity extends AppCompatActivity implements
                 public void onCancelled(DatabaseError databaseError) {
 
                 }
-            });
-
-
-            finish();
+            });*/
 
 
         }
@@ -222,5 +278,6 @@ public class AddRestaurantActivity extends AppCompatActivity implements
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
+
 
 }

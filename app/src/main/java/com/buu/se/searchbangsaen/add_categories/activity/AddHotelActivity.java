@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.buu.se.searchbangsaen.R;
 import com.buu.se.searchbangsaen.add_categories.adapter.AddHotelAdapter;
 import com.buu.se.searchbangsaen.add_categories.dao.AddHotelDao;
+import com.buu.se.searchbangsaen.add_categories.dao.BenefitHotelDao;
+import com.buu.se.searchbangsaen.add_categories.dao.RelaxDao;
 import com.buu.se.searchbangsaen.add_categories.fragment.AddDetailHotelFragment;
 import com.buu.se.searchbangsaen.add_categories.fragment.AddLatLngHotelFragment;
 import com.buu.se.searchbangsaen.add_categories.fragment.AddPictureHotelFragment;
@@ -70,16 +72,19 @@ public class AddHotelActivity extends AppCompatActivity implements AddDetailHote
 
 
     @Override
-    public void onSuccessToAddDetailClick(String etAddHotel, String etAddPhone, String etEmtryRoom, String etPriceF, String etPriceT, String etAddress) {
+    public void onSuccessToAddDetailClick(String etAddHotel, String etAddPhone, String etEmtryRoom, String etPriceF, String etPriceT, String etAddress,RelaxDao relaxDao, BenefitHotelDao addbenefitDao) {
         addHotelDao.setNameHotel(etAddHotel);
         addHotelDao.setHotelPhone(etAddPhone);
         addHotelDao.setHotelEmtryRoom(etEmtryRoom);
         addHotelDao.setHotelPrice_f(etPriceF);
         addHotelDao.setHotelPrice_t(etPriceT);
         addHotelDao.setHotelAddress(etAddress);
-
+        addHotelDao.setRelaxDao(relaxDao);
+        addHotelDao.setBenefitHotelDao(addbenefitDao);
         flAddSwipeViewpager.setCurrentItem(1);
     }
+
+
 
     @Override
     public void onBackClick() {
@@ -131,6 +136,24 @@ public class AddHotelActivity extends AppCompatActivity implements AddDetailHote
             mRootRef.child("hotel").child(uuid).child("address").setValue(addHotelDao.getHotelAddress());
             mRootRef.child("hotel").child(uuid).child("latitude").setValue("" + addHotelDao.getHotelLatLng().latitude);
             mRootRef.child("hotel").child(uuid).child("longitude").setValue("" + addHotelDao.getHotelLatLng().longitude);
+
+
+            //relax
+            mRootRef.child("hotel").child(uuid).child("relaxs").child("swim").setValue(String.valueOf(addHotelDao.getRelaxDao().isSwim()));
+            mRootRef.child("hotel").child(uuid).child("relaxs").child("fitness").setValue(String.valueOf(addHotelDao.getRelaxDao().isFitness()));
+            mRootRef.child("hotel").child(uuid).child("relaxs").child("playground").setValue(String.valueOf(addHotelDao.getRelaxDao().isPlayground()));
+            mRootRef.child("hotel").child(uuid).child("relaxs").child("golf").setValue(String.valueOf(addHotelDao.getRelaxDao().isGolf()));
+
+
+            //benefit
+            mRootRef.child("hotel").child(uuid).child("benefits").child("internat").setValue(String.valueOf(addHotelDao.getBenefitHotelDao().isChkInternat()));
+            mRootRef.child("hotel").child(uuid).child("benefits").child("shop").setValue(String.valueOf(addHotelDao.getBenefitHotelDao().isChkShop()));
+            mRootRef.child("hotel").child(uuid).child("benefits").child("dry").setValue(String.valueOf(addHotelDao.getBenefitHotelDao().isChkDry()));
+            mRootRef.child("hotel").child(uuid).child("benefits").child("parking").setValue(String.valueOf(addHotelDao.getBenefitHotelDao().isChkParking()));
+            mRootRef.child("hotel").child(uuid).child("benefits").child("taxi").setValue(String.valueOf(addHotelDao.getBenefitHotelDao().isChkTaxi()));
+
+
+
             //    mRootRef.child("users-categories").child(user.getUid()).child("resta").setValue(mAuthDao.getUid());
 
 

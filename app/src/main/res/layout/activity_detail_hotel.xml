@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_detail"
+
     tools:context="com.buu.se.searchbangsaen.hotel_categories.activity.DetailHotelActivity">
 
     <include layout="@layout/toolbar"
@@ -58,7 +59,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="ครัวน้องเบส"
-
                         android:textColor="@color/title_bar_hotel"
                         android:textStyle="bold"/>
 
@@ -193,6 +193,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/ll_detail2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#0093d7"
@@ -222,9 +223,10 @@
                 </LinearLayout>
                 <GridView
                     android:id="@+id/gv_relax"
+                    android:layout_height="50dp"
+                    android:paddingLeft="5dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/ll_detail"
+                    android:paddingTop="5dp"
                     android:columnWidth="120dp"
                     android:gravity="center"
                     android:horizontalSpacing="4dp"
@@ -391,6 +393,7 @@
             android:layout_marginTop="5dp"
             android:layout_margin="5dp"
             android:layout_marginRight="20dp"
+            android:textColor="#60d9cb"
             android:background="@drawable/btn_border_submit"
             android:text="ค้นหาตำแหน่ง"/>
 

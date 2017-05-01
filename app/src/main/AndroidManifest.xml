@@ -84,18 +84,18 @@
             android:name=".editcategories.activity.EditPageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan">
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".add_categories.activity.AddRestaurantActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="stateVisible|adjustPan">
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity android:name=".add_categories.activity.AddHotelActivity"
                   android:screenOrientation="portrait"
                   android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-                  android:windowSoftInputMode="stateVisible|adjustPan">
+                  android:windowSoftInputMode="adjustPan">
         </activity>
     </application>
 

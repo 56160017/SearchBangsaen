@@ -1,5 +1,6 @@
 package com.buu.se.searchbangsaen.restaurant_categories.dao;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -23,9 +24,13 @@ public class RestaurantDao implements Parcelable {
     private String location;
     private double latitude;
     private double longitude;
-
+    private DatesDao datesDao;
     private BenefitsDao BenefitsDao;
     private TypeResDao typeResDao;
+    private List<Uri> mUri;
+
+
+
     public RestaurantDao(){
 
     }
@@ -62,9 +67,10 @@ public class RestaurantDao implements Parcelable {
         location = in.readString();
         latitude = in.readDouble();
         longitude = in.readDouble();
+        datesDao = in.readParcelable(DatesDao.class.getClassLoader());
         BenefitsDao = in.readParcelable(com.buu.se.searchbangsaen.restaurant_categories.dao.BenefitsDao.class.getClassLoader());
-        typeResDao = in.readParcelable(com.buu.se.searchbangsaen.add_categories.dao.TypeResDao.class.getClassLoader());
-
+        typeResDao = in.readParcelable(TypeResDao.class.getClassLoader());
+        mUri = in.createTypedArrayList(Uri.CREATOR);
     }
 
     public static final Creator<RestaurantDao> CREATOR = new Creator<RestaurantDao>() {
@@ -167,6 +173,14 @@ public class RestaurantDao implements Parcelable {
         this.longitude = longitude;
     }
 
+    public DatesDao getDatesDao() {
+        return datesDao;
+    }
+
+    public void setDatesDao(DatesDao datesDao) {
+        this.datesDao = datesDao;
+    }
+
     public BenefitsDao getBenefitsDao() {
         return BenefitsDao;
     }
@@ -181,6 +195,13 @@ public class RestaurantDao implements Parcelable {
 
     public void setTypeResDao(TypeResDao typeResDao) {
         this.typeResDao = typeResDao;
+    }
+    public List<Uri> getmUri() {
+        return mUri;
+    }
+
+    public void setmUri(List<Uri> mUri) {
+        this.mUri = mUri;
     }
 
     @Override
@@ -201,7 +222,9 @@ public class RestaurantDao implements Parcelable {
         dest.writeString(location);
         dest.writeDouble(latitude);
         dest.writeDouble(longitude);
+        dest.writeParcelable(datesDao, flags);
         dest.writeParcelable(BenefitsDao, flags);
         dest.writeParcelable(typeResDao, flags);
+        dest.writeTypedList(mUri);
     }
 }

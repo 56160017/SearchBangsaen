@@ -3,6 +3,9 @@ package com.buu.se.searchbangsaen.hotel_categories.dao;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.buu.se.searchbangsaen.add_categories.dao.BenefitHotelDao;
+import com.buu.se.searchbangsaen.add_categories.dao.RelaxDao;
+
 /**
  * Created by Dell on 10/03/2560.
  */
@@ -18,6 +21,9 @@ public class HotelDao implements Parcelable {
     private String distance;
     private double latitude;
     private double longitude;
+    private BenefitsHotelDao benefitHotelDao;
+    private RelaxsDao relaxDao;
+
 
     public HotelDao() {
 
@@ -45,6 +51,8 @@ public class HotelDao implements Parcelable {
         distance = in.readString();
         latitude = in.readDouble();
         longitude = in.readDouble();
+        benefitHotelDao = in.readParcelable(com.buu.se.searchbangsaen.hotel_categories.dao.BenefitsHotelDao.class.getClassLoader());
+        relaxDao = in.readParcelable(com.buu.se.searchbangsaen.hotel_categories.dao.RelaxsDao.class.getClassLoader());
     }
 
     public static final Creator<HotelDao> CREATOR = new Creator<HotelDao>() {
@@ -138,8 +146,20 @@ public class HotelDao implements Parcelable {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+    public BenefitsHotelDao getBenefitHotelDao() {
+        return benefitHotelDao;
+    }
 
+    public void setBenefitHotelDao(BenefitsHotelDao benefitHotelDao) {
+        this.benefitHotelDao = benefitHotelDao;
+    }
+    public RelaxsDao getRelaxDao() {
+        return relaxDao;
+    }
 
+    public void setRelaxDao(RelaxsDao relaxDao) {
+        this.relaxDao = relaxDao;
+    }
     @Override
     public int describeContents() {
         return 0;
@@ -157,5 +177,8 @@ public class HotelDao implements Parcelable {
         dest.writeString(distance);
         dest.writeDouble(latitude);
         dest.writeDouble(longitude);
+        dest.writeParcelable(benefitHotelDao, flags);
+        dest.writeParcelable(relaxDao, flags);
+
     }
 }
