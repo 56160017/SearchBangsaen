@@ -59,5 +59,6 @@ dependencies {
     compile 'com.roger.catloadinglibrary:catloadinglibrary:1.0.1'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.github.mmoamenn:ProgressImage_Android:0.0.2'
 }
 apply plugin: 'com.google.gms.google-services'
