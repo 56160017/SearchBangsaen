@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -148,8 +149,9 @@ public class HotelActivity extends AppCompatActivity implements
                         benefitdaos = new BenefitsHotelDao();
                         relaxDao =   new RelaxsDao();
                         HotelDao a = new HotelDao();
+                        List<Uri> mUri = new ArrayList<Uri>();
                         for (DataSnapshot getuuid : uuid.getChildren()){
-                          //  a.setDistance("กำลังคำนวณ");
+                            a.setDistance("กำลังคำนวณ");
                             switch (getuuid.getKey()){
                                 case "name":
                                     a.setName("" + getuuid.getValue());
@@ -214,7 +216,14 @@ public class HotelActivity extends AppCompatActivity implements
                                     }
                                     a.setRelaxDao(relaxDao);
                                     break;
-
+                                case "pic":
+                                    for (DataSnapshot getpics : getuuid.getChildren()) {
+                                        mUri.add(Uri.parse("" + getpics.getValue()));
+                                        Log.d("getpics//" + getpics.getKey() + ":", " " + getpics.getValue());
+                                    }
+                                    //    a.setTypeResDao(typeResDaos);
+                                    a.setmUri(mUri);
+                                    break;
                                 default: break;
                             }
                             Log.d("onDataChange: ",""+getuuid.getValue());

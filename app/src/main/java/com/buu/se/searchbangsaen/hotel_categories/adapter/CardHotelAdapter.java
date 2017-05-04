@@ -3,6 +3,7 @@ package com.buu.se.searchbangsaen.hotel_categories.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,9 @@ import android.widget.TextView;
 import com.buu.se.searchbangsaen.R;
 import com.buu.se.searchbangsaen.hotel_categories.activity.DetailHotelActivity;
 import com.buu.se.searchbangsaen.hotel_categories.dao.HotelDao;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -29,10 +33,11 @@ import butterknife.ButterKnife;
 public class CardHotelAdapter extends RecyclerView.Adapter<CardHotelAdapter.ViewHolder> {
     private Context mContext;
     private List<HotelDao> hotelList;
-
+    private StorageReference mStorage;
     public CardHotelAdapter(Context mContext, List<HotelDao> restaurantList) {
         this.mContext = mContext;
         this.hotelList = restaurantList;
+        mStorage = FirebaseStorage.getInstance().getReference();
     }
 
     @Override
@@ -44,7 +49,7 @@ public class CardHotelAdapter extends RecyclerView.Adapter<CardHotelAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         DecimalFormat formatter = new DecimalFormat("#,###,###");
 
         if(hotelList.get(position).getName().trim().length() > 20){
@@ -62,18 +67,16 @@ public class CardHotelAdapter extends RecyclerView.Adapter<CardHotelAdapter.View
         holder.tvDistance.setText(hotelList.get(position).getDistance());
 
         //img
-        if (position == 0) {
-            Picasso.with(mContext).load("https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-0/p206x206/1934604_10153418966847304_790610692157339225_n.jpg?oh=93bfb5e2f6160b981e4fda636b6211c2&oe=597312C5").into(holder.ivHotel);
+        StorageReference filepath = mStorage.child("hotel").child("" + hotelList.get(position).getmUri().get(0));
+        filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.with(mContext).load(uri.toString()).into(holder.ivHotel);
+            }
+        });
+           // Picasso.with(mContext).load("https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-0/p206x206/1934604_10153418966847304_790610692157339225_n.jpg?oh=93bfb5e2f6160b981e4fda636b6211c2&oe=597312C5").into(holder.ivHotel);
             setOnclickDetailListener(holder, position);
-        } else if (position == 1) {
-            Picasso.with(mContext).load("http://www.saensukcity.com/images/hotel/heritage/heritage.jpg").into(holder.ivHotel);
-            setOnclickDetailListener(holder, position);
-        } else if (position == 2) {
-            Picasso.with(mContext).load("http://www.saensukcity.com/images/hotel/thetideresort/bangsaen/thetideresort-03s.jpg").into(holder.ivHotel);
-            setOnclickDetailListener(holder, position);
-        }else{
-            setOnclickDetailListener(holder, position);
-        }
+
     }
 
     private void setOnclickDetailListener(ViewHolder holder, final int position) {

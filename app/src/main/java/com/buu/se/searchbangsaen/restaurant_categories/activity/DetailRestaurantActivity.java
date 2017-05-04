@@ -70,7 +70,7 @@ public class DetailRestaurantActivity extends AppCompatActivity {
         Intent mIntent = getIntent();
         int intValue = mIntent.getIntExtra("key", 0);
         restaurantListDao = mIntent.getParcelableExtra("data");
-        Log.d("onCreatexxx: ", "" + restaurantListDao.getmUri().get(0));
+
         //image view
         mStorage = FirebaseStorage.getInstance().getReference();
         rvImgs.setHasFixedSize(true);

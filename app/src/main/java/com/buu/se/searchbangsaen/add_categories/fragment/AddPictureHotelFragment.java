@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,12 +13,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.buu.se.searchbangsaen.R;
 import com.buu.se.searchbangsaen.add_categories.adapter.AddImageAdapter;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +37,7 @@ public class AddPictureHotelFragment extends Fragment {
     @BindView(R.id.btn_add_image) Button btnAddImage;
     @BindView(R.id.gv_image) GridView gvImage;
     public static final int REQUEST_GALLERY = 1;
+    @BindView(R.id.rl_error) RelativeLayout rlError;
 
     private onAddpictureSuccessClickNextListener mCallBack;
     private List<Uri> mUri;
@@ -47,7 +46,7 @@ public class AddPictureHotelFragment extends Fragment {
     private Uri uri;
 
     public interface onAddpictureSuccessClickNextListener {
-        void onSuccessToAddPictureClick();
+        void onSuccessToAddPictureClick(List<Uri> mUri);
 
         void onBackClick();
     }
@@ -70,6 +69,7 @@ public class AddPictureHotelFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_picture_hotel, container, false);
         ButterKnife.bind(this, view);
+        mUri = new ArrayList<>();
         return view;
     }
 
@@ -79,9 +79,10 @@ public class AddPictureHotelFragment extends Fragment {
         btnAddImage.setOnClickListener(OnbtnAddImageClickListener);
         btnSubmit.setOnClickListener(OnbtnSubmitClickListener);
         ivBack.setOnClickListener(OnbtnBackClickListener);
-        mUri = new ArrayList<>();
+
         ivAdapter = new AddImageAdapter(mContext);
     }
+
     private View.OnClickListener OnbtnAddImageClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -95,7 +96,11 @@ public class AddPictureHotelFragment extends Fragment {
         @Override
         public void onClick(View v) {
             mUri = ivAdapter.getAllUri();
-            mCallBack.onSuccessToAddPictureClick();
+            if (mUri.size() > 0) {
+                mCallBack.onSuccessToAddPictureClick(mUri);
+            } else {
+                rlError.setVisibility(View.VISIBLE);
+            }
         }
     };
     private View.OnClickListener OnbtnBackClickListener = new View.OnClickListener() {
@@ -116,6 +121,7 @@ public class AddPictureHotelFragment extends Fragment {
 
         }
     }
+
     public static Fragment newInstance() {
         return new AddPictureHotelFragment();
     }

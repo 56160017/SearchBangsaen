@@ -1,10 +1,12 @@
 package com.buu.se.searchbangsaen.add_categories.activity;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.buu.se.searchbangsaen.R;
 import com.buu.se.searchbangsaen.add_categories.adapter.AddHotelAdapter;
@@ -16,11 +18,16 @@ import com.buu.se.searchbangsaen.add_categories.fragment.AddLatLngHotelFragment;
 import com.buu.se.searchbangsaen.add_categories.fragment.AddPictureHotelFragment;
 import com.buu.se.searchbangsaen.utils.SearchNonSwipeableViewPager;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.util.List;
 import java.util.UUID;
 
 import butterknife.BindView;
@@ -37,6 +44,7 @@ public class AddHotelActivity extends AppCompatActivity implements AddDetailHote
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private StorageReference mStorage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +61,7 @@ public class AddHotelActivity extends AppCompatActivity implements AddDetailHote
 
             }
         };
+        mStorage = FirebaseStorage.getInstance().getReference();
     }
 
     @Override
@@ -86,6 +95,7 @@ public class AddHotelActivity extends AppCompatActivity implements AddDetailHote
 
 
 
+
     @Override
     public void onBackClick() {
         onBackPressed();
@@ -98,12 +108,13 @@ public class AddHotelActivity extends AppCompatActivity implements AddDetailHote
 
         flAddSwipeViewpager.setCurrentItem(2);
     }
-
     @Override
-    public void onSuccessToAddPictureClick() {
+    public void onSuccessToAddPictureClick(List<Uri> mUri) {
+        addHotelDao.setmUri(mUri);
         AddDatatoFirebase();
         finish();
     }
+
     @Override
     public void onBackPressed() {
         try {
@@ -152,11 +163,22 @@ public class AddHotelActivity extends AppCompatActivity implements AddDetailHote
             mRootRef.child("hotel").child(uuid).child("benefits").child("parking").setValue(String.valueOf(addHotelDao.getBenefitHotelDao().isChkParking()));
             mRootRef.child("hotel").child(uuid).child("benefits").child("taxi").setValue(String.valueOf(addHotelDao.getBenefitHotelDao().isChkTaxi()));
 
-
-
-            //    mRootRef.child("users-categories").child(user.getUid()).child("resta").setValue(mAuthDao.getUid());
-
-
+            // uri image
+            for (int i = 0; i < addHotelDao.getmUri().size(); i++) {
+                String photo_uuid = "pt-" + UUID.randomUUID().toString();
+                mRootRef.child("hotel").child(uuid).child("pic").child(String.valueOf(i)).setValue(photo_uuid);
+                StorageReference filepath = mStorage.child("hotel").child(photo_uuid);
+                final int finalI = i;
+                filepath.putFile(addHotelDao.getmUri().get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(AddHotelActivity.this, "upload pic. Good", Toast.LENGTH_SHORT).show();
+                        if (finalI == addHotelDao.getmUri().size() - 1) {
+                            finish();
+                        }
+                    }
+                });
+            }
             finish();
 
 

@@ -32,7 +32,7 @@ import com.akexorcist.googledirection.GoogleDirection;
 import com.akexorcist.googledirection.constant.TransportMode;
 import com.akexorcist.googledirection.constant.Unit;
 import com.akexorcist.googledirection.model.Direction;
-import com.bluehomestudio.progressimage.ProgressPicture;
+
 import com.buu.se.searchbangsaen.R;
 import com.buu.se.searchbangsaen.add_categories.dao.TypeResDao;
 import com.buu.se.searchbangsaen.auth.activity.AuthActivity;
@@ -68,6 +68,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class RestaurantSearchActivity extends AppCompatActivity implements
@@ -80,7 +81,6 @@ public class RestaurantSearchActivity extends AppCompatActivity implements
     @BindView(R.id.btn_connecting) Button btnConnecting;
     @BindView(R.id.fl_connecting) FrameLayout flConnecting;
     @BindView(R.id.fl_map) FrameLayout flMap;
-
 
     private RecyclerView.LayoutManager mLayoutManager;
     private CardRestaurantSearchAdapter mAdapter;
@@ -99,9 +99,6 @@ public class RestaurantSearchActivity extends AppCompatActivity implements
     //FirebaseAuth
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private StorageReference mStorage;
-    private int incheckData;
-    private ProgressPicture progressPicture;
 
 
 
@@ -109,8 +106,7 @@ public class RestaurantSearchActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_search);
-        ButterKnife.bind(this);
-        Log.d("test", "onCreate");
+         ButterKnife.bind(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {  //เช็ค permission
             checkLocationPermission();
         }
@@ -144,7 +140,6 @@ public class RestaurantSearchActivity extends AppCompatActivity implements
         ivBack.setOnClickListener(OnClickBackListener);
         ivAdd.setOnClickListener(OnClickAddBackListener);
         btnConnecting.setOnClickListener(OnClickReconnectBackListener);
-
         serverkey = getResources().getString(R.string.google_maps_key);
             checkInternet();
 
@@ -370,7 +365,7 @@ public class RestaurantSearchActivity extends AppCompatActivity implements
                                     //    a.setTypeResDao(typeResDaos);
                                     a.setmUri(mUri);
                                     break;
-//////////////////////////
+
                                 default:
                                     break;
                             }
@@ -390,7 +385,7 @@ public class RestaurantSearchActivity extends AppCompatActivity implements
 
 
                     mAdapter = new CardRestaurantSearchAdapter(RestaurantSearchActivity.this, restaurantList);
-                    //  recyclerRes.setAdapter(mAdapter);
+                      recyclerRes.setAdapter(mAdapter);
 
                     //    mapFragment.getMapAsync(RestaurantSearchActivity.this);
                 }
@@ -593,4 +588,6 @@ public class RestaurantSearchActivity extends AppCompatActivity implements
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
+
+
 }

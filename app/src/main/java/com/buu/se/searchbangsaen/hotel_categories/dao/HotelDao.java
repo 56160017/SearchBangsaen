@@ -1,10 +1,10 @@
 package com.buu.se.searchbangsaen.hotel_categories.dao;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.buu.se.searchbangsaen.add_categories.dao.BenefitHotelDao;
-import com.buu.se.searchbangsaen.add_categories.dao.RelaxDao;
+import java.util.List;
 
 /**
  * Created by Dell on 10/03/2560.
@@ -23,6 +23,8 @@ public class HotelDao implements Parcelable {
     private double longitude;
     private BenefitsHotelDao benefitHotelDao;
     private RelaxsDao relaxDao;
+    private List<Uri> mUri;
+
 
 
     public HotelDao() {
@@ -53,6 +55,7 @@ public class HotelDao implements Parcelable {
         longitude = in.readDouble();
         benefitHotelDao = in.readParcelable(com.buu.se.searchbangsaen.hotel_categories.dao.BenefitsHotelDao.class.getClassLoader());
         relaxDao = in.readParcelable(com.buu.se.searchbangsaen.hotel_categories.dao.RelaxsDao.class.getClassLoader());
+        mUri = in.createTypedArrayList(Uri.CREATOR);
     }
 
     public static final Creator<HotelDao> CREATOR = new Creator<HotelDao>() {
@@ -153,6 +156,15 @@ public class HotelDao implements Parcelable {
     public void setBenefitHotelDao(BenefitsHotelDao benefitHotelDao) {
         this.benefitHotelDao = benefitHotelDao;
     }
+
+    public List<Uri> getmUri() {
+        return mUri;
+    }
+
+    public void setmUri(List<Uri> mUri) {
+        this.mUri = mUri;
+    }
+
     public RelaxsDao getRelaxDao() {
         return relaxDao;
     }
@@ -179,6 +191,7 @@ public class HotelDao implements Parcelable {
         dest.writeDouble(longitude);
         dest.writeParcelable(benefitHotelDao, flags);
         dest.writeParcelable(relaxDao, flags);
+        dest.writeTypedList(mUri);
 
     }
 }

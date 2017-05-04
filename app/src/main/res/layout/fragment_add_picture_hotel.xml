@@ -48,6 +48,18 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/rl_error"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="เพิ่มรูปภาพอย่างน้อย 1 รูป"
+                    android:gravity="center"
+                    android:textColor="@color/Text_error"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
             <GridView
                 android:id="@+id/gv_image"
                 android:layout_width="match_parent"

@@ -81,17 +81,6 @@ public class CardRestaurantSearchAdapter extends RecyclerView.Adapter<CardRestau
             Log.d("ic_status: ", "ic_status_closed");
         }
 
-  /*      if (position == 0) {
-            Picasso.with(mContext).load("https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/403484_156009281197295_536660032_n.jpg?oh=a201d4b0399a80cc7535db8f50349334&oe=593FD711").into(holder.ivFood);
-        } else if (position == 1) {
-            Picasso.with(mContext).load("https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/14021701_1169485746446022_8096981577666880213_n.jpg?oh=b6c29acdbe6a4b9dd3b36f6eac506b40&oe=59289DEF").into(holder.ivFood);
-        } else if (position == 2) {
-            Picasso.with(mContext).load("https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/13606871_1581968302099843_2099360564028036367_n.jpg?oh=91eda0d211c99b41d01c57f7d9b31f37&oe=593BE04C").into(holder.ivFood);
-        } else if (position == 3) {
-            Picasso.with(mContext).load("https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/15872017_1291649610855323_432103020786255615_n.jpg?oh=47e373cb9e1b8527fbeab0caca379379&oe=59301499").into(holder.ivFood);
-        } else if (position == 4) {
-            Picasso.with(mContext).load("https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/12717180_843418215767113_5605301514423727807_n.png?oh=b054cda8a0738ba702997198a6f1c7a8&oe=5930DD17").into(holder.ivFood);
-        }*/
         StorageReference filepath = mStorage.child("restaurant").child("" + restaurantList.get(position).getmUri().get(0));
         filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override

@@ -1,7 +1,11 @@
 package com.buu.se.searchbangsaen.add_categories.dao;
 
+import android.net.Uri;
+
 import com.buu.se.searchbangsaen.hotel_categories.dao.BenefitsHotelDao;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.List;
 
 /**
  * Created by Dell on 14/04/2560.
@@ -17,6 +21,9 @@ public class AddHotelDao {
     private LatLng hotelLatLng;
     private RelaxDao relaxDao;
     private BenefitHotelDao addbenefitDao;
+    private List<Uri> mUri;
+
+
 
     public RelaxDao getRelaxDao() {
         return relaxDao;
@@ -88,5 +95,12 @@ public class AddHotelDao {
 
     public void setHotelLatLng(LatLng resLatLng) {
         this.hotelLatLng = resLatLng;
+    }
+    public List<Uri> getmUri() {
+        return mUri;
+    }
+
+    public void setmUri(List<Uri> mUri) {
+        this.mUri = mUri;
     }
 }
