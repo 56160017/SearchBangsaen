@@ -27,12 +27,15 @@ import com.buu.se.searchbangsaen.R;
 
 import com.buu.se.searchbangsaen.add_categories.dao.AddRestaurantDao;
 import com.buu.se.searchbangsaen.add_categories.fragment.AddDetailResFragment;
+import com.buu.se.searchbangsaen.add_categories.fragment.AddLatLngResFragment;
 import com.buu.se.searchbangsaen.editcategories.adapter.EditPageShopInAccountAdapter;
 import com.buu.se.searchbangsaen.editcategories.fragment.EditDataPageFragment;
 import com.buu.se.searchbangsaen.editcategories.fragment.EditHotelFragment;
+import com.buu.se.searchbangsaen.editcategories.fragment.EditMapResFragment;
 import com.buu.se.searchbangsaen.editcategories.fragment.EditProfilePageFragment;
 import com.buu.se.searchbangsaen.editcategories.fragment.EditRestarantFragment;
 import com.buu.se.searchbangsaen.utils.CircleTransform;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -57,7 +60,7 @@ import yalantis.com.sidemenu.interfaces.ScreenShotable;
 import yalantis.com.sidemenu.model.SlideMenuItem;
 
 public class EditPageActivity extends AppCompatActivity implements yalantis.com.sidemenu.util.ViewAnimator.ViewAnimatorListener
-,EditPageShopInAccountAdapter.onEditShopSuccessClickNextListener{
+,EditPageShopInAccountAdapter.onEditShopSuccessClickNextListener,EditMapResFragment.onAddMapSuccessClickNextListener{
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private List<SlideMenuItem> list = new ArrayList<>();
@@ -70,6 +73,10 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
     private EditHotelFragment editHotelFragment;
     private StorageReference mStorage;
     private Uri mUri;
+    private AddRestaurantDao addRestaurantDao;
+    private AddLatLngResFragment addLatLngResFragment;
+    private EditMapResFragment editMapResFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -308,4 +315,50 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
     }
 
 
+//    @Override
+//    public void onAddMapSuccessClickNextListener(LatLng selectLatLng) {
+//        Log.d( "onSuccessToEditClick: ","test");
+//        addRestaurantDao.setResLatLng(selectLatLng);
+//        AddLatLngResFragment myFragment = new AddLatLngResFragment;
+//        FragmentManager manager = getSupportFragmentManager();
+//        FragmentTransaction transaction = manager.beginTransaction();
+//        transaction.replace(R.id.content_frame, myFragment);
+//        transaction.commit();
+//    }
+
+    @Override
+    public void onSuccessToAddMapClick(LatLng selectLatLng) {
+        addRestaurantDao.setResLatLng(selectLatLng);
+     //   flAddSwipeViewpager.setCurrentItem(2, true);
+
+
+//        FragmentTransaction transaction = manager.beginTransaction();
+//        transaction.show(myFragment);
+//        transaction.commit();
+
+//        FragmentTransaction transaction = manager.beginTransaction();
+//        transaction.add(R.id.content_frame, myFragment);
+//        transaction.commit();
+
+        EditMapResFragment myFragment = new EditMapResFragment();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.content_frame, myFragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void onLatLngBackPress() {
+        editDataPageFragment = EditDataPageFragment.newInstance();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.content_frame, editDataPageFragment);
+        transaction.commit();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

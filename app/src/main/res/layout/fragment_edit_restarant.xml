@@ -215,12 +215,12 @@
                         android:layout_weight="1"
                         android:src="@drawable/map_black" />
 
-                    <ImageButton
+                    <Button
+                        android:id="@+id/btn_map"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="7"
-                        android:background="@drawable/background_cardview"
-                        android:src="@drawable/map_fix" />
+                        android:background="@drawable/map_fix" />
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>

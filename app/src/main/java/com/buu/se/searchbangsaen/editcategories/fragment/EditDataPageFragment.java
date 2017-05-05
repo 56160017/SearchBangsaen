@@ -55,6 +55,8 @@ public class EditDataPageFragment extends Fragment implements ScreenShotable {
     @BindView(R.id.list_shop_in_account) RecyclerView listShopInAccount;
     @BindView(R.id.iv_profile) CircleImageView ivProfile;
     @BindView(R.id.tv_value_shop) TextView tvValueShop;
+    @BindView(R.id.tv_name_customer) TextView tvNameCustomer;
+
     //    @BindView(R.id.btn_submit) Button btnSubmit;
     //   private RecyclerView listShopInAccount;
     private View containerView;
@@ -64,6 +66,7 @@ public class EditDataPageFragment extends Fragment implements ScreenShotable {
     private StorageReference mStorage;
     private AddRestaurantDao addRestaurantDao;
     private ArrayList<AddRestaurantDao> mAddRestaurantDao;
+    private String name;
 
     public static EditDataPageFragment newInstance() {
         EditDataPageFragment editDataPageFragment = new EditDataPageFragment();
@@ -101,6 +104,7 @@ public class EditDataPageFragment extends Fragment implements ScreenShotable {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             initProfile(user);
+            initProfileName(user);
             initData(user);
         }
 
@@ -137,10 +141,44 @@ public class EditDataPageFragment extends Fragment implements ScreenShotable {
                                 .placeholder(getResources().getDrawable(R.drawable.user_profile)).into(ivProfile);
                     }
                 });
-                //
+
+//                name = "" + dataSnapshot.getValue();
+//                tvNameCustomer.setText(name);
+
+
+//                if (dataSnapshot.exists()) {
+//                    for (DataSnapshot uuRes : dataSnapshot.getChildren()) {
+//                        name = "" + uuRes.child("name").getValue();
+//                        tvNameCustomer.setText(name);
+//                        //tvNameCustomer.setText(""+ uuRes.child("name").getValue().toString());
+//                    }
+//                }
             }
 
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void initProfileName(FirebaseUser user) {
+        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+        mRootRef.child("users").child(user.getUid()).child("detail").child("name").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                name = "" + dataSnapshot.getValue();
+                tvNameCustomer.setText(name);
+//                if (dataSnapshot.exists()) {
+//                    for (DataSnapshot uuRes : dataSnapshot.getChildren()) {
+//                        name = "" + uuRes.child("name").getValue();
+//                        tvNameCustomer.setText(name);
+//                        //tvNameCustomer.setText(""+ uuRes.child("name").getValue().toString());
+//                    }
+//                }
+            }
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
