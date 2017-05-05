@@ -58,6 +58,7 @@ public class EditPageShopInAccountAdapter extends RecyclerView.Adapter<EditPageS
             @Override
             public void onClick(View v) {
                 mCallBack.onSuccessToEditClick(mAddRestaurantDao.get(position));
+
             }
         });
 
