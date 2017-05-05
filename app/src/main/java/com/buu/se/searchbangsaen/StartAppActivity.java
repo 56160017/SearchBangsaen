@@ -32,7 +32,7 @@ public class StartAppActivity extends AhoyOnboarderActivity {
         editor.putInt("pg", 1);
         editor.commit();
 
-        AhoyOnboarderCard ahoyOnboarderCardFirst = new AhoyOnboarderCard("Search Bangsean", "Easy Sreach Easy Go!!", R.drawable.ic_coconut);
+        AhoyOnboarderCard ahoyOnboarderCardFirst = new AhoyOnboarderCard("Search Bangsean", "Easy Sreach Easy Go!!", R.drawable.ic_coconut_white);
         ahoyOnboarderCardFirst.setTitleTextSize(30);
         ahoyOnboarderCardFirst.setDescriptionTextSize(25);
         AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("คุณกำลังหาอะไร", "จะเที่ยวไหนก็หาเจอ \nจะไปไหนก็รู้ก่อนใคร", R.drawable.ic_spend);

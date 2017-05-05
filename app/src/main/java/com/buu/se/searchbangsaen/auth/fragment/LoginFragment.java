@@ -22,6 +22,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -41,7 +44,6 @@ public class LoginFragment extends Fragment {
     TextView forgotPass;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
     private onClickRegisterListener mCallBack;
 
 
@@ -65,6 +67,28 @@ public class LoginFragment extends Fragment {
         ButterKnife.bind(this, view);
         return view;
     }
+
+    private boolean isValidEmail(String email) {
+        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    // validating password with retype password
+    private boolean isValidPassword(String pass) {
+        if (pass != null && pass.length() > 5) {
+            return true;
+        }
+        return false;
+    }
+
+    private void checkValidate() {
+
+    }
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -91,6 +115,15 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //  if(1 == 1){
+
+                if (!isValidEmail(etUser.getText().toString())) {
+                    etUser.setError("อีเมลไม่ถูกต้อง");
+                    return;
+                }
+                if (!isValidPassword(etPass.getText().toString())) {
+                    etPass.setError("รหัสผ่านไม่ถูกต้อง");
+                    return;
+                }else
                 SignInWithEmailAndPassword();
 //                }else {
 //                    Toast.makeText(getActivity(), "กรุณากรอกข้อมูลให้ครบถ้วน", Toast.LENGTH_SHORT).show();
@@ -120,10 +153,10 @@ public class LoginFragment extends Fragment {
                     public void onComplete(Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
                             Log.w("signInWithEmail", task.getException().getMessage());
-                            Toast.makeText(getActivity(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "อีเมลหรือรหัสผ่านไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
 
                         } else {
-                            Toast.makeText(getActivity(), "Authentication True.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "เข้าสู่ระบบสำเร็จ", Toast.LENGTH_SHORT).show();
                             mCallBack.onSuccessToUserPageClick();
                         }
                         // ...

@@ -31,27 +31,18 @@ import butterknife.ButterKnife;
 public class RegisterEmailFragment extends Fragment {
 
 
-    @BindView(R.id.txt_level1)
-    TextView txtLevel1;
-    @BindView(R.id.et_email)
-    EditText etEmail;
-    @BindView(R.id.et_pwd)
-    EditText etPwd;
-    @BindView(R.id.et_conf_pwd)
-    EditText etConfPwd;
-    @BindView(R.id.btn_submit)
-    Button btnSubmit;
-    @BindView(R.id.imv_back)
-    ImageView imvBack;
-    @BindView(R.id.rl_appbar)
-    RelativeLayout rlAppbar;
-    @BindView(R.id.toolbar)
-    AppBarLayout toolbar;
+    @BindView(R.id.txt_level1) TextView txtLevel1;
+    @BindView(R.id.imv_back) ImageView imvBack;
+    @BindView(R.id.rl_appbar) RelativeLayout rlAppbar;
+    @BindView(R.id.toolbar) AppBarLayout toolbar;
+    @BindView(R.id.et_email) EditText etEmail;
+    @BindView(R.id.et_pwd) EditText etPwd;
+    @BindView(R.id.et_conf_pwd) EditText etConfPwd;
+    @BindView(R.id.btn_submit) Button btnSubmit;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     private onClickDetailRegisterListener mCallBack;
-
 
     public interface onClickDetailRegisterListener {
         void onSuccessToRegisterDetailClick(String email, String pwd);

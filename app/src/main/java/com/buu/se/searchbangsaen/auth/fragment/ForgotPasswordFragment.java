@@ -1,6 +1,8 @@
 package com.buu.se.searchbangsaen.auth.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -41,6 +43,17 @@ public class ForgotPasswordFragment extends Fragment {
     CardView cardViewForgot;
     @BindView(R.id.btn_create)
     Button btnCreate;
+//    private onClickRegisterListener mCallBack;
+//
+//    public interface onClickRegisterListener {
+//        void onForgotPassToBackMainRegisterClick();
+//    }
+//
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        mCallBack = (onClickRegisterListener) context;
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +63,17 @@ public class ForgotPasswordFragment extends Fragment {
         ButterKnife.bind(this, view);
         return view;
     }
+//
+//    @Override
+//    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//        imvBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mCallBack.onForgotPassToBackMainRegisterClick();
+//            }
+//        });
+//    }
 
     public static Fragment newInstance() {
         return new ForgotPasswordFragment();

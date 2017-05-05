@@ -8,10 +8,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -42,34 +42,17 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class MainActivity extends AppCompatActivity {
 
 
-    @BindView(R.id.civ_search)
-    CircleImageView civSearch;
-    @BindView(R.id.tv_login)
-    TextView tvLogin;
-    @BindView(R.id.app_bar_layout)
-    AppBarLayout appBarLayout;
-    @BindView(R.id.txt_search)
-    TextView txtSearch;
-    @BindView(R.id.btn_Restaurant)
-    CircleImageView btnRestaurant;
-    @BindView(R.id.btn_Hotel)
-    CircleImageView btnHotel;
-    @BindView(R.id.btn_Coffee)
-    CircleImageView btnCoffee;
-    @BindView(R.id.img_Gift)
-    CircleImageView imgGift;
-    @BindView(R.id.btn_Ws)
-    CircleImageView btnWs;
-    @BindView(R.id.img_Festival)
-    CircleImageView imgFestival;
-    @BindView(R.id.ll_search)
-    LinearLayout llSearch;
-    @BindView(R.id.activity_main)
-    RelativeLayout activityMain;
-    @BindView(R.id.iv_profile)
-    ImageView ivProfile;
-    @BindView(R.id.rl_profile)
-    RelativeLayout rlProfile;
+    @BindView(R.id.civ_search) ImageView civSearch;
+    @BindView(R.id.tv_login) TextView tvLogin;
+    @BindView(R.id.iv_profile) ImageView ivProfile;
+    @BindView(R.id.rl_profile) RelativeLayout rlProfile;
+    @BindView(R.id.app_bar_layout) AppBarLayout appBarLayout;
+    @BindView(R.id.txt_search) TextView txtSearch;
+    @BindView(R.id.ivFood) ImageView ivFood;
+    @BindView(R.id.cardV1) CardView cardV1;
+    @BindView(R.id.ivHotel) ImageView ivHotel;
+    @BindView(R.id.cardV2) CardView cardV2;
+    @BindView(R.id.activity_main) RelativeLayout activityMain;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressDialog progressDialog;
@@ -100,11 +83,10 @@ public class MainActivity extends AppCompatActivity {
             initProfile(user);
         }
 
-        btnRestaurant.setOnClickListener(OnRestaurantClickListener);
-        btnHotel.setOnClickListener(OnHotelClickListener);
+        cardV1.setOnClickListener(OnRestaurantClickListener);
+        cardV2.setOnClickListener(OnHotelClickListener);
         tvLogin.setOnClickListener(OnLoginClickListener);
         ivProfile.setOnClickListener(OnProfileClickListener);
-
 
 
     }

@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.buu.se.searchbangsaen.add_categories.activity.AddHotelActivity;
 import com.buu.se.searchbangsaen.add_categories.activity.AddRestaurantActivity;
 import com.buu.se.searchbangsaen.auth.dao.AuthDao;
@@ -197,6 +196,7 @@ public class AuthActivity extends AppCompatActivity implements
         }
     }
 
+
     @Override
     public void onSuccessToForgetPassword() {
         flNonSwipeViewpager.setCurrentItem(2, true);
@@ -208,8 +208,10 @@ public class AuthActivity extends AppCompatActivity implements
 
     }
 
-
-
+//    @Override
+//    private void onForgotPassToBackMainRegisterClick(){
+//        flNonSwipeViewpager.setCurrentItem(0, true);
+//    }
 
     @Override
     public void onSuccessToUserPageClick() { // หน้า login
@@ -222,13 +224,13 @@ public class AuthActivity extends AppCompatActivity implements
                     @Override
                     public void onComplete(Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            Toast.makeText(AuthActivity.this, "Add failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AuthActivity.this, "สมัครไม่สำเร็จ", Toast.LENGTH_SHORT).show();
                             Log.d("onCompleteRegis: ",task.toString());
                       /*      userID =  etEmail.getText().toString();
                             pwd = etPwd.getText().toString();*/
                         } else {
                             task.getResult().getUser().getUid();
-                            Toast.makeText(AuthActivity.this, "Add OK.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AuthActivity.this, "สมัครสำเร็จ", Toast.LENGTH_SHORT).show();
                             DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
                             mRootRef.child("users").child(task.getResult().getUser().getUid()).child("detail").child("userID").setValue(mAuthDao.getUid());
                             mRootRef.child("users").child(task.getResult().getUser().getUid()).child("detail").child("pwd").setValue(mAuthDao.getPwd());
