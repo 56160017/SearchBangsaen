@@ -74,7 +74,7 @@ public class DetailHotelActivity extends AppCompatActivity {
         Intent mIntent = getIntent();
         int intValue = mIntent.getIntExtra("key", 0);
         hotelListDao = mIntent.getParcelableExtra("data");
-        Log.d("onCreatemuri: ", "" + hotelListDao.getmUri().get(0) + "\n" + hotelListDao.getmUri().get(1));
+//        Log.d("onCreatemuri: ", "" + hotelListDao.getmUri().get(0) + "\n" + hotelListDao.getmUri().get(1));
 
         tvNameTitle.setText(hotelListDao.getName());
         tvName.setText(hotelListDao.getName());

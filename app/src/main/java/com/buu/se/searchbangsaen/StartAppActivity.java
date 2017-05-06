@@ -22,17 +22,17 @@ public class StartAppActivity extends AhoyOnboarderActivity {
         super.onCreate(savedInstanceState);
         SharedPreferences sp = getSharedPreferences("landding_pg", Context.MODE_PRIVATE);
         int pg_id = sp.getInt("pg", 0);
-        if (pg_id == 1) {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
+//        if (pg_id == 1) {
+//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }
         sp = getSharedPreferences("landding_pg", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putInt("pg", 1);
         editor.commit();
 
-        AhoyOnboarderCard ahoyOnboarderCardFirst = new AhoyOnboarderCard("Search Bangsean", "Easy Sreach Easy Go!!", R.drawable.ic_coconut_white);
+        AhoyOnboarderCard ahoyOnboarderCardFirst = new AhoyOnboarderCard("Search Bangsean", "แอปพลิเคชันที่จะช่วยคุณค้นหาสถานที่ได้ง่ายขึ้น", R.drawable.ic_coconut_white);
         ahoyOnboarderCardFirst.setTitleTextSize(30);
         ahoyOnboarderCardFirst.setDescriptionTextSize(25);
         AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("คุณกำลังหาอะไร", "จะเที่ยวไหนก็หาเจอ \nจะไปไหนก็รู้ก่อนใคร", R.drawable.ic_spend);
