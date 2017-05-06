@@ -1,5 +1,6 @@
 package com.buu.se.searchbangsaen.editcategories.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -17,10 +18,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.buu.se.searchbangsaen.MainActivity;
 import com.buu.se.searchbangsaen.R;
@@ -194,8 +199,37 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
         }
         switch (item.getItemId()) {
             case R.id.logout:
-                finish();
-                mAuth.signOut();
+
+                final Dialog dialog = new Dialog(EditPageActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_logout);
+                dialog.setCancelable(true);
+
+                Button button1 = (Button)dialog.findViewById(R.id.button1);
+                button1.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext()
+                                , "Close dialog", Toast.LENGTH_SHORT);
+                        dialog.cancel();
+                        finish();
+                        mAuth.signOut();
+                    }
+                });
+
+                Button button2 = (Button)dialog.findViewById(R.id.button2);
+                button2.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext()
+                                , "Close dialog", Toast.LENGTH_SHORT);
+                        dialog.cancel();
+                    }
+                });
+
+                TextView textView = (TextView)dialog.findViewById(R.id.textView);
+                textView.setText("คุณต้องการที่จะออกบัญชีผู้ใช้นี้ ใช่หรือไม่");
+
+                dialog.show();
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -330,7 +364,6 @@ public class EditPageActivity extends AppCompatActivity implements yalantis.com.
     public void onSuccessToAddMapClick(LatLng selectLatLng) {
         addRestaurantDao.setResLatLng(selectLatLng);
      //   flAddSwipeViewpager.setCurrentItem(2, true);
-
 
 //        FragmentTransaction transaction = manager.beginTransaction();
 //        transaction.show(myFragment);

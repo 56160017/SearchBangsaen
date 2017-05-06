@@ -220,6 +220,9 @@ public class EditDataPageFragment extends Fragment implements ScreenShotable {
                     }
                 }
                 Log.d("onsize: ", "" + mAddRestaurantDao.size());
+
+
+
                 editadpter = new EditPageShopInAccountAdapter(mContext, mAddRestaurantDao);
                 LinearLayoutManager llm = new LinearLayoutManager(mContext);
                 llm.setOrientation(LinearLayoutManager.VERTICAL);
